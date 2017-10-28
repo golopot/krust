@@ -1,0 +1,36 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/1.css">
+	<!-- <script defer src='/js/bundle.js' ></script> -->
+	<style>
+		{% include 'inpage.css' %}
+	</style>
+</head>
+
+<body>
+	<header>
+		<div id='header-left'>
+			<div id='logo'>
+				<a href="/"><span>Potato</span></a>
+			</div>
+		</div>
+
+		<div id='header-right'>
+			<a href='/submit'>Submit</a>
+			<a href='/login' id='login-thing'>Login</a>
+			<script>
+				if( /authtoken/.test(document.cookie) ){
+					var el = document.querySelector('#login-thing')
+					el.innerHTML = 'Profile'
+					el.href = '/profile'
+				}
+			</script>
+		</div>
+	</header>
+	<section id='message-popup'></section>
+	<section id='content'>
+		{% block content %}{% endblock %}
+	</section>
+	<script src='/js/bundle.js' ></script>
+</body>
+</html>

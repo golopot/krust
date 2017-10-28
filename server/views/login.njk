@@ -1,0 +1,34 @@
+{% extends 'layout.njk' %}
+
+{% block content %}
+
+<style>
+	form > input{
+		display: block;
+		margin: 10px 0px;
+	}
+</style>
+
+<form id='login-form'>
+	<div>Log in</div>
+	<input name='username' type='text' autocomplete='username' maxlength='20' placeholder="username">
+	<input name='password' type='password' autocomplete='current-password' placeholder="password">
+	<button>Submit</button>
+</form>
+
+<hr>
+
+<form id='signup-form'>
+	<div>Create a new account</div>
+	<input name='newUsername' type='text' maxlength='20' placeholder="username">
+	<input name='newPassword' type='password' autocomplete='new-password' placeholder="password">
+	<input name='verify-password' type='password' autocomplete='new-password' placeholder="verify password ">
+	<input name='email' type='email' placeholder="email ">
+	<button>Submit</button>
+</form>
+
+<hr>
+<button class='oauth-btn'>Log in with Google Account</button>
+
+
+{% endblock %}

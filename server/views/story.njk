@@ -1,0 +1,73 @@
+{% extends 'layout.njk' %}
+
+{% block content %}
+<data id='data-story-id' style="display:none">{{id}}</data>
+
+<section class='story'>
+	<div class='title'>
+		<div>{{title}}</div>
+	</div>
+
+	<div class='byline'>
+		<div class='votes'>{{votes}}</div>
+		<div>points by</div>
+		<div class='author'>{{username}}</div>
+		<div >{{date_submit}}</div>
+		<div>|</div>
+		<div class='upvote'>upvote</div>
+		<div class='more'>
+			<details>
+				<summary>
+					more
+				</summary>
+				<div>
+					<div class='edit'>edit</div>
+					<div class='delete'>delete</div>
+					<div>downvote</div>
+					<div>flag</div>
+				</div>
+			</details>
+		</div>
+	</div>
+	<div class='content'>
+		{% if deleted %} This is deleted.{% endif %}
+		{{content}}
+	</div>
+
+</section>
+
+<section id='comment-section'>
+
+	<h1>Comments</h1>
+	<div id='create-comment-slot'></div>
+
+	<div>
+		{% for c in comments %}
+			{{ commentMacro(c) }}
+		{% endfor %}
+	</div>
+
+</section>
+{% endblock %}
+
+
+{% macro commentMacro(c) %}
+<div class='comment-tree'>
+	<div class='comment' data-cid='{{c.id}}'>
+		<div class='byline'>
+			<div>{{c.username}}</div>
+			<div>{{c.votes}}</div>
+			<div class='upvote'>upvote</div>
+			<div class='reply'>reply</div>
+			<div class='edit'>edit</div>
+			<div class='delete'>delete</div>
+		</div>
+		<div class='content'>
+			{{c.content}}
+		</div>
+	</div>
+	<div class='children'>
+		{% for d in c.children %} {{ commentMacro(d) }} {% endfor %}
+	</div>
+</div>
+{% endmacro %}
