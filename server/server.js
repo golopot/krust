@@ -36,8 +36,8 @@ app.use( (req,res,next) => {
 })
 
 
-app.use('/js', express.static(__dirname + '/../client/build'))
-app.use('/css', express.static(__dirname + '/../client/build/css'))
+app.use('/js', express.static(__dirname + '/../dist/js'))
+app.use('/css', express.static(__dirname + '/../dist/css'))
 
 app.use('/api', api )
 

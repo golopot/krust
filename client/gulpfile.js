@@ -6,7 +6,7 @@ gulp.task('less', function(){
     .pipe(less({
       paths: [ __dirname ]
     }))
-    .pipe(gulp.dest('./build/css'))
+    .pipe(gulp.dest('../dist/css'))
 })
 
 gulp.task('watch', ['------'], function(){
