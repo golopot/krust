@@ -1,6 +1,6 @@
 ## functionality
 
-* comment
+* ~~ comment
 * ~~ delete
 * ~~ edit
 * tags
@@ -9,9 +9,11 @@
 * feed
 * spam moderation
 * submission history
-* votes up
+* ~~ votes
 * keyboard navigation
 * plates
+* markdown
+* chat
 
 ## bug fix
 
@@ -19,13 +21,12 @@
 * front-end rendering everything
 
 ## later
-* submit form use ajax
-* submit form client validation
 * csrf
 * api response format
 * tests
 * use base64 string for id
 * zero tolerane to FOUC
+* metrics of response time, requests counts
 
 ## check
 * persistent connection

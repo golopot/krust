@@ -1,11 +1,12 @@
 const Comment = require('../models/Comment')
+const Story = require('../models/Story')
 
 const createComment = (req, res, next) => {
   const b = req.body
   const comment = new Comment({
     content: b.content,
-    story: b.story,
-    parent: b.cid || null,
+    story: b.storyId,
+    parent: b.commentId || null,
     username: req.username,
     date_submit: new Date(),
     votes: 0,

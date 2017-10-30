@@ -147,11 +147,7 @@ header a, header a:visited{
 
 .story{
 	.byline{
-		display: flex;
 		color: #555;
-		> div{
-			margin-right: 6px;
-		}
 	}
 
 	.more details{
@@ -217,17 +213,40 @@ header a, header a:visited{
 }
 
 
+.comment-tree{
+	position: relative;
+}
+
 .comment{
 	padding: 4px 0px;
+	margin-left: 19px;
 
 	.byline{
 		display: flex;
 		font-size: 14px;
 		color: #666;
 
-	> div{
-		margin-right: 6px;
-	}
+		> div{
+			margin-right: 6px;
+		}
+
+		>.upvote, >.reply, >.edit, >.delete, >.collapse{
+			cursor: pointer;
+		}
+
+		>.collapse{
+			position: absolute;
+			left: 0px;
+			height: 100%;
+			user-select: none;
+			margin: 0px;
+			padding: 0px 1px;
+			font-size: 13px;
+			color:#999;
+		}
+		>.collapse:hover{
+			background-color: #eee;
+		}
 
   }
 }
@@ -246,11 +265,20 @@ header a, header a:visited{
 	}
 }
 
-.add-comment-form{
+.reply-story-form{
 	textarea{
 		width: 400px;
 		height: 140px;
 	}
 }
+
+.login-section{
+	form > input{
+		display: block;
+		margin: 10px 0px;
+	}
+}
+
+
 
 @import 'includes/loader.less';

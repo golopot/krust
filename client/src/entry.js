@@ -3,27 +3,18 @@ import config from './config'
 import {dq, formToObj} from './utils'
 import dateStringify from './dateStringify'
 import Preact from 'preact'
+import store from './store'
+import App from './components/App'
 
-function popError(e){
-  console.error(e)
-  dq('#message-popup').innerHTML = `<div>${e}</div>`
+require('preact/devtools');
 
-}
-
-function popMessage(msg){
-  console.log(msg)
-  dq('#message-popup').innerHTML = `<div>${msg}</div>`
-}
-
-if( dq('.story-list') ){
-  const dates = Array.from(document.querySelectorAll('.story-list .date-submit'))
-  for(let date of dates){
-    date.innerHTML = dateStringify( new Date( parseInt(date.innerHTML)) )
+Promise.all(window.REACT_INIT_LOADER.fetches)
+.then( (resources) => {
+  store.resources = {}
+  for(let i=0; i<resources.length; i++){
+    let endpoints = window.REACT_INIT_LOADER.endpoints
+    store.resources[endpoints[i]] = resources[i]
   }
-}
-
-
-
-import './components/comment'
-import './components/story'
-import './components/auth'
+  Preact.render(<App />, document.body)
+})
+.catch(console.error)

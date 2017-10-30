@@ -8,22 +8,21 @@ const Comment = require('../models/Comment')
 const Vote = require('../models/Vote')
 
 const {voteController} = require('./vote')
-const {createStory, editStory, deleteStory} = require('./story')
+const {createStory, getStory, editStory, deleteStory} = require('./story')
 const {createComment} = require('./comment')
-
+const {getUserProfile} = require('./userProfile')
 
 const debug = require('debug')('qa')
 // const pnr = s => {debug(s); return s}
 const fetch = require('node-fetch')
 
-const {ClientError, cerr} = require('../utils')
+const {ClientError, cerr, dateToStr} = require('../utils')
 const {
   auth,
   passwordSignIn,
   oauthSignIn,
   signUp,
 } = require('./auth')
-
 
 
 const ko = obj => {
@@ -63,30 +62,38 @@ router.get('/', (req,res) => {
   res.json({foo: 'bar'})
 })
 
-router.get('/storys', (req,res) => {
+router.get('/stories', (req, res, next) => {
 
   const q = req.query
-
-  Story.collection.find(ko({
-    submit_date: {$gt: q.after},
-  }))
-    .limit(q.size)
-    .toArray()
-  // .then( r => pnr(r) )
-    .then( r => res.json(r) )
-    .catch( e => console.error(e) )
+  Story.collection.find({}, {
+    date_submit: 1,
+    id: 1,
+    title: 1,
+    votes:1,
+    username: 1,
+  })
+  .limit(q.size|| 20)
+  .toArray()
+  .then( docs => {
+    for(let x of docs){
+      x.date_submit = x.date_submit.getTime()
+    }
+    const nextPage = docs.length > 20 && docs[20].id
+    res.json({stories: docs, nextPage})
+  })
+  .catch(next)
 
 })
 
+router.get('/profile', auth, getUserProfile)
+
+router.get('/story/:id', getStory)
+
 router.post('/signup', signUp)
 router.post('/login', passwordSignIn)
-router.post('/signin-oauth', oauthSignIn)
 
 router.post('/create-comment', auth, createComment)
-
-router.post('/create-post', auth, createStory)
-
-
+router.post('/create-story', auth, createStory)
 router.post('/delete-story', auth, deleteStory)
 router.post('/edit-story', auth, editStory)
 router.post('/vote', auth, voteController)

@@ -6,6 +6,13 @@ module.exports = {
     filename : 'bundle.js',
     path : __dirname + '/../dist/js'
   },
+  resolve: {
+    alias: {
+      'react': 'preact-compat',
+      'react-dom': 'preact-compat'
+    }
+  },
+
   module: {
     rules: [
       {
@@ -13,7 +20,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
-          presets: ['es2015'],
+          presets: ['env'],
           plugins: [
             ['transform-react-jsx', {'pragma': 'Preact.h'}]
           ]

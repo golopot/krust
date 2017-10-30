@@ -1,0 +1,20 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/css/1.css">
+	<script>
+	;(() => {
+		let resources = {{resources|safe}};
+		window.REACT_INIT_LOADER = {
+			endpoints: resources,
+			fetches: resources.map( x => fetch(x)
+				.then( r => r.json() )
+				.catch( e => console.error(e) )
+			)
+		}
+
+	})()
+	</script>
+	<script defer src='/js/bundle.js' ></script>
+</head>
+<body></body>
+</html>

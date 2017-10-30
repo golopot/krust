@@ -12,10 +12,11 @@ const Story = require('./models/Story')
 const User = require('./models/User')
 const Comment = require('./models/Comment')
 const cookieParser = require('cookie-parser')
+const compression = require('compression')
 const {auth} = require('./api/auth')
-const {ClientError} = require('./utils')
+const {ClientError, dateToStr} = require('./utils')
 
-const dateToStr = d => `${d.getUTCFullYear()}/${d.getUTCMonth()+1}/${d.getUTCDate()}`
+app.use(compression())
 app.use(cookieParser())
 app.disable('x-powered-by')
 
@@ -54,99 +55,33 @@ app.get('/test', (req,res) => {
 
 
 app.get('/', (req, res) => {
-
-  const after = ~~ req.query.after
-
-  Story.collection.find({
-    id: { $gt: after},
-    deleted: { $eq: null},
-  })
-    .limit(21).toArray()
-    .then( data => {
-      for(let x of data){
-        x.date_submit = x.date_submit.getTime()
-        x.link = `/p/${x.id}`
-        x.username = x.username
-      }
-
-      const nextPage = data.length > 20 && data[20].id
-      res.render('index.njk', {storys: data, nextPage})
-
-    })
-    .catch( e => console.error(e) )
+    res.render('react.njk', {resources: '["/api/stories"]'})
 })
 
 
 app.get('/p/:id', (req, res, next) => {
 
-
-
-  const treeBuild = nodes => {
-    let topNodes = []
-    let hash = {}
-    for(let node of nodes){
-      node.children = []
-      hash[node.id] = node
-    }
-
-    for(let node of nodes){
-      if(node.parent === null){
-        topNodes.push(node)
-      }
-      else{
-        hash[node.parent].children.push(node)
-      }
-    }
-    return topNodes
-  }
-
-  var story
-
   Story.collection.findOne({id: ~~req.params.id})
     .then( x => {
       if( x === null ) throw 404
-      story = x
+      const resources = JSON.stringify([`/api/story/${req.params.id}`])
+      res.render('react.njk', {resources})
     })
-    .then( () => Comment.collection.find({story: story.id}).toArray())
-    .then( comments => {
-      const x = story
-      res.render('story.njk', {
-        id: x.id,
-        title: x.title,
-        view_counts: 57,
-        votes: x.votes,
-        date_submit: dateToStr(x.date_submit),
-        username: x.username,
-        content: x.content,
-        comments: treeBuild(comments),
-        deleted: x.deleted,
-      })
-    })
+
     .catch( e => next(e) )
 })
 
 
 app.get('/submit', (req, res) => {
-  res.render('submit.njk')
+  res.render('react.njk', {resources: JSON.stringify([])} )
 })
 
-app.get('/profile', auth, (req, res) => {
-  var username = ''
-  try{username = req.cookies.authtoken.split('.')[0]}
-  catch(e){}
-
-  User.findOne({username})
-    .then( user => {
-      res.render('profile.njk', {
-        username: user.username,
-        email: user.email,
-      })
-    })
-    .catch( e => res.frown('user not found.') )
+app.get('/profile', (req, res) => {
+  res.render('react.njk', {resources: JSON.stringify([])} )
 })
 
 app.get('/login', (req, res) => {
-  res.render('login.njk')
+  res.render('react.njk', {resources: JSON.stringify([])} )
 })
 
 app.get('/oauth-redirect-back-google', (req,res) => {
@@ -158,13 +93,6 @@ app.get('/oauth-redirect-back-google', (req,res) => {
 	`)
 })
 
-
-app.use( (err,req,res,next) => {
-
-  console.error( err )
-
-  res.status(500).send('500')
-})
 
 app.use( (err,req,res,next) => {
 

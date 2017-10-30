@@ -20,23 +20,27 @@ const sendAuthtoken = (user, res) => {
 }
 
 const auth = (req, res, next) => {
+
+  /* csrf check*/
+  if( !req.headers['x-csrf-prevention']){
+    throw cerr('API requests must include the header `X-CSRF-Prevention: 1`.')
+  }
   /* Check authtoken */
   const token = req.cookies.authtoken || ''
   const parts = token.split('.')
   if( parts.length !== 3){
-    return next(cerr('authentication error',401))
+    throw cerr('Authentication error',401)
   }
   const [username, date, hash1] = parts
   const hash2 = getHmac(username, date)
   if( hash1 !== hash2 ){
-    return next(cerr('authentication error',401))
+    throw cerr('Authentication error',401)
   }
   req.username = username
   next()
 }
 
 const signUp = (req, res, next) => {
-  console.log(req.body)
   const {newUsername, newPassword, email} = req.body
   User.collection.findOne({newUsername})
     .then( doc => {

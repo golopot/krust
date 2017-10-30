@@ -1,6 +1,6 @@
 function ClientError(reason, status){
   this.status = status || 400
-  this.reasdon = reason || ''
+  this.reason = reason || ''
 }
 
 
@@ -9,7 +9,11 @@ function cerr(reason, status){
 }
 
 
+
+const dateToStr = d => `${d.getUTCFullYear()}/${d.getUTCMonth()+1}/${d.getUTCDate()}`
+
 module.exports = {
   cerr,
   ClientError,
+  dateToStr,
 }
