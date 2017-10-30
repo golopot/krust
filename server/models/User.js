@@ -1,7 +1,7 @@
-const crypto = require('crypto')
 const mongoose = require('mongoose')
 const M = require('./utils/Moi')
 const fancyInsert = require('./utils/fancyInsert')
+const crypto = require('crypto')
 const bcrypt = require('bcrypt')
 
 const schema = new mongoose.Schema(M.translate({
@@ -17,7 +17,7 @@ schema.statics.fancyInsert = fancyInsert
 
 schema.statics.validateUsername = (username) => {
   return /^.{2,20}$/.test(username)
- && /^[\w\-]*$/.test(username)
+ && /^[\w-]*$/.test(username)
 }
 
 

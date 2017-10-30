@@ -26,5 +26,5 @@ const createComment = (req, res, next) => {
 
 
 module.exports = {
-	createComment
+  createComment
 }

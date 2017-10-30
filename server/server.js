@@ -9,12 +9,10 @@ const app = express()
 const nunjucks = require('nunjucks')
 nunjucks.configure('views', {express: app})
 const Story = require('./models/Story')
-const User = require('./models/User')
-const Comment = require('./models/Comment')
 const cookieParser = require('cookie-parser')
 const compression = require('compression')
 const {auth} = require('./api/auth')
-const {ClientError, dateToStr} = require('./utils')
+const {ClientError} = require('./utils')
 
 app.use(compression())
 app.use(cookieParser())
@@ -55,7 +53,7 @@ app.get('/test', (req,res) => {
 
 
 app.get('/', (req, res) => {
-    res.render('react.njk', {resources: '["/api/stories"]'})
+  res.render('react.njk', {resources: '["/api/stories"]'})
 })
 
 

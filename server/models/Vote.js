@@ -21,14 +21,14 @@ schema.statics.updateVoteCounts = function(target, target_type){
     {$match: {target}},
     {$group: {_id: target, total: {$sum: '$direction'}}}
   ])
-  .toArray()
-  .then( x => {
-    const model = 
+    .toArray()
+    .then( x => {
+      const model = 
       target_type === 'comment' && Comment ||
       target_type === 'story' && Story
 
-    return model.collection.updateOne({id: target}, {$set: {votes: x[0].total }})
-  })
+      return model.collection.updateOne({id: target}, {$set: {votes: x[0].total }})
+    })
 }
 
 schema.statics.upvote = () => {

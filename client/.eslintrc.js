@@ -3,7 +3,7 @@ module.exports = {
         "browser": true,
         "es6": true
     },
-    "extends": "eslint:recommended",
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
     "parserOptions": {
         "ecmaFeatures": {
             "experimentalObjectRestSpread": true,
@@ -30,6 +30,11 @@ module.exports = {
         ],
         'no-console' : 0,
         'no-unused-vars': ['error',{'varsIgnorePattern': '^h$'}],
+        'react/react-in-jsx-scope': 0,
 
-    }
+    },
+
+    "plugins": [
+      "react"
+    ]
 };

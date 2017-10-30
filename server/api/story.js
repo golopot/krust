@@ -32,49 +32,49 @@ const createStory = (req, res, next) => {
 */
 const getStory = (req, res, next) => {
 
-    const treeBuild = nodes => {
-      let topNodes = []
-      let hash = {}
-      for(let node of nodes){
-        node.children = []
-        hash[node.id] = node
-      }
-
-      for(let node of nodes){
-        if(node.parent === null){
-          topNodes.push(node)
-        }
-        else{
-          hash[node.parent].children.push(node)
-        }
-      }
-      return topNodes
+  const treeBuild = nodes => {
+    let topNodes = []
+    let hash = {}
+    for(let node of nodes){
+      node.children = []
+      hash[node.id] = node
     }
 
-    var story
+    for(let node of nodes){
+      if(node.parent === null){
+        topNodes.push(node)
+      }
+      else{
+        hash[node.parent].children.push(node)
+      }
+    }
+    return topNodes
+  }
 
-    Story.collection.findOne({id: ~~req.params.id})
-      .then( x => {
-        if( x === null ) throw 'Story not found.'
-        story = x
-      })
-      .then( () => Comment.collection.find({story: story.id}).toArray())
-      .then( comments => {
-        const x = story
-        story = {
-          id: x.id,
-          title: x.title,
-          view_counts: 57,
-          votes: x.votes,
-          date_submit: dateToStr(x.date_submit),
-          username: x.username,
-          content: x.content,
-          comments: treeBuild(comments),
-          deleted: x.deleted,
-        }
-        res.json({story})
-      })
-      .catch( e => next(e) )
+  var story
+
+  Story.collection.findOne({id: ~~req.params.id})
+    .then( x => {
+      if( x === null ) throw 'Story not found.'
+      story = x
+    })
+    .then( () => Comment.collection.find({story: story.id}).toArray())
+    .then( comments => {
+      const x = story
+      story = {
+        id: x.id,
+        title: x.title,
+        view_counts: 57,
+        votes: x.votes,
+        date_submit: dateToStr(x.date_submit),
+        username: x.username,
+        content: x.content,
+        comments: treeBuild(comments),
+        deleted: x.deleted,
+      }
+      res.json({story})
+    })
+    .catch( e => next(e) )
 }
 
 const editStory = (req, res, next) => {
@@ -83,25 +83,25 @@ const editStory = (req, res, next) => {
   // TODO: check content valid
   const b = req.body
   Story.collection.updateOne({id: ~~b.storyId}, {$set:{content: b.content}} )
-  .then( doc => {
-    if( doc.matchedCount === 0 ) throw 'Story is not found.'
-    res.json(doc)
-  })
-  .catch(next)
+    .then( doc => {
+      if( doc.matchedCount === 0 ) throw 'Story is not found.'
+      res.json(doc)
+    })
+    .catch(next)
 }
 
 const deleteStory = (req, res, next) => {
   const b = req.body
   Story.collection.updateOne({id: ~~b.id}, {$set:{deleted: new Date()}} )
-  .then( doc => {
-    if(doc.matchedCount === 0) throw 'Story is not found.'
-    res.json(doc)
-  })
-  .catch(next)
+    .then( doc => {
+      if(doc.matchedCount === 0) throw 'Story is not found.'
+      res.json(doc)
+    })
+    .catch(next)
 }
 
 module.exports = {
-	createStory,
+  createStory,
   getStory,
   editStory,
   deleteStory,

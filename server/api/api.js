@@ -2,25 +2,18 @@ const express = require('express')
 const router = express.Router()
 const bodyParser = require('body-parser')
 
-const User = require('../models/User')
 const Story = require('../models/Story')
-const Comment = require('../models/Comment')
-const Vote = require('../models/Vote')
 
 const {voteController} = require('./vote')
 const {createStory, getStory, editStory, deleteStory} = require('./story')
 const {createComment} = require('./comment')
 const {getUserProfile} = require('./userProfile')
 
-const debug = require('debug')('qa')
-// const pnr = s => {debug(s); return s}
-const fetch = require('node-fetch')
 
-const {ClientError, cerr, dateToStr} = require('../utils')
+const {ClientError, dateToStr} = require('../utils')
 const {
   auth,
   passwordSignIn,
-  oauthSignIn,
   signUp,
 } = require('./auth')
 
@@ -72,16 +65,16 @@ router.get('/stories', (req, res, next) => {
     votes:1,
     username: 1,
   })
-  .limit(q.size|| 20)
-  .toArray()
-  .then( docs => {
-    for(let x of docs){
-      x.date_submit = x.date_submit.getTime()
-    }
-    const nextPage = docs.length > 20 && docs[20].id
-    res.json({stories: docs, nextPage})
-  })
-  .catch(next)
+    .limit(q.size|| 20)
+    .toArray()
+    .then( docs => {
+      for(let x of docs){
+        x.date_submit = x.date_submit.getTime()
+      }
+      const nextPage = docs.length > 20 && docs[20].id
+      res.json({stories: docs, nextPage})
+    })
+    .catch(next)
 
 })
 

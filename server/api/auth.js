@@ -56,6 +56,8 @@ const signUp = (req, res, next) => {
         throw 'Password is invalid.'
       }
 
+      // TODO: validate email
+
       const saltRounds = 6
 
       return bcrypt.hash(newPassword, saltRounds)
@@ -107,7 +109,6 @@ const oauthSignIn = (req,res,next) => {
       {method: 'post'}
     )
       .then( r => r.json())
-      .then( r => pnr(r))
       .then( r => {
         if(r.aud !== '806708806553-ausj6asg5gof7tnfg2c20jjv32cm8jf6.apps.googleusercontent.com'){
           throw('client_id mismatch')

@@ -3,25 +3,24 @@ const Story = require('../models/Story')
 const Vote = require('../models/Vote')
 
 const voteController = (req, res, next) => {
-    const b = req.body
-    let vote = new Vote({
-      username: req.username,
-      direction: b.direction,
-      target: b.target,
-      target_type: b.target_type,
-      date: new Date(),
-    })
-    var target
+  const b = req.body
+  let vote = new Vote({
+    username: req.username,
+    direction: b.direction,
+    target: b.target,
+    target_type: b.target_type,
+    date: new Date(),
+  })
 
-    Promise.resolve().then( () => {
-      var model
-      if( b.target_type === 'comment')
-        model = Comment
-      if( b.target_type === 'story')
-        model = Story
+  Promise.resolve().then( () => {
+    var model
+    if( b.target_type === 'comment')
+      model = Comment
+    if( b.target_type === 'story')
+      model = Story
 
-      return model.collection.findOne({id: vote.target})
-    })
+    return model.collection.findOne({id: vote.target})
+  })
     .then( doc => {
       if( doc === null ){
         return Promise.reject('Comment or story is not found.')
@@ -48,7 +47,7 @@ const voteController = (req, res, next) => {
         }
       }
     })
-    .then( r => {
+    .then( () => {
       return Vote.updateVoteCounts(vote.target, vote.target_type)
     })
     .then( r => {

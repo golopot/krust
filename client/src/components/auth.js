@@ -1,6 +1,4 @@
-import {dq, formToObj, getStoryId} from '../utils'
-import Preact from 'preact'
-import Cookies from 'js-cookie'
+import {dq, formToObj} from '../utils'
 
 
 if( dq('.oauth-btn') ){
