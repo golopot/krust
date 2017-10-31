@@ -140,7 +140,7 @@ const Story = ({story}) => (
 
 
 
-const Container = (Wrapped) => class extends Preact.Component{
+const withStory = (Wrapped) => class extends Preact.Component{
   render(){
     this.endpoint = '/api/story/'+ window.location.pathname.slice(3)
     const {story} = store.resources[this.endpoint]
@@ -149,4 +149,4 @@ const Container = (Wrapped) => class extends Preact.Component{
 }
 
 
-export default Container(Story)
+export default withStory(Story)

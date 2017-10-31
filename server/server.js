@@ -53,7 +53,7 @@ app.get('/test', (req,res) => {
 
 
 app.get('/', (req, res) => {
-  res.render('react.njk', {resources: '["/api/stories"]'})
+  res.render('react.njk')
 })
 
 
@@ -62,8 +62,7 @@ app.get('/p/:id', (req, res, next) => {
   Story.collection.findOne({id: ~~req.params.id})
     .then( x => {
       if( x === null ) throw 404
-      const resources = JSON.stringify([`/api/story/${req.params.id}`])
-      res.render('react.njk', {resources})
+      res.render('react.njk')
     })
 
     .catch( e => next(e) )
@@ -71,15 +70,19 @@ app.get('/p/:id', (req, res, next) => {
 
 
 app.get('/submit', (req, res) => {
-  res.render('react.njk', {resources: JSON.stringify([])} )
+  res.render('react.njk')
 })
 
 app.get('/profile', (req, res) => {
-  res.render('react.njk', {resources: JSON.stringify([])} )
+  res.render('react.njk')
 })
 
 app.get('/login', (req, res) => {
-  res.render('react.njk', {resources: JSON.stringify([])} )
+  res.render('react.njk')
+})
+
+app.get('/plates', (req, res) => {
+  res.render('react.njk')
 })
 
 app.get('/oauth-redirect-back-google', (req,res) => {

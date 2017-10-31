@@ -27,6 +27,30 @@ const createStory = (req, res, next) => {
 
 }
 
+
+const getStories = (req, res, next) => {
+
+  const q = req.query
+  Story.collection.find({}, {
+    date_submit: 1,
+    id: 1,
+    title: 1,
+    votes:1,
+    username: 1,
+  })
+    .limit(q.size|| 20)
+    .toArray()
+    .then( docs => {
+      for(let x of docs){
+        x.date_submit = x.date_submit.getTime()
+      }
+      const nextPage = docs.length > 20 && docs[20].id
+      res.json({stories: docs, nextPage})
+    })
+    .catch(next)
+
+}
+
 /*
   /api/story/:id
 */
@@ -77,6 +101,7 @@ const getStory = (req, res, next) => {
     .catch( e => next(e) )
 }
 
+
 const editStory = (req, res, next) => {
 
   // TODO: check user is author or moderator or admin
@@ -103,6 +128,7 @@ const deleteStory = (req, res, next) => {
 module.exports = {
   createStory,
   getStory,
+  getStories,
   editStory,
   deleteStory,
 }

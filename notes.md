@@ -14,6 +14,8 @@
 * plates
 * markdown
 * chat
+* customizable stylesheets
+* crosspost
 
 ## bug fix
 

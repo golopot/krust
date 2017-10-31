@@ -8,7 +8,6 @@ Moi.translate = function(obj){
   if( typeof obj == 'string' )
     return
 
-
   for( var key in obj ){
 
     if( obj[key] instanceof MoiType )

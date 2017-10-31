@@ -5,7 +5,8 @@ const bodyParser = require('body-parser')
 const Story = require('../models/Story')
 
 const {voteController} = require('./vote')
-const {createStory, getStory, editStory, deleteStory} = require('./story')
+const {createStory, getStory, getStories, editStory, deleteStory} = require('./story')
+const {createPlate, getPlates} = require('./plate')
 const {createComment} = require('./comment')
 const {getUserProfile} = require('./userProfile')
 
@@ -55,28 +56,8 @@ router.get('/', (req,res) => {
   res.json({foo: 'bar'})
 })
 
-router.get('/stories', (req, res, next) => {
-
-  const q = req.query
-  Story.collection.find({}, {
-    date_submit: 1,
-    id: 1,
-    title: 1,
-    votes:1,
-    username: 1,
-  })
-    .limit(q.size|| 20)
-    .toArray()
-    .then( docs => {
-      for(let x of docs){
-        x.date_submit = x.date_submit.getTime()
-      }
-      const nextPage = docs.length > 20 && docs[20].id
-      res.json({stories: docs, nextPage})
-    })
-    .catch(next)
-
-})
+router.get('/stories', getStories)
+router.get('/plate', getPlates)
 
 router.get('/profile', auth, getUserProfile)
 
@@ -87,9 +68,11 @@ router.post('/login', passwordSignIn)
 
 router.post('/create-comment', auth, createComment)
 router.post('/create-story', auth, createStory)
+router.post('/create-plate', auth, createPlate)
 router.post('/delete-story', auth, deleteStory)
 router.post('/edit-story', auth, editStory)
 router.post('/vote', auth, voteController)
+
 
 
 router.use( (err,req,res,next) => {

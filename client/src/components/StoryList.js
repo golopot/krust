@@ -2,7 +2,7 @@ import Preact from 'preact'
 import {Link} from 'react-router-dom'
 import store from '../store'
 import dateStringify from '../dateStringify'
-
+import Plink from './Plink'
 const urlFromId = (id) => (
   '/p/' + id
 )
@@ -10,7 +10,7 @@ const urlFromId = (id) => (
 const StoryItem = ({story}) => (
   <div className='story-item'>
     <div className='up'>
-      <a className='title' href={urlFromId(story.id)}>{story.title}</a>
+      <Plink class='title' to={urlFromId(story.id)}>{story.title}</Plink>
     </div>
     <div className='middle'>
       <span className='votes'>{story.votes} points </span>
