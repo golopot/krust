@@ -7,40 +7,32 @@
 import { withRouter } from 'react-router-dom'
 import Preact from 'preact'
 import {Component} from 'preact'
-import pathToResources from '../pathToResources'
+import PropTypes from 'prop-types'
+import promisedNavigate from '../promisedNavigate'
 import store from '../store'
 
 class Plink extends Component{
 
 	// TODO deal with furious clicking
 	// TODO indicate "connecting" after clicking
+	// TODO What happens when link href is current href?
 
 	onClick(ev){
 		const {to, history} = this.props
 		ev.preventDefault()
-		const resources = pathToResources(to).map(
-			uri => fetch(uri)
-				.then( r => r.json() )
-				.then( r => {
-					if(r.error){
-						throw r.error
-					}
-					else{
-						store.resources[uri] = r
-					}
-				})
-				.catch(console.error)
-		)
-
-		Promise.all(resources)
-		.then( () => {
-			history.push(to)
-		})
-		.catch(console.error)
+		promisedNavigate(to, history)
 	}
 
+
 	render(){
-		return <a href={this.props.to} onClick={this.onClick.bind(this)}>{this.props.children}</a>
+		const {to, history, match, location, ...props} = this.props
+		return <a
+			{...props}
+			href={this.props.to}
+			onClick={this.onClick.bind(this)}
+		>
+			{this.props.children}
+		</a>
 	}
 }
 

@@ -1,34 +1,44 @@
 ## functionality
-
-* ~~ comment
-* ~~ delete
-* ~~ edit
-* tags
+* TLS
+* markdown styling
 * pagination
-* ~~ user login
-* feed
 * spam moderation
-* submission history
-* ~~ votes
+* home page
+* feed
+* notification
+* subscribe plate
+* edit history
+* plate settting: text only...
+* tags
+* top of week or month
+* search filter: flagged deleted user before
 * keyboard navigation
-* plates
-* markdown
 * chat
-* customizable stylesheets
+* customizable stylesheets for each plate
 * crosspost
+* reputation
+* make votes more conspicuous
+* make plates a menu
+* moderation history
+* precache link on mouse hover
+
+## Index
+* subscriptions
+* all
+* plates
 
 ## bug fix
 
-## epoch
-* front-end rendering everything
-
 ## later
-* csrf
 * api response format
 * tests
-* use base64 string for id
+* use base62 for id
 * zero tolerane to FOUC
 * metrics of response time, requests counts
+* proptypes
+* Caching fetched resources
+* cleaner comments
+* Improve Moi by eliminate the need for tranlation
 
 ## check
 * persistent connection

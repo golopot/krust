@@ -2,23 +2,59 @@
 // Doing this reduces latency by one round trip.
 
 ;(() => {
-	let resources = []
-	const path = window.location.pathname
-	let r
 
-	if(path === '/'){
-		resources.push(['/api/stories'])
-	}
-	if(r = /^\/p\/([\w]*)/.exec(path)){
-		resources.push([`/api/story/${r[1]}`])
+
+	const pathToResources = (href) => {
+
+	  const noHash = /^[^#]*/.exec(href)[0]
+	  let [ _, path, query] = /^([^?]*)(.*)/.exec(noHash)
+
+	  const q = query || ''
+		let m
+	  if(path === '/'){
+
+		}
+		if(m = /^\/p\/([\w]*)/.exec(path)){
+			return [`/api/story/${m[1]}${q}`]
+		}
+	  if(m = /^\/plate\/([\w]*)/.exec(path)){
+	    return [`/api/plate/${m[1]}${q}`]
+	  }
+	  return []
 	}
 
-	window.REACT_INIT_LOADER = {
-		endpoints: resources,
-		fetches: resources.map( x => fetch(x)
-			.then( r => r.json() )
-			.catch( e => console.error(e) )
+	const alwaysResources = () => {
+		if(document.cookie.search('authtoken=') !== -1){
+			return ['/api/user-votes']
+		}
+		else{
+			return []
+		}
+	}
+
+
+	const executeFetches = () => {
+		const uris = pathToResources(window.location.pathname + window.location.search)
+			.concat(alwaysResources())
+		const fetches = uris.map( uri =>
+			fetch(uri,{
+				credentials: 'include',
+				headers: {'X-CSRF-Prevention': 1},
+			})
+			.then(r => r.json())
 		)
+
+		window.INIT_FETCHES = Promise.all(fetches)
+		.then( r => {
+			let table = {}
+			for(let i=0; i<uris.length; i++){
+				table[uris[i]] = r[i]
+			}
+			return table
+		})
+		.catch(console.error)
 	}
+
+	executeFetches()
 
 })()

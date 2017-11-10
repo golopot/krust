@@ -9,6 +9,12 @@ class Comment extends Component{
 
   constructor(props){
     super(props)
+    const {id, votes} = props.comment
+    this.state = {
+      voteDirection: store.userVotes.get('comment'+id) || 0,
+      temporaryVote: 0,
+      votes,
+    }
     this.onClick = this.onClick.bind(this)
   }
 
@@ -20,19 +26,34 @@ class Comment extends Component{
     }
 
     if(has('upvote')){
+      const oldDirection = this.state.voteDirection
+      const newDirection = oldDirection === 1 ? 0 : 1
+      this.setState({
+        voteDirection: newDirection,
+        temporaryVote: newDirection - oldDirection,
+      })
+
       fetch('/api/vote', {
         method: 'post',
         credentials: 'include',
-        headers: {'content-type': 'application/json'},
+        headers: {'content-type': 'application/json', 'X-CSRF-Prevention': 1},
         body: JSON.stringify({
-          direction: 1,
+          direction: newDirection,
           target: this.props.comment.id,
           target_type: 'comment',
         }),
       })
         .then( r => r.json())
         .then( r => {
-          console.log(r)
+          if(r.error){
+            throw(r.error)
+          }
+          this.setState({
+            votes: this.state.votes + this.state.temporaryVote,
+            temporaryVote: 0,
+          })
+          store.userVotes.set('comment'+this.props.comment.id, this.state.voteDirection)
+
         })
         .catch( e => console.error(e))
     }
@@ -55,23 +76,32 @@ class Comment extends Component{
 
   render(){
     const {comment: c, storyId} = this.props
+    const {temporaryVote, voteDirection, votes} = this.state
+    const voteMap = {
+      '-1': 'dislike',
+      '0': 'unvoted',
+      '1': 'like'
+    }
+    const voteClassName = voteMap[voteDirection]
+
     return(
-      <div className='comment-tree'>
-        <div className='comment' onClick={this.onClick} data-cid={c.id}>
-          <div className='byline'>
-            <div>{c.votes}</div>
-            <div>{c.username}</div>
-            <div className='upvote'>upvote</div>
-            <div className='reply'>reply</div>
-            <div className='edit'>edit</div>
-            <div className='delete'>delete</div>
-            <div className='collapse'>[-]</div>
+      <div class='comment-tree'>
+        <div class='comment' onClick={this.onClick} data-cid={c.id}>
+          <div class='byline'>
+            <span class={`vote ${voteClassName}`}>{votes + temporaryVote} </span>
+            <span class='username'>{c.username} </span>
+            <span class={`upvote ${voteClassName}`}>upvote </span>
+            <span class='reply'>reply </span>
+            <span class='edit'>edit </span>
+            <span class='delete'>delete </span>
+            <span class='collapse'>[-]</span>
           </div>
-          <div className='content'>
-            {c.content}
+          <div
+            class='content'
+            dangerouslySetInnerHTML={ ({__html: c.content_marked}) }>
           </div>
           {this.state.replying &&
-      <CommentForm storyId={storyId} commentId={c.id} />
+            <CommentForm storyId={storyId} commentId={c.id} />
           }
         </div>
         <div className='children'>

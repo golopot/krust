@@ -26,17 +26,12 @@ class Profile extends Component{
           <div>Username</div>
           <span>{p.username}</span>
         </div>
-        <div>
-          <div>Email</div>
-          <span>{p.email}</span>
-        </div>
 
         <div>
           <div>Stories you submit</div>
         </div>
 
         <div>
-          <div>Log out</div>
           <button className='logout' onClick={this.onClickLogout}>logout</button>
         </div>
 

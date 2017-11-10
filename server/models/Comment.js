@@ -7,6 +7,7 @@ const schema = new mongoose.Schema(M.translate({
   username: M.string().required(),
   story: M.number().required(),
   content: M.string().required(),
+  content_marked: M.string().required(),
   votes: M.number(),
   parent: M.number(),
   date_submit: M.date().required(),

@@ -4,12 +4,11 @@ const bodyParser = require('body-parser')
 
 const Story = require('../models/Story')
 
-const {voteController} = require('./vote')
+const {castVote, getUserVotes} = require('./vote')
 const {createStory, getStory, getStories, editStory, deleteStory} = require('./story')
-const {createPlate, getPlates} = require('./plate')
+const {createPlate, getPlates, getPlate} = require('./plate')
 const {createComment} = require('./comment')
-const {getUserProfile} = require('./userProfile')
-
+const {getUserProfile, getUser} = require('./user')
 
 const {ClientError, dateToStr} = require('../utils')
 const {
@@ -59,9 +58,13 @@ router.get('/', (req,res) => {
 router.get('/stories', getStories)
 router.get('/plate', getPlates)
 
+
+router.get('/user/:user', getUser)
 router.get('/profile', auth, getUserProfile)
+router.get('/user-votes', auth, getUserVotes)
 
 router.get('/story/:id', getStory)
+router.get('/plate/:name', getPlate)
 
 router.post('/signup', signUp)
 router.post('/login', passwordSignIn)
@@ -71,7 +74,7 @@ router.post('/create-story', auth, createStory)
 router.post('/create-plate', auth, createPlate)
 router.post('/delete-story', auth, deleteStory)
 router.post('/edit-story', auth, editStory)
-router.post('/vote', auth, voteController)
+router.post('/vote', auth, castVote)
 
 
 

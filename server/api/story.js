@@ -2,6 +2,14 @@ const Story = require('../models/Story')
 const User = require('../models/User')
 const Comment = require('../models/Comment')
 const {dateToStr} = require('../utils')
+const showdown = require('showdown')
+const converter = new showdown.Converter({
+  tables: true,
+  strikethrough: true,
+  simpleLineBreaks: true,
+})
+const xss = require('xss')
+
 
 const createStory = (req, res, next) => {
 
@@ -9,10 +17,11 @@ const createStory = (req, res, next) => {
   const story = new Story({
     title: b.title,
     content: b.content,
+    content_marked: xss(converter.makeHtml(b.content)),
     plate: b.plate,
     votes: 0,
     username: req.username,
-    deleted: null,
+    deleted: false,
     date_submit: new Date(),
   })
 
@@ -29,26 +38,7 @@ const createStory = (req, res, next) => {
 
 
 const getStories = (req, res, next) => {
-
-  const q = req.query
-  Story.collection.find({}, {
-    date_submit: 1,
-    id: 1,
-    title: 1,
-    votes:1,
-    username: 1,
-  })
-    .limit(q.size|| 20)
-    .toArray()
-    .then( docs => {
-      for(let x of docs){
-        x.date_submit = x.date_submit.getTime()
-      }
-      const nextPage = docs.length > 20 && docs[20].id
-      res.json({stories: docs, nextPage})
-    })
-    .catch(next)
-
+  throw new Error('This is not implemented.')
 }
 
 /*
@@ -75,30 +65,28 @@ const getStory = (req, res, next) => {
     return topNodes
   }
 
-  var story
 
   Story.collection.findOne({id: ~~req.params.id})
-    .then( x => {
-      if( x === null ) throw 'Story not found.'
-      story = x
+    .then( story => {
+      if( story === null ) throw 'Story not found.'
+      return Comment.collection.find({story: story.id}).toArray()
+        .then( comments => {
+          const x = story
+          res.json({story: {
+            id: x.id,
+            title: x.title,
+            view_counts: 57,
+            votes: x.votes,
+            date_submit: dateToStr(x.date_submit),
+            username: x.username,
+            content_marked: x.content_marked,
+            comments: treeBuild(comments),
+            deleted: x.deleted,
+            plate: x.plate,
+          }})
+        })
     })
-    .then( () => Comment.collection.find({story: story.id}).toArray())
-    .then( comments => {
-      const x = story
-      story = {
-        id: x.id,
-        title: x.title,
-        view_counts: 57,
-        votes: x.votes,
-        date_submit: dateToStr(x.date_submit),
-        username: x.username,
-        content: x.content,
-        comments: treeBuild(comments),
-        deleted: x.deleted,
-      }
-      res.json({story})
-    })
-    .catch( e => next(e) )
+    .catch(next)
 }
 
 
@@ -117,7 +105,7 @@ const editStory = (req, res, next) => {
 
 const deleteStory = (req, res, next) => {
   const b = req.body
-  Story.collection.updateOne({id: ~~b.id}, {$set:{deleted: new Date()}} )
+  Story.collection.updateOne({id: ~~b.id}, {$set:{deleted: true}} )
     .then( doc => {
       if(doc.matchedCount === 0) throw 'Story is not found.'
       res.json(doc)

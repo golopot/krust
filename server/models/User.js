@@ -11,6 +11,7 @@ const schema = new mongoose.Schema(M.translate({
   gid: M.string(),
   name: M.string(),
   email: M.string(),
+  date_created: M.date(),
 }), { timestamps: true })
 
 schema.statics.fancyInsert = fancyInsert

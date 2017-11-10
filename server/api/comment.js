@@ -1,10 +1,18 @@
 const Comment = require('../models/Comment')
 const Story = require('../models/Story')
+const showdown = require('showdown')
+const converter = new showdown.Converter({
+  tables: true,
+  strikethrough: true,
+  simpleLineBreaks: true,
+})
+const xss = require('xss')
 
 const createComment = (req, res, next) => {
   const b = req.body
   const comment = new Comment({
     content: b.content,
+    content_marked: xss(converter.makeHtml(b.content)),
     story: b.storyId,
     parent: b.commentId || null,
     username: req.username,

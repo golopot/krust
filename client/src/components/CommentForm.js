@@ -2,6 +2,8 @@ import Preact from 'preact'
 import {Link} from 'react-router-dom'
 import store from '../store'
 import {formToObj} from '../utils'
+import {} from '../utils'
+import Cookies from 'js-cookie'
 
 
 const Loading = () => <span>Loading...</span>
@@ -46,13 +48,15 @@ class CommentForm extends Preact.Component{
   }
 
   render(){
+    if(!Cookies.get('authtoken'))
+      return null
     return (
       <form className='reply-story-form' onSubmit={this.onSubmit}>
-        <textarea name='content' />
-        <div>
-          <button disabled={this.state.status === status.WAIT} >save</button>
-          { this.state.status === status.WAIT && <Loading /> }
-        </div>
+          <textarea name='content' />
+          <div class='form-submit'>
+            <button disabled={this.state.status === status.WAIT} >save</button>
+            { this.state.status === status.WAIT && <Loading /> }
+          </div>
       </form>
     )
   }

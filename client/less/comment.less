@@ -1,0 +1,83 @@
+
+.comment-tree{
+	position: relative;
+}
+
+.comment{
+	padding: 4px 0px;
+	margin-left: 19px;
+
+	p{
+		margin-top: 0px;
+		margin-bottom: 12px;
+	}
+
+	.byline{
+		font-size: 14px;
+		color: #666;
+
+		> span{
+			cursor: pointer;
+
+		}
+		> span:hover{
+			text-decoration: underline;
+		}
+
+		> span.vote:hover, span.username:hover{
+			text-decoration: none;
+		}
+
+
+		>.collapse{
+			position: absolute;
+			left: 0px;
+			height: 100%;
+			user-select: none;
+			margin: 0px;
+			padding: 0px 1px;
+			font-size: 13px;
+			color:#999;
+		}
+		>.collapse:hover{
+			background-color: #eee;
+		}
+
+		>.vote.like{
+			color: orange;
+		}
+
+  }
+}
+
+.comment-reply-form{
+	textarea{
+		width: 400px;
+		height: 114px;
+	}
+
+	.form-submit{
+		padding: 6px 0px;
+	}
+
+}
+
+
+.reply-story-form{
+	textarea{
+		width: 400px;
+		height: 114px;
+	}
+
+	.form-submit{
+		padding: 6px 0px;
+	}
+}
+
+
+
+.comment-tree{
+	> .children{
+		padding-left: 16px;
+	}
+}

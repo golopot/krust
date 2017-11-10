@@ -1,14 +1,20 @@
+const pathToResources = (href) => {
 
-const pathToResources = (path) => {
-  const resources = []
-	let r
+  const noHash = /^[^#]*/.exec(href)[0]
+  let [ _, path, query] = /^([^?]*)(.*)/.exec(noHash)
+
+  const q = query || ''
+	let m
   if(path === '/'){
-		resources.push(['/api/stories'])
+
 	}
-	if(r = /^\/p\/([\w]*)/.exec(path)){
-		resources.push([`/api/story/${r[1]}`])
+	if(m = /^\/p\/([\w]*)/.exec(path)){
+		return [`/api/story/${m[1]}${q}`]
 	}
-	return resources
+  if(m = /^\/plate\/([\w]*)/.exec(path)){
+    return [`/api/plate/${m[1]}${q}`]
+  }
+  return []
 }
 
 

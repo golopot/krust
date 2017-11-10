@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import store from '../store'
 
 import {formToObj} from '../utils'
+import pJump from '../promisedNavigate'
 
 
 const Loading = () => <span>Loading...</span>
@@ -25,7 +26,9 @@ class StoryForm extends Component{
     ev.preventDefault()
     this.setState( {status: status.WAIT} )
     const form = formToObj(new FormData(ev.target))
-    const body = Object.assign(form, {})
+    const body = Object.assign(form, {
+      plate: this.props.match.params.plate,
+    })
 
     fetch('/api/create-story', {
       method: 'post',
@@ -33,22 +36,28 @@ class StoryForm extends Component{
       headers: {'content-type': 'application/json', 'X-CSRF-Prevention': 1},
       body: JSON.stringify(body),
     })
-      .then( x => x.json() )
-      .then( () => {
-        this.setState( {status: status.IDLE} )
+      .then( r => r.json() )
+      .then( r => {
+        if(r.error){
+          this.setState({error: true})
+        }
+        else{
+          pJump(`/p/${r.id}`, this.props.history)
+        }
       })
-    // .then( () => window.location = window.location )
       .catch( e => console.error(e) )
   }
 
   render(){
+    const {plate} = this.props.match.params
     return (
       <div>
-        <div>Submit Post</div>
+        <div>Submit to {plate}</div>
         <form id='create-post-form' onSubmit={this.onSubmit}>
           <div><input name='title' placeholder='Title' /></div>
           <div><textarea name='content' placeholder='Content' /></div>
           <button type='submit'>Submit</button>
+          {this.state.error && <span>Error</span>}
         </form>
       </div>
     )

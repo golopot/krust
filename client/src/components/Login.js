@@ -89,14 +89,14 @@ class SignupForm extends Component{
         <div>Create a new account</div>
         <input name='newUsername' type='text' maxLength='20' placeholder="username" />
         <input name='newPassword' type='password'
-          autoComplete='new-password' placeholder="password"
+          autoComplete='off' placeholder="password"
         />
         <input name='verify-password' type='password'
-          autoComplete='new-password' placeholder="verify password "
+          autoComplete='off' placeholder="verify password "
         />
         <input name='email' type='email' placeholder="email " />
         <button>Submit</button>
-        {created && <span>Account is created.</span>}
+        {created && <span>Account is created succssfully.</span>}
         {erroring && <span>Error</span>}
       </form>
 

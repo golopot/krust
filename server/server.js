@@ -40,19 +40,18 @@ app.use('/css', express.static(__dirname + '/../dist/css'))
 
 app.use('/api', api )
 
-app.get('/debug', (req,res,next) => {
+app.get('/test', (req,res,next) => {
   res.sent = true
   res.send('ooo')
   next()
 })
 
-app.get('/test', (req,res) => {
-  console.log('oooooooo')
-  res.json('test')
-})
-
 
 app.get('/', (req, res) => {
+  res.render('react.njk')
+})
+
+app.get('/plate/:plate', (req, res) => {
   res.render('react.njk')
 })
 
@@ -69,7 +68,7 @@ app.get('/p/:id', (req, res, next) => {
 })
 
 
-app.get('/submit', (req, res) => {
+app.get('/submit/:plate', (req, res) => {
   res.render('react.njk')
 })
 
@@ -82,6 +81,10 @@ app.get('/login', (req, res) => {
 })
 
 app.get('/plates', (req, res) => {
+  res.render('react.njk')
+})
+
+app.get('/u/:user', (req, res) => {
   res.render('react.njk')
 })
 

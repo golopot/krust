@@ -112,11 +112,11 @@ class StoryProper extends Component{
           </span>
         </div>
 
-        <div className='content'>
-          { editing && <EditStoryForm story={s}/>}
-          { s.deleted ? 'This post is deleted' : s.content }
-        </div>
-
+        { editing && <EditStoryForm story={s}/>}
+        { s.deleted
+          ? <div class='content'>[deleted]</div>
+          : <div class='content' dangerouslySetInnerHTML={({__html: s.content_marked})} />
+        }
       </section>
     )
 
@@ -128,12 +128,15 @@ class StoryProper extends Component{
 const Story = ({story}) => (
   <div>
     <StoryProper story={story} />
-    <div>Comments</div>
     <CommentForm storyId={story.id} commentId={null}/>
     <section id='comment-section'>
       {(story.comments||[]).map( c =>
         <Comment storyId={story.id} comment={c}  key={c.id} />
       )}
+
+      {!story.comments &&
+        <div>No comments yet.</div>
+      }
     </section>
   </div>
 )

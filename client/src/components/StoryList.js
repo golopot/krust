@@ -33,13 +33,11 @@ const StoryList = ({stories, nextPage}) => (
   </div>
 )
 
-const Container = (Wrapped) => () => {
-  const {stories, nextPage} = store.resources['/api/stories']
-  return <Wrapped stories={stories} nextPage={nextPage}/>
+const StoryListContainer = ({plate, query}) => {
+  query = query || ''
+  const path = `/api/plate/${plate}${query}`
+  const {stories, nextPage} = store.resources[path]
+  return <StoryList stories={stories} nextPage={nextPage} />
 }
 
-const resources = [
-  '/api/stories'
-]
-
-export default Container(StoryList)
+export {StoryListContainer}

@@ -2,9 +2,9 @@ const Comment = require('../models/Comment')
 const Story = require('../models/Story')
 const Vote = require('../models/Vote')
 
-const voteController = (req, res, next) => {
+const castVote = (req, res, next) => {
   const b = req.body
-  let vote = new Vote({
+  const vote = new Vote({
     username: req.username,
     direction: b.direction,
     target: b.target,
@@ -42,8 +42,10 @@ const voteController = (req, res, next) => {
       }
       else{
         if(doc.direction != vote.direction){
-          vote._id = doc._id
-          return vote.save()
+          return Vote.collection.updateOne(
+            {_id: doc._id},
+            {$set: {direction: vote.direction}}
+          )
         }
       }
     })
@@ -51,11 +53,28 @@ const voteController = (req, res, next) => {
       return Vote.updateVoteCounts(vote.target, vote.target_type)
     })
     .then( r => {
-      res.json(r)
+      res.json({
+        direction: vote.direction,
+        votes: r.votes,
+      })
     })
     .catch(next)
 }
 
+const getUserVotes = (req, res, next) => {
+  Vote.collection.find({username: req.username}, {
+    direction: 1,
+    target: 1,
+    target_type: 1,
+  })
+  .toArray()
+  .then( docs => {
+    res.json({userVotes: docs, username: req.username})
+  })
+  .catch(next)
+}
+
 module.exports = {
-  voteController
+  castVote,
+  getUserVotes,
 }
