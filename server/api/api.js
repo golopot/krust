@@ -5,7 +5,8 @@ const bodyParser = require('body-parser')
 const Story = require('../models/Story')
 
 const {castVote, getUserVotes} = require('./vote')
-const {createStory, getStory, getStories, editStory, deleteStory} = require('./story')
+const {createStory, getStory, getStories, editStory, deleteStory,
+  getFrontPageStories} = require('./story')
 const {createPlate, getPlates, getPlate} = require('./plate')
 const {createComment} = require('./comment')
 const {getUserProfile, getUser} = require('./user')
@@ -56,8 +57,8 @@ router.get('/', (req,res) => {
 })
 
 router.get('/stories', getStories)
+router.get('/front-page-stories', getFrontPageStories)
 router.get('/plate', getPlates)
-
 
 router.get('/user/:user', getUser)
 router.get('/profile', auth, getUserProfile)

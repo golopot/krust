@@ -1,5 +1,5 @@
 import Preact, {Component} from 'preact'
-import { withRouter } from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import {formToObj} from '../utils'
 import {StoryListContainer} from './StoryList'
 import Plink from './Plink'
@@ -10,8 +10,8 @@ class VoteFilter extends Component{
 		const {match, history} = this.props
 		ev.stopPropagation()
 		if(ev.key !== 'Enter') return
-		const votes = ev.target.value
-		const uri = `/plate/${match.params.plate}?votes=${votes}`
+		const score = ev.target.value
+		const to = `/plate/${match.params.plate}?score=${score}`
 		promisedNavigate(to, history)
 	}
 
@@ -35,9 +35,9 @@ class SortBy extends Component{
 		return (
 			<span class='filter-tabs'>
 				<Plink to={`/plate/${plateName}`}>Newest</Plink>
-				<Plink to={`/plate/${plateName}?score=${20}`}>Filter</Plink>
 				<Plink to={`/plate/${plateName}?t=week`}>Week</Plink>
 				<Plink to={`/plate/${plateName}?t=month`}>Month</Plink>
+				<Plink to={`/plate/${plateName}?score=${20}`}>Filter</Plink>
 			</span>
 		)
 	}

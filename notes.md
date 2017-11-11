@@ -21,9 +21,10 @@
 * make plates a menu
 * moderation history
 * precache link on mouse hover
+* write all things in chinese
 
 ## Index
-* subscriptions
+* feed
 * all
 * plates
 

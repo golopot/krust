@@ -13,6 +13,7 @@ const schema = new mongoose.Schema(M.translate({
   content: M.string().required(),
   content_marked: M.string().required(),
   comments: [M.number()],
+  tags: [M.string()],
   date_submit: M.date().required(),
   date_edit: M.date(),
   deleted: M.boolean().required(),

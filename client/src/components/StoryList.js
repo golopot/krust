@@ -6,11 +6,13 @@ import Plink from './Plink'
 const urlFromId = (id) => (
   '/p/' + id
 )
+import {Tagline} from './Tag'
 
 const StoryItem = ({story}) => (
   <div className='story-item'>
     <div className='up'>
       <Plink class='title' to={urlFromId(story.id)}>{story.title}</Plink>
+      <Tagline tags={story.tags} plate={story.plate} />
     </div>
     <div className='middle'>
       <span className='votes'>{story.votes} points </span>
@@ -25,8 +27,8 @@ const StoryList = ({stories, nextPage}) => (
     { stories.map( story => <StoryItem story={story}/>) }
     { stories === null && <span>There is no story here.</span> }
     <div className='page-nav'>
-      { nextPage ?
-        <a href={`/?after=${nextPage}`} className='next'>next</a>
+      { nextPage
+        ? <a href={`/?after=${nextPage}`} className='next'>next</a>
         : <span>end of list</span>
       }
     </div>
@@ -40,4 +42,4 @@ const StoryListContainer = ({plate, query}) => {
   return <StoryList stories={stories} nextPage={nextPage} />
 }
 
-export {StoryListContainer}
+export {StoryListContainer, StoryList}

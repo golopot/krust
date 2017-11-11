@@ -1,5 +1,4 @@
 import pathToResources from './pathToResources'
-import store from './store'
 
 export default (to, history) => {
 	const resources = pathToResources(to).map(

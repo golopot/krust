@@ -25,9 +25,13 @@ class StoryForm extends Component{
   onSubmit(ev){
     ev.preventDefault()
     this.setState( {status: status.WAIT} )
+    const taglineParse = (tagline) => {
+      return tagline.split(' ')
+    }
     const form = formToObj(new FormData(ev.target))
     const body = Object.assign(form, {
       plate: this.props.match.params.plate,
+      tags: taglineParse(form.tags)
     })
 
     fetch('/api/create-story', {
@@ -56,6 +60,7 @@ class StoryForm extends Component{
         <form id='create-post-form' onSubmit={this.onSubmit}>
           <div><input name='title' placeholder='Title' /></div>
           <div><textarea name='content' placeholder='Content' /></div>
+          <div><input name='tags' placeholder='Tags' /></div>
           <button type='submit'>Submit</button>
           {this.state.error && <span>Error</span>}
         </form>

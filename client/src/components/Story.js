@@ -1,11 +1,11 @@
-import Preact from 'preact'
-import {Component} from 'preact'
+import Preact, {Component} from 'preact'
 import {Link} from 'react-router-dom'
 import store from '../store'
 
 import {formToObj} from '../utils'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
+import {Tag} from './Tag'
 
 const onClickDelete = (ev) => {
   const storyId = ev.target.dataset.storyId
@@ -99,7 +99,6 @@ class StoryProper extends Component{
 
         <div className='byline'>
           <span className='votes'>{s.votes} </span>
-          <span>points by </span>
           <span className='author'>{s.username} </span>
           <span className='date'>{s.date_submit} </span>
           <span>| </span>
@@ -110,6 +109,9 @@ class StoryProper extends Component{
             <span>downvote </span>
             <span>flag </span>
           </span>
+        </div>
+        <div class='tagline'>
+          {s.tags.map( x => <Tag tag={x} plate={s.plate} /> )}
         </div>
 
         { editing && <EditStoryForm story={s}/>}

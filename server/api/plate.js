@@ -39,6 +39,10 @@ const getPlate = (req, res, next) => {
     deleted: false,
   }
 
+  if(q.tag){
+    selector['tags'] = q.tag
+  }
+
   if(q.t === 'week' || q.t === 'month'){
     sort = {votes: -1}
 
@@ -67,6 +71,8 @@ const getPlate = (req, res, next) => {
     id: 1,
     title: 1,
     votes: 1,
+    tags: 1,
+    plate: 1,
     username: 1,
   })
     .limit(q.size|| 20)
@@ -78,10 +84,10 @@ const getPlate = (req, res, next) => {
       }
       const nextPage = docs.length > 20 && docs[20].id
       res.json({
-  stories: docs,
-  nextPage,
-  plateName: name,
-  })
+        stories: docs,
+        nextPage,
+        plateName: name,
+      })
     })
     .catch(next)
 

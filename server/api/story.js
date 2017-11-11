@@ -21,6 +21,7 @@ const createStory = (req, res, next) => {
     plate: b.plate,
     votes: 0,
     username: req.username,
+    tags: b.tags,
     deleted: false,
     date_submit: new Date(),
   })
@@ -39,6 +40,24 @@ const createStory = (req, res, next) => {
 
 const getStories = (req, res, next) => {
   throw new Error('This is not implemented.')
+}
+
+const getFrontPageStories = (req, res, next) => {
+  Story.collection.find({}, {
+    date_submit: 1,
+    id: 1,
+    title: 1,
+    votes: 1,
+    tags: 1,
+    plate: 1,
+    username: 1,
+  })
+  .sort({date_submit: -1})
+  .toArray()
+  .then( docs => {
+    res.json({stories: docs})
+  })
+  .catch(next)
 }
 
 /*
@@ -80,6 +99,7 @@ const getStory = (req, res, next) => {
             date_submit: dateToStr(x.date_submit),
             username: x.username,
             content_marked: x.content_marked,
+            tags: x.tags,
             comments: treeBuild(comments),
             deleted: x.deleted,
             plate: x.plate,
@@ -119,4 +139,5 @@ module.exports = {
   getStories,
   editStory,
   deleteStory,
+  getFrontPageStories,
 }

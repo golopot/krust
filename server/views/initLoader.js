@@ -12,7 +12,7 @@
 	  const q = query || ''
 		let m
 	  if(path === '/'){
-
+	    return [`/api/plate`, `/api/front-page-stories`]
 		}
 		if(m = /^\/p\/([\w]*)/.exec(path)){
 			return [`/api/story/${m[1]}${q}`]
@@ -22,6 +22,7 @@
 	  }
 	  return []
 	}
+
 
 	const alwaysResources = () => {
 		if(document.cookie.search('authtoken=') !== -1){
