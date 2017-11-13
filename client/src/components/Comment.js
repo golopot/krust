@@ -3,6 +3,7 @@ import {Component} from 'preact'
 import {Link} from 'react-router-dom'
 
 import CommentForm from './CommentForm'
+import {getUsername} from '../utils'
 
 
 class Comment extends Component{
@@ -90,11 +91,16 @@ class Comment extends Component{
           <div class='byline'>
             <span class={`vote ${voteClassName}`}>{votes + temporaryVote} </span>
             <span class='username'>{c.username} </span>
-            <span class={`upvote ${voteClassName}`}>推 </span>
-            <span class='reply'>回 </span>
-            <span class='edit'>編 </span>
-            <span class='delete'>刪 </span>
-            <span class='collapse'>[-]</span>
+            {
+              getUsername() &&
+              <span class='actions'>
+                <a class={`upvote ${voteClassName}`}>推</a>
+                <a class='reply'>回</a>
+                <a class='edit'>編</a>
+                <a class='delete'>刪</a>
+              </span>
+            }
+          <span class='collapse'>[-]</span>
           </div>
           <div
             class='content'

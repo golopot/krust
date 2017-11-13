@@ -2,6 +2,7 @@ import Preact, {Component} from 'preact'
 import store from '../store'
 import {StoryList} from './StoryList'
 import Plink from './Plink'
+import SetDocumentTitle from './SetDocumentTitle'
 
 export default class Index extends Component{
 
@@ -11,6 +12,7 @@ export default class Index extends Component{
     const {stories} = store.resources['/api/front-page-stories']
 		return (
 			<div class='homepage'>
+				<SetDocumentTitle title='Krust' />
 				<div class='hot-plates'>
 					<div>熱門社群</div>
 					<div class='list'>

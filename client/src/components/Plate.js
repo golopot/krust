@@ -5,6 +5,7 @@ import {StoryListContainer} from './StoryList'
 import Plink from './Plink'
 import promisedNavigate from '../promisedNavigate'
 import {Tag} from './Tag'
+import SetDocumentTitle from './SetDocumentTitle'
 
 class VoteFilter extends Component{
 	onKeyDown(ev){
@@ -57,7 +58,7 @@ class FilterDescription extends Component{
 			tag &&
 			<div>
 				<span>Tag: </span>
-				<Tag tag={tag} plate={plate} /> 
+				<Tag tag={tag} plate={plate} />
 			</div>
 		)
 	}
@@ -81,6 +82,7 @@ class Plate extends Component{
 		const query = this.props.location.search
 		return (
 			<section class='plate'>
+				<SetDocumentTitle title={plate} />
 				<div class='top-bar'>
 					<Tabs plateName={plate} />
 					<Plink class='new-post' to={`/submit/${plate}`}>發文</Plink>

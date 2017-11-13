@@ -9,21 +9,20 @@
 * subscribe plate
 * edit history
 * plate settting: text only...
-* tags
-* top of week or month
 * search filter: flagged deleted user before
 * keyboard navigation
 * chat
 * customizable stylesheets for each plate
 * crosspost
 * reputation
-* make votes more conspicuous
+* make score more conspicuous
 * make plates a menu
 * moderation history
 * precache link on mouse hover
 * write all things in chinese
 * tag editing
 * fix post upvote
+* preview before submit
 
 ## Index
 * feed

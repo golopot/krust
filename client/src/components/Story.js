@@ -8,6 +8,7 @@ import CommentForm from './CommentForm'
 import {Tag} from './Tag'
 import {EventEmitter} from 'fbemitter'
 
+import SetDocumentTitle from './SetDocumentTitle'
 
 const onClickDelete = (ev) => {
   const storyId = ev.target.dataset.storyId
@@ -61,7 +62,7 @@ class Score extends Component{
     super(props)
     const {story, score} = props
     this.state.score = score
-    this.state.vote = this.initialVote = store.userVotes.get(`story${story}`)
+    this.state.vote = this.initialVote = store.userVotes.get(`story${story}`) || 0
   }
 
   toggleVote(){
@@ -124,12 +125,11 @@ class StoryProper extends Component{
           <Score story={s.id} score={s.votes} eventEmitter={this.eventEmitter} />
           <span class='author'>{s.username} </span>
           <span class='date'>{s.date_submit} </span>
-          <span>| </span>
           <span class='actions'>
-            <span class='upvote' onClick={()=>this.eventEmitter.emit('toggleVote')}>推 </span>
-            <span class='edit' onClick={this.onClickEdit}>編 </span>
-            <span class='delete' onClick={this.onClickDelete} data-story-id={s.id}>刪 </span>
-            <span>噓 </span>
+            <span class='upvote' onClick={()=>this.eventEmitter.emit('toggleVote')}>推</span>
+            <span class='edit' onClick={this.onClickEdit}>編</span>
+            <span class='delete' onClick={this.onClickDelete} data-story-id={s.id}>刪</span>
+            <span>噓</span>
             <span>標</span>
           </span>
         </div>
@@ -152,6 +152,7 @@ class StoryProper extends Component{
 
 const Story = ({story}) => (
   <div>
+    <SetDocumentTitle title={story.title}/>
     <StoryProper story={story} />
     <CommentForm storyId={story.id} commentId={null}/>
     <section id='comment-section'>

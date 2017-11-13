@@ -1,6 +1,6 @@
-const dq = x => document.querySelector(x)
+export const dq = x => document.querySelector(x)
 
-const formToObj = form => {
+export const formToObj = form => {
   var obj = {}
   for(let key of form.keys()){
     obj[key] = form.get(key)
@@ -9,14 +9,13 @@ const formToObj = form => {
 }
 
 
-const getStoryId = () => {
+export const getStoryId = () => {
   return document.querySelector('#data-story-id').innerHTML
 }
 
 
 
-export{
-  dq,
-  formToObj,
-  getStoryId,
+export const getUsername = () => {
+  const m = /authtoken=(.+?)\./.exec(document.cookie)
+  return m ? m[1] : false
 }

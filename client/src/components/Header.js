@@ -3,11 +3,7 @@ import pathToResources from '../pathToResources'
 import store from '../store'
 import Plink from './Plink'
 import Cookies from 'js-cookie'
-
-const getUsername = () => {
-  const m = /authtoken=(.+?)\./.exec(document.cookie)
-  return m ? m[1] : false
-}
+import {getUsername} from '../utils'
 
 
 class Menu extends Component{
@@ -54,7 +50,7 @@ class Menu extends Component{
         <div class={'details' + openess} onClick={onClickDetails}>
           {
             getUsername()
-            ? <div><a onClick={this.onClickLogout}>登出</a><div>設定</div></div>
+            ? <div><a onClick={this.onClickLogout}>登出</a></div>
             : <div><Plink to='/login'>登入</Plink></div>
           }
           <div><Plink to='/plates'>全部看板</Plink></div>
