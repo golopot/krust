@@ -7,7 +7,7 @@ import {
 import store from '../store'
 import Story from './Story'
 import StoryList from './StoryList'
-import StoryForm from './StoryForm'
+import {CreateStory} from './StoryForm'
 import Login from './Login'
 import Profile from './Profile'
 import PlateList from './PlateList'
@@ -26,7 +26,7 @@ const App = () => (
       <Route path="/p/:story" component={Story}/>
       <Route path="/plate/:plate" component={Plate}/>
       <Route path="/login" component={Login}/>
-      <Route path="/submit/:plate" component={StoryForm}/>
+      <Route path="/submit/:plate" component={CreateStory}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/plates" component={PlateList}/>
       <Route component={SideEffect} />

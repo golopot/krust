@@ -1,6 +1,8 @@
 import pathToResources from './pathToResources'
+import store from './store'
 
-export default (to, history) => {
+export default (to) => {
+	const history = store.history
 	const resources = pathToResources(to).map(
 		uri => fetch(uri)
 			.then( r => r.json() )
@@ -15,7 +17,7 @@ export default (to, history) => {
 			.catch(console.error)
 	)
 
-	Promise.all(resources)
+	return Promise.all(resources)
 	.then( () => {
 		history.push(to)
 	})

@@ -7,8 +7,8 @@ import Comment from './Comment'
 import CommentForm from './CommentForm'
 import {Tag} from './Tag'
 import {EventEmitter} from 'fbemitter'
-
 import SetDocumentTitle from './SetDocumentTitle'
+import {EditStoryForm} from './StoryForm'
 
 const onClickDelete = (ev) => {
   const storyId = ev.target.dataset.storyId
@@ -26,35 +26,6 @@ const onClickDelete = (ev) => {
     .catch( e => console.error(e))
 }
 
-const onSubmitEdit = (ev) => {
-  ev.preventDefault()
-  const storyId = ev.target.dataset.storyId
-  const form = formToObj(new FormData(ev.target))
-  const body = Object.assign(form, {
-    storyId,
-  })
-
-  fetch('/api/edit-story', {
-    method: 'post',
-    credentials: 'include',
-    headers: {'content-type': 'application/json', 'X-CSRF-Prevention': 1},
-    body: JSON.stringify(body),
-  })
-    .then( r => r.json())
-    .then( r => console.log(r))
-  // .then( () => window.location = window.location )
-    .catch( e => console.error(e))
-
-}
-
-const EditStoryForm = ({story}) => (
-  <form className='edit-story-form' onSubmit={onSubmitEdit} data-story-id={story.id}>
-    <textarea name='content' />
-    <div>
-      <button>save</button>
-    </div>
-  </form>
-)
 
 class Score extends Component{
 
@@ -137,7 +108,8 @@ class StoryProper extends Component{
           {s.tags.map( x => <Tag tag={x} plate={s.plate} /> )}
         </div>
 
-        { editing && <EditStoryForm story={s}/>}
+        { editing && <EditStoryForm
+          storyId={s.id} title={s.title} content={s.content} tags={s.tags}/>}
         { s.deleted
           ? <div class='content'>[deleted]</div>
           : <div class='content' dangerouslySetInnerHTML={({__html: s.content_marked})} />

@@ -34,8 +34,28 @@ const createStory = (req, res, next) => {
     .then( () => Story.fancyInsert(story) )
     .then( id => res.json({id, ok: true}))
     .catch( e => next(e) )
-
 }
+
+
+const editStory = (req, res, next) => {
+
+  // TODO: check user is author or moderator or admin
+  // TODO: check content valid
+  const b = req.body
+  Story.collection.updateOne({id: ~~b.storyId}, {$set:
+    { title: b.title,
+      content: b.content,
+      content_marked: xss(converter.makeHtml(b.content)),
+      tags: b.tags,
+    }
+  })
+    .then( doc => {
+      if( doc.matchedCount === 0 ) throw 'Story is not found.'
+      res.json({id: ~~b.storyId})
+    })
+    .catch(next)
+}
+
 
 
 const getStories = (req, res, next) => {
@@ -98,6 +118,7 @@ const getStory = (req, res, next) => {
             votes: x.votes,
             date_submit: dateToStr(x.date_submit),
             username: x.username,
+            content: x.content,
             content_marked: x.content_marked,
             tags: x.tags,
             comments: treeBuild(comments),
@@ -105,20 +126,6 @@ const getStory = (req, res, next) => {
             plate: x.plate,
           }})
         })
-    })
-    .catch(next)
-}
-
-
-const editStory = (req, res, next) => {
-
-  // TODO: check user is author or moderator or admin
-  // TODO: check content valid
-  const b = req.body
-  Story.collection.updateOne({id: ~~b.storyId}, {$set:{content: b.content}} )
-    .then( doc => {
-      if( doc.matchedCount === 0 ) throw 'Story is not found.'
-      res.json(doc)
     })
     .catch(next)
 }
