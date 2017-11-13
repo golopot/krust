@@ -22,6 +22,8 @@
 * moderation history
 * precache link on mouse hover
 * write all things in chinese
+* tag editing
+* fix post upvote
 
 ## Index
 * feed

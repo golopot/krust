@@ -43,7 +43,7 @@ const getStories = (req, res, next) => {
 }
 
 const getFrontPageStories = (req, res, next) => {
-  Story.collection.find({}, {
+  Story.collection.find({deleted: false}, {
     date_submit: 1,
     id: 1,
     title: 1,

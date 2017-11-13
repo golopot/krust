@@ -12,6 +12,9 @@ const {createComment} = require('./comment')
 const {getUserProfile, getUser} = require('./user')
 
 const {ClientError, dateToStr} = require('../utils')
+const {createSubscription, getSubscriptions, deleteSubscription}
+  = require('./plateSubscription')
+
 const {
   auth,
   passwordSignIn,
@@ -77,6 +80,9 @@ router.post('/delete-story', auth, deleteStory)
 router.post('/edit-story', auth, editStory)
 router.post('/vote', auth, castVote)
 
+router.post('/delete-subscription', auth, deleteSubscription)
+router.post('/create-subscription', auth, createSubscription)
+router.get('/get-subscriptions', auth, getSubscriptions)
 
 
 router.use( (err,req,res,next) => {

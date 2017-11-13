@@ -52,7 +52,7 @@ class PlateForm extends Component{
     const {error} = this.state
     return (
       <div>
-        <div>Create a new plate</div>
+        <div>創造新板</div>
         <form id='create-plate-form' onSubmit={this.onSubmit}>
           <div><input name='name' placeholder='name' /></div>
           <div><input name='title' placeholder='title' /></div>

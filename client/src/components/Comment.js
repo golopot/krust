@@ -90,10 +90,10 @@ class Comment extends Component{
           <div class='byline'>
             <span class={`vote ${voteClassName}`}>{votes + temporaryVote} </span>
             <span class='username'>{c.username} </span>
-            <span class={`upvote ${voteClassName}`}>upvote </span>
-            <span class='reply'>reply </span>
-            <span class='edit'>edit </span>
-            <span class='delete'>delete </span>
+            <span class={`upvote ${voteClassName}`}>推 </span>
+            <span class='reply'>回 </span>
+            <span class='edit'>編 </span>
+            <span class='delete'>刪 </span>
             <span class='collapse'>[-]</span>
           </div>
           <div

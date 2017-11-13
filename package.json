@@ -21,6 +21,7 @@
     "cookie-parser": "^1.4.3",
     "debug": "^2.6.9",
     "express": "^4.16.2",
+    "fbemitter": "^2.1.1",
     "gulp": "^3.9.1",
     "gulp-less": "^3.3.2",
     "js-cookie": "^2.1.4",

@@ -36,7 +36,7 @@
 			user-select: none;
 			margin: 0px;
 			padding: 0px 1px;
-			font-size: 13px;
+			font-size: 12px;
 			color:#999;
 		}
 		>.collapse:hover{
@@ -50,30 +50,22 @@
   }
 }
 
-.comment-reply-form{
+.comment-form{
+	> div{
+		display: flex;
+	}
+
 	textarea{
 		width: 400px;
 		height: 114px;
+		flex-shrink: 1;
 	}
 
-	.form-submit{
+	.bottom{
 		padding: 6px 0px;
 	}
 
 }
-
-
-.reply-story-form{
-	textarea{
-		width: 400px;
-		height: 114px;
-	}
-
-	.form-submit{
-		padding: 6px 0px;
-	}
-}
-
 
 
 .comment-tree{

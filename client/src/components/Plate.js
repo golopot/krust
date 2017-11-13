@@ -4,6 +4,7 @@ import {formToObj} from '../utils'
 import {StoryListContainer} from './StoryList'
 import Plink from './Plink'
 import promisedNavigate from '../promisedNavigate'
+import {Tag} from './Tag'
 
 class VoteFilter extends Component{
 	onKeyDown(ev){
@@ -21,28 +22,48 @@ class VoteFilter extends Component{
 				<input
 					class='filter-input'
 					onKeyDown={this.onKeyDown.bind(this)}
-					placeholder='filters'
+					placeholder='分數大於?'
 				/>
 			</span>
 		)
 	}
 }
 
-class SortBy extends Component{
+const VoteFilterWithRouter = withRouter(VoteFilter)
+
+class Tabs extends Component{
 
 	render(){
 		const {plateName} = this.props
 		return (
 			<span class='filter-tabs'>
-				<Plink to={`/plate/${plateName}`}>Newest</Plink>
-				<Plink to={`/plate/${plateName}?t=week`}>Week</Plink>
-				<Plink to={`/plate/${plateName}?t=month`}>Month</Plink>
-				<Plink to={`/plate/${plateName}?score=${20}`}>Filter</Plink>
+				<Plink to={`/plate/${plateName}`}>最新</Plink>
+				<Plink to={`/plate/${plateName}?t=week`}>本周</Plink>
+				<Plink to={`/plate/${plateName}?t=month`}>本月</Plink>
+				<a onClick={()=>this.setState({filterInput: true})}>過濾</a>
+				{ this.state.filterInput && <VoteFilterWithRouter />}
 			</span>
 		)
 	}
 }
 
+class FilterDescription extends Component{
+
+	render(){
+		const {plate} = this.props
+		const m = /tag=([\w_-]+)/.exec(this.props.location.search)
+		const tag = m ? m[1] : null
+		return(
+			tag &&
+			<div>
+				<span>Tag: </span>
+				<Tag tag={tag} plate={plate} /> 
+			</div>
+		)
+	}
+}
+
+const FilterDescriptionWithRouter = withRouter(FilterDescription)
 
 class Plate extends Component{
 	constructor(){
@@ -61,10 +82,10 @@ class Plate extends Component{
 		return (
 			<section class='plate'>
 				<div class='top-bar'>
-					<SortBy plateName={plate} />
-					<VoteFilter history={history} match={match}/>
-					<Plink class='new-post' to={`/submit/${plate}`}>New Post</Plink>
+					<Tabs plateName={plate} />
+					<Plink class='new-post' to={`/submit/${plate}`}>發文</Plink>
 				</div>
+				<FilterDescriptionWithRouter plate={plate}/>
 				<StoryListContainer plate={plate} query={query} />
 			</section>
 		)

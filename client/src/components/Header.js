@@ -2,8 +2,15 @@ import Preact, {Component} from 'preact'
 import pathToResources from '../pathToResources'
 import store from '../store'
 import Plink from './Plink'
+import Cookies from 'js-cookie'
 
-class PlateDropdown extends Component{
+const getUsername = () => {
+  const m = /authtoken=(.+?)\./.exec(document.cookie)
+  return m ? m[1] : false
+}
+
+
+class Menu extends Component{
   constructor(){
     super()
     this.state.open = false
@@ -19,6 +26,11 @@ class PlateDropdown extends Component{
     this.setState({open: false})
   }
 
+  onClickLogout(){
+    Cookies.remove('authtoken', {path: '/'})
+    window.location.href = '/'
+  }
+
   componentDidMount(){
 
   }
@@ -27,7 +39,7 @@ class PlateDropdown extends Component{
 
     const onTouchSummary = () => this.setState({open: !this.state.open})
     const onClickDetails = (ev) => {
-      !ev.target.classList.contains('details') && this.setState({open: false})
+      ev.target.tagName === 'A' && this.setState({open: false})
     }
 
     const openess = this.state.open ? ' open' : ''
@@ -37,16 +49,15 @@ class PlateDropdown extends Component{
         onMouseLeave={this.onMouseLeave}
       >
         <div class='dropdown-summary' onTouchStart={onTouchSummary}>
-          Menu
+          選單
         </div>
         <div class={'details' + openess} onClick={onClickDetails}>
-          <div>關於</div>
-          <div>設定</div>
-          <div>登出</div>
-          <Plink to='/plates'>全部看板</Plink>
-          <div>Cats</div>
-          <div>Loris</div>
-          <div>Tarsier</div>
+          {
+            getUsername()
+            ? <div><a onClick={this.onClickLogout}>登出</a><div>設定</div></div>
+            : <div><Plink to='/login'>登入</Plink></div>
+          }
+          <div><Plink to='/plates'>全部看板</Plink></div>
         </div>
       </div>
     )
@@ -73,16 +84,14 @@ const Header = ({location}) => {
     <header>
       <div id='header-left'>
         <div id='logo'>
-          {plateName
-            ? <Plink to={`/plate/${plateName}`}>{plateName}</Plink>
-            : <a href="/">Potato</a>
-          }
-
+          <Plink to="/">Krust</Plink>
+          {plateName && <span class='separator'>/</span>}
+          {plateName && <Plink to={`/plate/${plateName}`}>{plateName}</Plink>}
         </div>
       </div>
 
       <div id='header-right'>
-        <PlateDropdown />
+        <Menu />
       </div>
     </header>
   )

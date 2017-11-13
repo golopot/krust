@@ -43,11 +43,16 @@ a:hover{
 
 #create-post-form{
 
+	>div{
+		display: flex;
+	}
+
 	input, textarea{
 		width: 540px;
 		margin: 6px 0px;
 		font-size: 16px;
 		font-family: Arial,sans-serif ;
+		flex-shrink: 1;
 	}
 
 	input{
@@ -56,24 +61,6 @@ a:hover{
 
 	textarea{
 		height: 300px;
-	}
-}
-
-
-#create-plate-form{
-	input, textarea{
-		width: 540px;
-		margin: 6px 0px;
-		font-size: 16px;
-		font-family: Arial,sans-serif;
-	}
-
-	input{
-		height: 28px;
-	}
-
-	textarea{
-		height: 200px;
 	}
 }
 
@@ -98,3 +85,4 @@ a:hover{
 @import 'content.less';
 @import 'tag.less';
 @import 'homepage.less';
+@import 'plate.less';

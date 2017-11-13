@@ -6,6 +6,8 @@ import {formToObj} from '../utils'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
 import {Tag} from './Tag'
+import {EventEmitter} from 'fbemitter'
+
 
 const onClickDelete = (ev) => {
   const storyId = ev.target.dataset.storyId
@@ -53,24 +55,45 @@ const EditStoryForm = ({story}) => (
   </form>
 )
 
-const onClickUpvote = function(){
+class Score extends Component{
 
-  const target = this.props.story.id
+  constructor(props){
+    super(props)
+    const {story, score} = props
+    this.state.score = score
+    this.state.vote = this.initialVote = store.userVotes.get(`story${story}`)
+  }
 
-  fetch('/api/vote', {
-    method: 'post',
-    credentials: 'include',
-    headers: {'content-type': 'application/json', 'X-CSRF-Prevention': 1},
-    body: JSON.stringify({
-      direction: 1,
-      target,
-      target_type: 'story',
-    }),
-  })
-    .then( r => r.json())
-    .then( r => console.log(r))
-    .catch( e => console.error(e))
+  toggleVote(){
+    const {story, score} = this.props
+    this.setState({vote: this.state.vote === 0 ? 1 : 0})
+    const tempVote = this.state.vote - this.initialVote
+    this.setState({score: this.props.score + tempVote})
 
+    fetch('/api/vote', {
+      method: 'post',
+      credentials: 'include',
+      headers: {'content-type': 'application/json', 'X-CSRF-Prevention': 1},
+      body: JSON.stringify({
+        direction: this.state.vote,
+        target: story,
+        target_type: 'story',
+      }),
+    })
+      .then( r => r.json())
+      .then( r => console.log(r))
+      .catch( e => console.error(e))
+  }
+
+  componentDidMount(){
+    this.props.eventEmitter.addListener('toggleVote', this.toggleVote.bind(this))
+  }
+
+  render(){
+    const {score} = this.props
+    const cName = this.state.score === 1 ? 'like' : 'unvoted'
+    return <span class={ 'score ' + cName }>{this.state.score} </span>
+  }
 }
 
 
@@ -83,8 +106,8 @@ class StoryProper extends Component{
   constructor(props){
     super(props)
     this.onClickDelete = onClickDelete.bind(this)
-    this.onClickUpvote = onClickUpvote.bind(this)
     this.onClickEdit = onClickEdit.bind(this)
+    this.eventEmitter = new EventEmitter()
   }
 
 
@@ -92,22 +115,22 @@ class StoryProper extends Component{
     const {story: s} = this.props
     const editing = this.state.editing
     return (
-      <section className='story'>
-        <div className='title'>
+      <section class='story'>
+        <div class='title'>
           <div>{s.title}</div>
         </div>
 
-        <div className='byline'>
-          <span className='votes'>{s.votes} </span>
-          <span className='author'>{s.username} </span>
-          <span className='date'>{s.date_submit} </span>
+        <div class='byline'>
+          <Score story={s.id} score={s.votes} eventEmitter={this.eventEmitter} />
+          <span class='author'>{s.username} </span>
+          <span class='date'>{s.date_submit} </span>
           <span>| </span>
-          <span className='actions'>
-            <span className='upvote' onClick={this.onClickUpvote}>upvote </span>
-            <span className='edit' onClick={this.onClickEdit}>edit </span>
-            <span className='delete' onClick={this.onClickDelete} data-story-id={s.id}>delete </span>
-            <span>downvote </span>
-            <span>flag </span>
+          <span class='actions'>
+            <span class='upvote' onClick={()=>this.eventEmitter.emit('toggleVote')}>推 </span>
+            <span class='edit' onClick={this.onClickEdit}>編 </span>
+            <span class='delete' onClick={this.onClickDelete} data-story-id={s.id}>刪 </span>
+            <span>噓 </span>
+            <span>標</span>
           </span>
         </div>
         <div class='tagline'>

@@ -1,6 +1,7 @@
 import Preact, {Component} from 'preact'
 import store from '../store'
 import {StoryList} from './StoryList'
+import Plink from './Plink'
 
 export default class Index extends Component{
 
@@ -12,7 +13,9 @@ export default class Index extends Component{
 			<div class='homepage'>
 				<div class='hot-plates'>
 					<div>熱門社群</div>
-					<div>{plates.map(x => <div>{x.name}</div>)}</div>
+					<div class='list'>
+						{plates.map(x => <div class='item'><Plink to={`/plate/${x.name}`}>{x.name}</Plink></div>)}
+					</div>
 				</div>
 				<div class='hot-stories'>
           <div>熱門貼文</div>

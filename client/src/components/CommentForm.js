@@ -51,9 +51,9 @@ class CommentForm extends Preact.Component{
     if(!Cookies.get('authtoken'))
       return null
     return (
-      <form className='reply-story-form' onSubmit={this.onSubmit}>
-          <textarea name='content' />
-          <div class='form-submit'>
+      <form class='comment-form' onSubmit={this.onSubmit}>
+          <div><textarea name='content' /></div>
+          <div class='bottom'>
             <button disabled={this.state.status === status.WAIT} >save</button>
             { this.state.status === status.WAIT && <Loading /> }
           </div>

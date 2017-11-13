@@ -38,14 +38,14 @@ class LoginForm extends Component{
     const {loading, erroring} = this.state
     return (
       <form id='login-form' onSubmit={this.onSubmitLogin}>
-        <div>Log in</div>
+        <div>登入</div>
         <input name='username' type='text' autoComplete='username'
           maxLength='20' placeholder="username"
         />
         <input name='password' type='password' autoComplete='current-password'
           placeholder="password"
         />
-        <button disabled={loading}>Submit</button>
+        <button disabled={loading}>登入</button>
         { loading && <span>loading...</span>}
         { erroring && <span style='color:red'>Error</span>}
       </form>
@@ -86,7 +86,7 @@ class SignupForm extends Component{
     const {created, erroring} = this.state
     return (
       <form id='signup-form' onSubmit={this.onSubmit}>
-        <div>Create a new account</div>
+        <div>註冊新帳號</div>
         <input name='newUsername' type='text' maxLength='20' placeholder="username" />
         <input name='newPassword' type='password'
           autoComplete='off' placeholder="password"
@@ -95,7 +95,7 @@ class SignupForm extends Component{
           autoComplete='off' placeholder="verify password "
         />
         <input name='email' type='email' placeholder="email " />
-        <button>Submit</button>
+        <button>註冊</button>
         {created && <span>Account is created succssfully.</span>}
         {erroring && <span>Error</span>}
       </form>

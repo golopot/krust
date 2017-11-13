@@ -8,54 +8,32 @@
 }
 
 
-.story-item{
-	padding: 8px 0px;
-
-	> .up{
-		display: flex;
-		align-items: center;
-		font-size: 17px;
-		color: #000;
-
-		.title{
-			padding-right: 6px;
-		}
-	}
-
-	> .middle{
-		font-size: 13px;
-		color: #717171;
-
-		> a{
-			color: #4070d0;
-		}
-
-	}
-}
-
-.story-item.cursor-here{
-	background-color: #eee;
-}
-
-
-.plate{
-	> .top-bar{
-		padding: 14px 0px 6px;
-
-		> .filter-tabs > a{
-			padding-right: 6px;
-		}
-
-		> .new-post{
-			float: right;
-		}
-	}
-}
-
 .plate-list{
 	.plate-item{
 		display: flex;
 		padding: 4px 0px;
 		font-size: 16px;
+	}
+}
+
+#create-plate-form{
+	> div{
+		display: flex;
+	}
+
+	input, textarea{
+		width: 540px;
+		margin: 6px 0px;
+		font-size: 16px;
+		font-family: Arial,sans-serif;
+		flex-shrink: 1;
+	}
+
+	input{
+		height: 28px;
+	}
+
+	textarea{
+		height: 200px;
 	}
 }

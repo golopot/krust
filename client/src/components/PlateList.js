@@ -40,7 +40,7 @@ export default class PlateList extends Component{
 			<div class='plate-list-page'>
 				<div class='create-plate'>
 					<span class='span-button' onClick={() => this.setState({creating: true})}>
-						Create a new plate
+						創造新板
 					</span>
 				</div>
 				{this.state.creating && <PlateForm />}
