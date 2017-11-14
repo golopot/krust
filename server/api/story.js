@@ -1,7 +1,9 @@
 const Story = require('../models/Story')
 const User = require('../models/User')
 const Comment = require('../models/Comment')
-const {dateToStr} = require('../utils')
+const StoryTag = require('../models/StoryTag')
+const Tag = require('../models/Tag')
+const {dateToStr, patchError} = require('../utils')
 const showdown = require('showdown')
 const converter = new showdown.Converter({
   tables: true,
@@ -32,8 +34,23 @@ const createStory = (req, res, next) => {
       story.user_id = doc.id
     })
     .then( () => Story.fancyInsert(story) )
-    .then( id => res.json({id, ok: true}))
-    .catch( e => next(e) )
+    .then( id => {
+      const ps = b.tags.map(tag => new StoryTag({
+          story: id,
+          ctag: `${b.plate}|${tag}`
+        })
+        .save()
+        .then( () => {
+          console.log(`${b.plate}|${tag}`)
+          return Tag.countTag(`${b.plate}|${tag}`)
+        })
+      )
+      return Promise.all(ps)
+        .then( () => {
+          res.json({id, ok: true})
+        })
+    })
+    .catch(e => next(patchError(e)))
 }
 
 

@@ -11,6 +11,8 @@ import {CreateStory} from './StoryForm'
 import Login from './Login'
 import Profile from './Profile'
 import PlateList from './PlateList'
+import PlateTags from './PlateTags'
+import PlateRules from './PlateRules'
 import Plate from './Plate'
 import User from './User'
 import Index from './Index'
@@ -24,7 +26,9 @@ const App = () => (
       <Route exact path="/" component={Index}/>
       <Route path="/u/:user" component={User}/>
       <Route path="/p/:story" component={Story}/>
-      <Route path="/plate/:plate" component={Plate}/>
+      <Route exact path="/plate/:plate" component={Plate}/>
+      <Route path="/plate/:plate/tags" component={PlateTags}/>
+      <Route path="/plate/:plate/rules" component={PlateRules}/>
       <Route path="/login" component={Login}/>
       <Route path="/submit/:plate" component={CreateStory}/>
       <Route path="/profile" component={Profile}/>

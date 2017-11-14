@@ -75,12 +75,12 @@ class StoryForm extends Component{
       ...form,
       plate: this.props.plate,
       tags: taglineParse(form.tags),
-      ... (storyId && {storyId})
+      ... ({storyId})
     }
 
     if(this.props.mode === 'edit'){
       this.fetchEditStory(body)
-    }else{
+    }else if(this.props.mode === 'create'){
       this.fetchCreateStory(body)
     }
 
@@ -88,12 +88,12 @@ class StoryForm extends Component{
 
   render(){
     const {title, content, tags} = this.props
-    const serializedTags = tags.join(' ')
+    const serializedTags = tags && tags.join(' ')
     return (
       <form id='story-form' onSubmit={this.onSubmit}>
-        <div><input name='title' placeholder='Title' value={title||null}/></div>
-        <div><textarea name='content' placeholder='Content' value={content||null}/></div>
-        <div><input name='tags' placeholder='Tags' value={serializedTags||null}/></div>
+        <div><input name='title' placeholder='Title' defaultValue={title||null}/></div>
+        <div><textarea name='content' placeholder='Content' defaultValue={content||null}/></div>
+        <div><input name='tags' placeholder='Tags' defaultValue={serializedTags||null}/></div>
         <button type='submit'>Submit</button>
         {this.state.error && <span>Error</span>}
       </form>
@@ -105,7 +105,7 @@ class StoryForm extends Component{
 
 
 export const CreateStoryForm = ({plate}) => (
-  <StoryForm plate={plate} mode='create' />
+  <StoryForm mode='create' plate={plate} />
 )
 
 CreateStoryForm.propTypes = {

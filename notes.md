@@ -23,6 +23,8 @@
 * tag editing
 * fix post upvote
 * preview before submit
+* access control for editing, deleting
+* use exponential backoff in fancyInsert
 
 ## Index
 * feed

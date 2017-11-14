@@ -1,7 +1,7 @@
 const config = require('../config')
 const debug = require('debug')('up')
 const mongoose = require('mongoose')
-mongoose.connect(config.mongourl, { useMongoClient: true })
+mongoose.connect(config.mongourl, {useMongoClient: true })
 mongoose.Promise = global.Promise
 const api = require('./api/api')
 const express = require('express')
@@ -40,21 +40,18 @@ app.use('/css', express.static(__dirname + '/../dist/css'))
 
 app.use('/api', api )
 
-app.get('/test', (req,res,next) => {
-  res.sent = true
+app.get('/test', (req, res, next) => {
   res.send('ooo')
   next()
 })
 
 
-app.get('/', (req, res) => {
-  res.render('react.njk')
-})
+const sendEmptyBody = (req, res) => res.render('react.njk')
 
-app.get('/plate/:plate', (req, res) => {
-  res.render('react.njk')
-})
-
+app.get('/', sendEmptyBody)
+app.get('/plate/:plate', sendEmptyBody)
+app.get('/plate/:plate/rules', sendEmptyBody)
+app.get('/plate/:plate/tags', sendEmptyBody)
 
 app.get('/p/:id', (req, res, next) => {
 
@@ -68,26 +65,11 @@ app.get('/p/:id', (req, res, next) => {
 })
 
 
-app.get('/submit/:plate', (req, res) => {
-  res.render('react.njk')
-})
-
-app.get('/profile', (req, res) => {
-  res.render('react.njk')
-})
-
-app.get('/login', (req, res) => {
-  res.render('react.njk')
-})
-
-app.get('/plates', (req, res) => {
-  res.render('react.njk')
-})
-
-app.get('/u/:user', (req, res) => {
-  res.render('react.njk')
-})
-
+app.get('/submit/:plate', sendEmptyBody)
+app.get('/profile', sendEmptyBody)
+app.get('/login', sendEmptyBody)
+app.get('/plates', sendEmptyBody)
+app.get('/u/:user', sendEmptyBody)
 app.get('/oauth-redirect-back-google', (req,res) => {
   res.send(`
 		<html><script>

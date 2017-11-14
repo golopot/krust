@@ -8,6 +8,11 @@ function cerr(reason, status){
   return new ClientError(reason, status)
 }
 
+function patchError(err){
+  const ne = new Error()
+  err.stack += '\n' + (ne.stack.split('\n')[2] || '').replace(/^    at/, '    from')
+  return err
+}
 
 
 const dateToStr = d => `${d.getUTCFullYear()}/${d.getUTCMonth()+1}/${d.getUTCDate()}`
@@ -15,5 +20,6 @@ const dateToStr = d => `${d.getUTCFullYear()}/${d.getUTCMonth()+1}/${d.getUTCDat
 module.exports = {
   cerr,
   ClientError,
+  patchError,
   dateToStr,
 }

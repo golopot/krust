@@ -10,6 +10,7 @@ const {createStory, getStory, getStories, editStory, deleteStory,
 const {createPlate, getPlates, getPlate} = require('./plate')
 const {createComment} = require('./comment')
 const {getUserProfile, getUser} = require('./user')
+const {getTags} = require('./tag')
 
 const {ClientError, dateToStr} = require('../utils')
 const {createSubscription, getSubscriptions, deleteSubscription}
@@ -69,6 +70,7 @@ router.get('/user-votes', auth, getUserVotes)
 
 router.get('/story/:id', getStory)
 router.get('/plate/:name', getPlate)
+router.get('/tags/:plate', getTags)
 
 router.post('/signup', signUp)
 router.post('/login', passwordSignIn)

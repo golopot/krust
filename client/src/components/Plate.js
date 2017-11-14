@@ -85,7 +85,11 @@ class Plate extends Component{
 				<SetDocumentTitle title={plate} />
 				<div class='top-bar'>
 					<Tabs plateName={plate} />
-					<Plink class='new-post' to={`/submit/${plate}`}>發文</Plink>
+					<span class='right'>
+						<Plink to={`/plate/${plate}/tags`}>標籤</Plink>
+						<Plink to={`/plate/${plate}/rules`}>規則</Plink>
+						<Plink class='new-post' to={`/submit/${plate}`}>發文</Plink>
+					</span>
 				</div>
 				<FilterDescriptionWithRouter plate={plate}/>
 				<StoryListContainer plate={plate} query={query} />
