@@ -1,5 +1,4 @@
 import Preact from 'preact'
-import {Link} from 'react-router-dom'
 import store from '../store'
 import dateStringify from '../dateStringify'
 import Plink from './Plink'
@@ -7,39 +6,54 @@ const urlFromId = (id) => (
   '/p/' + id
 )
 import {Tagline} from './Tag'
+import PropTypes from 'prop-types'
 
 const StoryItem = ({story}) => (
-  <div className='story-item'>
-    <div className='up'>
+  <div class='story-item'>
+    <div class='up'>
       <Plink class='title' to={urlFromId(story.id)}>{story.title}</Plink>
       <Tagline tags={story.tags} plate={story.plate} />
     </div>
-    <div className='middle'>
-      <span className='votes'>{story.votes} points </span>
-      <span className='date-submit'>{dateStringify(story.date_submit)} </span>
-      <span className='authors'>{story.username} </span>
+    <div class='middle'>
+      <span class='votes'>{story.votes} points </span>
+      <span class='date-submit'>{dateStringify(story.date_submit)} </span>
+      <span class='authors'>{story.username} </span>
     </div>
   </div>
 )
 
+StoryItem.propTypes = {
+  story: PropTypes.object.isRequired,
+}
+
 const StoryList = ({stories, nextPage}) => (
-  <div className='story-list'>
-    { stories.map( story => <StoryItem story={story}/>) }
+  <div class='story-list'>
+    { stories.map( story => <StoryItem story={story} key={story.id} />) }
     { stories === null && <span>There is no story here.</span> }
-    <div className='page-nav'>
+    <div class='page-nav'>
       { nextPage
-        ? <a href={`/?after=${nextPage}`} className='next'>next</a>
+        ? <a href={`/?after=${nextPage}`} class='next'>next</a>
         : <span>end of list</span>
       }
     </div>
   </div>
 )
 
+StoryList.propTypes = {
+  stories: PropTypes.object.isRequired,
+  nextPage: PropTypes.number,
+}
+
 const StoryListContainer = ({plate, query}) => {
   query = query || ''
   const path = `/api/plate/${plate}${query}`
   const {stories, nextPage} = store.resources[path]
   return <StoryList stories={stories} nextPage={nextPage} />
+}
+
+StoryListContainer.propTypes = {
+  plate: PropTypes.string.isRequired,
+  query: PropTypes.string,
 }
 
 export {StoryListContainer, StoryList}

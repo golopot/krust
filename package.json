@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "cd client; webpack -w & gulp watch; kill %%",
     "up": "cd server; nodemon --ext js,njk server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "eslintc": "cd client; eslint **",
+    "eslints": "cd server; eslint **" 
   },
   "author": "",
   "license": "MIT",

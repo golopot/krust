@@ -1,14 +1,7 @@
-import Preact from 'preact'
-import {Component} from 'preact'
-import {Link} from 'react-router-dom'
-import store from '../store'
-
+import Preact, {Component} from 'preact'
 import {formToObj} from '../utils'
 import pJump from '../promisedNavigate'
-import PropTypes from 'prop-types';
-
-
-const Loading = () => <span>Loading...</span>
+import PropTypes from 'prop-types'
 
 const status = {
   IDLE: 0,
@@ -101,7 +94,14 @@ class StoryForm extends Component{
   }
 }
 
-
+StoryForm.propTypes = {
+  title: PropTypes.string,
+  content: PropTypes.string,
+  storyId: PropTypes.string,
+  plate: PropTypes.string,
+  tags: PropTypes.array,
+  mode: PropTypes.string,
+}
 
 
 export const CreateStoryForm = ({plate}) => (
@@ -125,9 +125,13 @@ EditStoryForm.propTypes = {
   tags: PropTypes.array.isRequired,
 }
 
-export const CreateStory = ({match, history}) => (
+export const CreateStory = ({match}) => (
   <div>
     <div>Submit to {match.params.plate}</div>
     <CreateStoryForm plate={match.params.plate} />
   </div>
 )
+
+CreateStory.propTypes = {
+  match: PropTypes.object.isRequired,
+}

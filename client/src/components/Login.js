@@ -1,6 +1,4 @@
-import Preact from 'preact'
-import {Component} from 'preact'
-import {Link} from 'react-router-dom'
+import Preact, {Component} from 'preact'
 import {formToObj} from '../utils'
 import Cookies from 'js-cookie'
 import SetDocumentTitle from './SetDocumentTitle'
@@ -112,7 +110,7 @@ class Login extends Component{
 
   render(){
     return (
-      <section className='login-section'>
+      <section class='login-section'>
         <SetDocumentTitle title='登入 Krust' />
         <LoginForm />
         <hr />

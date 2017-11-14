@@ -1,4 +1,5 @@
 import Preact, {Component} from 'preact'
+import PropTypes from 'prop-types'
 import pathToResources from '../pathToResources'
 import store from '../store'
 import Plink from './Plink'
@@ -50,8 +51,8 @@ class Menu extends Component{
         <div class={'details' + openess} onClick={onClickDetails}>
           {
             getUsername()
-            ? <div><a onClick={this.onClickLogout}>登出</a></div>
-            : <div><Plink to='/login'>登入</Plink></div>
+              ? <div><a onClick={this.onClickLogout}>登出</a></div>
+              : <div><Plink to='/login'>登入</Plink></div>
           }
           <div><Plink to='/plates'>全部看板</Plink></div>
         </div>
@@ -91,5 +92,9 @@ const Header = ({location}) => {
       </div>
     </header>
   )
+}
+
+Header.propTypes = {
+  location: PropTypes.object.isRequired,
 }
 export default Header

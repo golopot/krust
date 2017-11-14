@@ -1,4 +1,4 @@
-var webpack = require('webpack')
+// var webpack = require('webpack')
 
 module.exports = {
   entry: './src/entry.js',
@@ -23,7 +23,7 @@ module.exports = {
           presets: ['env'],
           plugins: [
             ['transform-react-jsx', {'pragma': 'Preact.h'}],
-            ["transform-object-rest-spread"]
+            ['transform-object-rest-spread']
           ]
         }
       }

@@ -1,7 +1,5 @@
-import Preact from 'preact'
-import {Component} from 'preact'
-import {Link} from 'react-router-dom'
-
+import Preact, {Component} from 'preact'
+import PropTypes from 'prop-types'
 import Cookies from 'js-cookie'
 
 class Profile extends Component{
@@ -18,7 +16,7 @@ class Profile extends Component{
   render(){
     const p = this.props.profile || {}
     return (
-      <div className='profile'>
+      <div class='profile'>
 
         <div>Profile and settings</div>
 
@@ -32,13 +30,16 @@ class Profile extends Component{
         </div>
 
         <div>
-          <button className='logout' onClick={this.onClickLogout}>logout</button>
+          <button class='logout' onClick={this.onClickLogout}>logout</button>
         </div>
 
       </div>
     )
   }
 
+}
+Profile.propTypes = {
+  profile: PropTypes.object.isRequired,
 }
 
 class Container extends Component{

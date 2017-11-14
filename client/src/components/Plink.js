@@ -5,36 +5,42 @@
 */
 
 import { withRouter } from 'react-router-dom'
-import Preact from 'preact'
-import {Component} from 'preact'
+import Preact, {Component} from 'preact'
 import PropTypes from 'prop-types'
 import promisedNavigate from '../promisedNavigate'
-import store from '../store'
 
 class Plink extends Component{
 
-	// TODO deal with furious clicking
-	// TODO indicate "connecting" after clicking
-	// TODO What happens when link href is current href?
+  // TODO deal with furious clicking
+  // TODO indicate "connecting" after clicking
+  // TODO What happens when link href is current href?
 
-	onClick(ev){
-		const {to, history} = this.props
-		ev.preventDefault()
-		promisedNavigate(to, history)
-	}
+  onClick(ev){
+    const {to, history} = this.props
+    ev.preventDefault()
+    promisedNavigate(to, history)
+  }
 
 
-	render(){
-		const {to, history, match, location, ...props} = this.props
-		return <a
-			{...props}
-			href={this.props.to}
-			onClick={this.onClick.bind(this)}
-		>
-			{this.props.children}
-		</a>
-	}
+  render(){
+    // eslint-disable-next-line no-unused-vars
+    const {to, history, match, location, ...props} = this.props
+    return <a
+      {...props}
+      href={to}
+      onClick={this.onClick.bind(this)}
+    >
+      {this.props.children}
+    </a>
+  }
 }
 
+Plink.propTypes = {
+  to: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  children: PropTypes.object,
+}
 
 export default withRouter(Plink)

@@ -1,10 +1,8 @@
-import Preact from 'preact'
-import {Component} from 'preact'
-import {Link} from 'react-router-dom'
-
+import Preact, {Component} from 'preact'
 import CommentForm from './CommentForm'
 import {getUsername} from '../utils'
-
+import pt from 'prop-types'
+import store from '../store'
 
 class Comment extends Component{
 
@@ -20,7 +18,7 @@ class Comment extends Component{
   }
 
   onClick(ev){
-    const has = (className) => ev.target.classList.contains(className)
+    const has = (name) => ev.target.classList.contains(name)
 
     if(has('reply')){
       this.setState({replying: !this.state.replying})
@@ -83,24 +81,24 @@ class Comment extends Component{
       '0': 'unvoted',
       '1': 'like'
     }
-    const voteClassName = voteMap[voteDirection]
+    const voteclass = voteMap[voteDirection]
 
     return(
       <div class='comment-tree'>
         <div class='comment' onClick={this.onClick} data-cid={c.id}>
           <div class='byline'>
-            <span class={`vote ${voteClassName}`}>{votes + temporaryVote} </span>
+            <span class={`vote ${voteclass}`}>{votes + temporaryVote} </span>
             <span class='username'>{c.username} </span>
             {
               getUsername() &&
               <span class='actions'>
-                <a class={`upvote ${voteClassName}`}>推</a>
+                <a class={`upvote ${voteclass}`}>推</a>
                 <a class='reply'>回</a>
                 <a class='edit'>編</a>
                 <a class='delete'>刪</a>
               </span>
             }
-          <span class='collapse'>[-]</span>
+            <span class='collapse'>[-]</span>
           </div>
           <div
             class='content'
@@ -110,7 +108,7 @@ class Comment extends Component{
             <CommentForm storyId={storyId} commentId={c.id} />
           }
         </div>
-        <div className='children'>
+        <div class='children'>
           {c.children.map( d =>
             <Comment storyId={storyId} comment={d} key={d.id} />
           )}
@@ -120,5 +118,9 @@ class Comment extends Component{
 
 }
 
+Comment.propTypes = {
+  comment: pt.object.isRequired,
+  storyId: pt.number.isRequired,
+}
 
 export default Comment

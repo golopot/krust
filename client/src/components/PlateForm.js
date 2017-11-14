@@ -1,12 +1,5 @@
-import Preact from 'preact'
-import {Component} from 'preact'
-import {Link} from 'react-router-dom'
-import store from '../store'
-
+import Preact, {Component} from 'preact'
 import {formToObj} from '../utils'
-
-
-const Loading = () => <span>Loading...</span>
 
 const status = {
   IDLE: 0,

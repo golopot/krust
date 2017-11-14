@@ -1,14 +1,14 @@
 import Preact, {Component} from 'preact'
-import {Link} from 'react-router-dom'
+import PropTypes from 'prop-types'
 import store from '../store'
 
-import {formToObj} from '../utils'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
 import {Tag} from './Tag'
 import {EventEmitter} from 'fbemitter'
 import SetDocumentTitle from './SetDocumentTitle'
 import {EditStoryForm} from './StoryForm'
+
 
 const onClickDelete = (ev) => {
   const storyId = ev.target.dataset.storyId
@@ -40,7 +40,7 @@ class Score extends Component{
     const {story, score} = this.props
     this.setState({vote: this.state.vote === 0 ? 1 : 0})
     const tempVote = this.state.vote - this.initialVote
-    this.setState({score: this.props.score + tempVote})
+    this.setState({score: score + tempVote})
 
     fetch('/api/vote', {
       method: 'post',
@@ -62,14 +62,19 @@ class Score extends Component{
   }
 
   render(){
-    const {score} = this.props
     const cName = this.state.score === 1 ? 'like' : 'unvoted'
     return <span class={ 'score ' + cName }>{this.state.score} </span>
   }
 }
 
+Score.propTypes = {
+  story: PropTypes.object.isRequired,
+  score: PropTypes.number.isRequired,
+  eventEmitter: PropTypes.instanceOf(EventEmitter).isRequired,
+}
 
-const onClickEdit = function(ev){
+
+const onClickEdit = function(){
   this.setState({editing: true})
 }
 
@@ -105,7 +110,7 @@ class StoryProper extends Component{
           </span>
         </div>
         <div class='tagline'>
-          {s.tags.map( x => <Tag tag={x} plate={s.plate} /> )}
+          {s.tags.map( x => <Tag tag={x} plate={s.plate} key={x} /> )}
         </div>
 
         { editing && <EditStoryForm
@@ -121,6 +126,9 @@ class StoryProper extends Component{
   }
 }
 
+StoryProper.propTypes = {
+  story: PropTypes.object.isRequired,
+}
 
 const Story = ({story}) => (
   <div>
@@ -139,7 +147,9 @@ const Story = ({story}) => (
   </div>
 )
 
-
+Story.propTypes = {
+  story: PropTypes.object.isRequired,
+}
 
 const withStory = (Wrapped) => class extends Preact.Component{
   render(){

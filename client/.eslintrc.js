@@ -1,6 +1,7 @@
 module.exports = {
     "env": {
         "browser": true,
+        "node": true,
         "es6": true
     },
     "extends": ["eslint:recommended", "plugin:react/recommended"],
@@ -29,7 +30,11 @@ module.exports = {
             "never"
         ],
         'no-console' : 0,
-        'no-unused-vars': ['error',{'varsIgnorePattern': '^h$'}],
+        'no-cond-assign' : 0,
+        'no-unused-vars': [
+          'error',
+          {'varsIgnorePattern': '^Preact$|_'},
+        ],
         'react/react-in-jsx-scope': 0,
 
     },

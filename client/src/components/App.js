@@ -4,9 +4,8 @@ import {
   Route,
 } from 'react-router-dom'
 
-import store from '../store'
+import '../store'
 import Story from './Story'
-import StoryList from './StoryList'
 import {CreateStory} from './StoryForm'
 import Login from './Login'
 import Profile from './Profile'

@@ -1,8 +1,5 @@
 import Preact from 'preact'
-import {Link} from 'react-router-dom'
-import store from '../store'
 import {formToObj} from '../utils'
-import {} from '../utils'
 import Cookies from 'js-cookie'
 
 
@@ -52,11 +49,11 @@ class CommentForm extends Preact.Component{
       return null
     return (
       <form class='comment-form' onSubmit={this.onSubmit}>
-          <div><textarea name='content' /></div>
-          <div class='bottom'>
-            <button disabled={this.state.status === status.WAIT} >save</button>
-            { this.state.status === status.WAIT && <Loading /> }
-          </div>
+        <div><textarea name='content' /></div>
+        <div class='bottom'>
+          <button disabled={this.state.status === status.WAIT} >save</button>
+          { this.state.status === status.WAIT && <Loading /> }
+        </div>
       </form>
     )
   }
