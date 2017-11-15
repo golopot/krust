@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
 const M = require('./utils/Moi')
-const StoryTag = require('./StoryTag')
-
 
 const schema = new mongoose.Schema(M.translate({
 	cname: M.string().required(),
@@ -24,6 +22,12 @@ schema.statics.countTag = function(ctag){
 	})
 }
 
+schema.statics.updateAllTagCounts = function(){
+	return StoryTag.collection.aggregate([{$group: {_id: '$ctag'}}])
+		.toArray()
+		.then(docs => Promise.all( docs.map(doc => schema.statics.countTag(doc._id)) ) )
+}
+
 const Tag = mongoose.model('Tag', schema)
 
 Tag.collection.createIndex({cname: 1}, {unique: 1})
@@ -32,3 +36,4 @@ Tag.collection.createIndex({plate: 1})
 
 
 module.exports = Tag
+const StoryTag = require('./StoryTag')

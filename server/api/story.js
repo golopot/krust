@@ -34,22 +34,8 @@ const createStory = (req, res, next) => {
       story.user_id = doc.id
     })
     .then( () => Story.fancyInsert(story) )
-    .then( id => {
-      const ps = b.tags.map(tag => new StoryTag({
-          story: id,
-          ctag: `${b.plate}|${tag}`
-        })
-        .save()
-        .then( () => {
-          console.log(`${b.plate}|${tag}`)
-          return Tag.countTag(`${b.plate}|${tag}`)
-        })
-      )
-      return Promise.all(ps)
-        .then( () => {
-          res.json({id, ok: true})
-        })
-    })
+    .then( id => StoryTag.refreshTagsForStory(id) )
+    .then( () => res.json({id}))
     .catch(e => next(patchError(e)))
 }
 
@@ -59,17 +45,18 @@ const editStory = (req, res, next) => {
   // TODO: check user is author or moderator or admin
   // TODO: check content valid
   const b = req.body
-  Story.collection.updateOne({id: ~~b.storyId}, {$set:
+  Story.collection.findOneAndUpdate({id: ~~b.storyId}, {$set:
     { title: b.title,
       content: b.content,
       content_marked: xss(converter.makeHtml(b.content)),
       tags: b.tags,
     }
   })
-    .then( doc => {
-      if( doc.matchedCount === 0 ) throw 'Story is not found.'
-      res.json({id: ~~b.storyId})
+    .then( ({value: doc}) => {
+      if( doc === null ) throw 'Story is not found.'
+      return StoryTag.refreshTagsForStory(doc.id)
     })
+    .then( () => res.json({id: ~~b.storyId}))
     .catch(next)
 }
 
@@ -149,11 +136,12 @@ const getStory = (req, res, next) => {
 
 const deleteStory = (req, res, next) => {
   const b = req.body
-  Story.collection.updateOne({id: ~~b.id}, {$set:{deleted: true}} )
-    .then( doc => {
-      if(doc.matchedCount === 0) throw 'Story is not found.'
-      res.json(doc)
+  Story.collection.findOneAndUpdate({id: ~~b.id}, {$set: {deleted: true}} )
+    .then( ({value}) => {
+      if( !value ) throw 'Story is not found.'
+      return StoryTag.collection.remove({story: value.id})
     })
+    .then( r => res.json(r))
     .catch(next)
 }
 

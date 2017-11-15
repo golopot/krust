@@ -14,17 +14,17 @@ export default class Index extends Component{
       <div class='homepage'>
         <SetDocumentTitle title='Krust' />
         <div class='hot-plates'>
-          <div>熱門社群</div>
+          <div>社群</div>
           <div class='list'>
             {plates.map(x =>
-              <div class='item' key='x.name'>
+              <div class='item' key={x.name}>
                 <Plink to={`/plate/${x.name}`}>{x.name}</Plink>
               </div>
             )}
           </div>
         </div>
         <div class='hot-stories'>
-          <div>熱門貼文</div>
+          <div>貼文</div>
           <div><StoryList stories={stories} /></div>
         </div>
       </div>

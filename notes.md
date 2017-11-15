@@ -25,6 +25,9 @@
 * preview before submit
 * access control for editing, deleting
 * use exponential backoff in fancyInsert
+* plate subscription
+* favorite tags
+* show number of posts under a tag
 
 ## Index
 * feed
