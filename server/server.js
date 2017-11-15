@@ -1,5 +1,4 @@
 const config = require('../config')
-const debug = require('debug')('up')
 const mongoose = require('mongoose')
 mongoose.connect(config.mongourl, {useMongoClient: true })
 mongoose.Promise = global.Promise
@@ -11,7 +10,6 @@ nunjucks.configure('views', {express: app})
 const Story = require('./models/Story')
 const cookieParser = require('cookie-parser')
 const compression = require('compression')
-const {auth} = require('./api/auth')
 const {ClientError} = require('./utils')
 
 app.use(compression())

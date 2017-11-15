@@ -2,7 +2,6 @@ const Story = require('../models/Story')
 const User = require('../models/User')
 const Comment = require('../models/Comment')
 const StoryTag = require('../models/StoryTag')
-const Tag = require('../models/Tag')
 const {dateToStr, patchError} = require('../utils')
 const showdown = require('showdown')
 const converter = new showdown.Converter({
@@ -34,8 +33,9 @@ const createStory = (req, res, next) => {
       story.user_id = doc.id
     })
     .then( () => Story.fancyInsert(story) )
-    .then( id => StoryTag.refreshTagsForStory(id) )
-    .then( () => res.json({id}))
+    .then( id => StoryTag.refreshTagsForStory(id)
+      .then( () => res.json({id}))
+    )
     .catch(e => next(patchError(e)))
 }
 
@@ -63,6 +63,7 @@ const editStory = (req, res, next) => {
 
 
 const getStories = (req, res, next) => {
+  res
   throw new Error('This is not implemented.')
 }
 
@@ -76,12 +77,12 @@ const getFrontPageStories = (req, res, next) => {
     plate: 1,
     username: 1,
   })
-  .sort({date_submit: -1})
-  .toArray()
-  .then( docs => {
-    res.json({stories: docs})
-  })
-  .catch(next)
+    .sort({date_submit: -1})
+    .toArray()
+    .then( docs => {
+      res.json({stories: docs})
+    })
+    .catch(next)
 }
 
 /*

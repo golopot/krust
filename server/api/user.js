@@ -15,16 +15,16 @@ const getUserProfile = (req, res, next) => {
 const getUser = (req, res, next) => {
   const {username} = this.params
   User.collection.findOne({username})
-  .then( doc => {
-    if(doc === null) throw 'user not found'
-    else{
-      res.json({
-        username: doc.username,
-        date_created: Number(doc.date_created),
-        points: doc.points,
-      })
-    }
-  })
+    .then( doc => {
+      if(doc === null) throw 'user not found'
+      else{
+        res.json({
+          username: doc.username,
+          date_created: Number(doc.date_created),
+          points: doc.points,
+        })
+      }
+    })
 }
 
 module.exports = {

@@ -2,8 +2,6 @@ const express = require('express')
 const router = express.Router()
 const bodyParser = require('body-parser')
 
-const Story = require('../models/Story')
-
 const {castVote, getUserVotes} = require('./vote')
 const {createStory, getStory, getStories, editStory, deleteStory,
   getFrontPageStories} = require('./story')
@@ -12,7 +10,7 @@ const {createComment} = require('./comment')
 const {getUserProfile, getUser} = require('./user')
 const {getTags} = require('./tag')
 
-const {ClientError, dateToStr} = require('../utils')
+const {ClientError} = require('../utils')
 const {createSubscription, getSubscriptions, deleteSubscription}
   = require('./plateSubscription')
 
@@ -21,22 +19,6 @@ const {
   passwordSignIn,
   signUp,
 } = require('./auth')
-
-
-const ko = obj => {
-  for(var field in obj){
-    for(var op in obj[field]){
-      if(obj[field][op] === null){
-        delete obj[field][op]
-      }
-    }
-    if( Object.keys(obj[field]).length === 0 && obj.constructor === Object ){
-      delete obj[field]
-    }
-  }
-  return obj
-}
-
 
 router.use( bodyParser.json() )
 

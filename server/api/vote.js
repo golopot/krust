@@ -67,11 +67,11 @@ const getUserVotes = (req, res, next) => {
     target: 1,
     target_type: 1,
   })
-  .toArray()
-  .then( docs => {
-    res.json({userVotes: docs, username: req.username})
-  })
-  .catch(next)
+    .toArray()
+    .then( docs => {
+      res.json({userVotes: docs, username: req.username})
+    })
+    .catch(next)
 }
 
 module.exports = {

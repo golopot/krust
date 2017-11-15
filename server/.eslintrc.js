@@ -1,8 +1,9 @@
 module.exports = {
     "env": {
-        "browser": true,
         "commonjs": true,
-        "es6": true
+        "es6": true,
+        "browser": true,
+        'node': true,
     },
     "extends": "eslint:recommended",
     "rules": {
@@ -22,7 +23,8 @@ module.exports = {
             "error",
             "never"
         ],
-		'no-console' : 0,
-    'no-unused-vars': ["error", { "argsIgnorePattern": "^next$" }],
+    		'no-console': 0,
+        'no-unused-vars': ["error", { "argsIgnorePattern": "^next$|^_$" }],
+        'no-cond-assign': 0,
     }
 };

@@ -8,7 +8,6 @@ const schema = new mongoose.Schema(M.translate({
   username: M.string().required(),
   user_id: M.number().required(),
   plate: M.string().required(),
-  tags: [M.number()],
   votes: M.number(),
   content: M.string().required(),
   content_marked: M.string().required(),

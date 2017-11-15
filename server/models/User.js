@@ -1,8 +1,6 @@
 const mongoose = require('mongoose')
 const M = require('./utils/Moi')
 const fancyInsert = require('./utils/fancyInsert')
-const crypto = require('crypto')
-const bcrypt = require('bcrypt')
 
 const schema = new mongoose.Schema(M.translate({
   id: M.number().required(),

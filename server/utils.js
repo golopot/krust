@@ -10,7 +10,7 @@ function cerr(reason, status){
 
 function patchError(err){
   const ne = new Error()
-  err.stack += '\n' + (ne.stack.split('\n')[2] || '').replace(/^    at/, '    from')
+  err.stack += '\n' + (ne.stack.split('\n')[2] || '').replace(/^ {4}at/, '    from')
   return err
 }
 
