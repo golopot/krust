@@ -127,7 +127,7 @@ EditStoryForm.propTypes = {
 
 export const CreateStory = ({match}) => (
   <div>
-    <div>Submit to {match.params.plate}</div>
+    <div>發文 {match.params.plate}</div>
     <CreateStoryForm plate={match.params.plate} />
   </div>
 )

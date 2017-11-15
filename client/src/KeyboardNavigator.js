@@ -1,5 +1,10 @@
 import store from './store'
 
+const scrollAmount = 50
+const pageIsPost = () => {
+  return /^\/p\//.test(location.pathname)
+}
+
 class KeyboardNavigator{
   constructor(){
     this.cursor = null
@@ -22,6 +27,12 @@ class KeyboardNavigator{
     }
 
     if(key == 'ArrowUp'){
+      if(pageIsPost()){
+        ev.preventDefault()
+        window.scrollBy(0, -scrollAmount)
+        return
+      }
+
       if(this.cursor === null){
         this.cursor = 0
       }
@@ -34,6 +45,13 @@ class KeyboardNavigator{
 
     }
     if(key === 'ArrowDown'){
+
+      if(pageIsPost()){
+        ev.preventDefault()
+        window.scrollBy(0, scrollAmount)
+        return
+      }
+
       if(this.cursor === null){
         this.cursor = 0
       }

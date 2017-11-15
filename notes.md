@@ -28,6 +28,8 @@
 * plate subscription
 * favorite tags
 * show number of posts under a tag
+* A button to cancel tag, score filters
+* An button to go back from a post
 
 ## Index
 * feed

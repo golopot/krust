@@ -3,6 +3,7 @@ import store from '../store'
 import {StoryList} from './StoryList'
 import Plink from './Plink'
 import SetDocumentTitle from './SetDocumentTitle'
+import {PlateSidebar} from './Plate'
 
 export default class Index extends Component{
 
@@ -13,18 +14,8 @@ export default class Index extends Component{
     return (
       <div class='homepage'>
         <SetDocumentTitle title='Krust' />
-        <div class='hot-plates'>
-          <div>社群</div>
-          <div class='list'>
-            {plates.map(x =>
-              <div class='item' key={x.name}>
-                <Plink to={`/plate/${x.name}`}>{x.name}</Plink>
-              </div>
-            )}
-          </div>
-        </div>
-        <div class='hot-stories'>
-          <div>貼文</div>
+        <PlateSidebar />
+        <div class='plate'>
           <div><StoryList stories={stories} /></div>
         </div>
       </div>

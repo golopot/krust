@@ -26,12 +26,11 @@
 
 
   const alwaysResources = () => {
+    let list = ['/api/plate']
     if(document.cookie.search('authtoken=') !== -1){
-      return ['/api/user-votes']
+      list.push('/api/user-votes')
     }
-    else{
-      return []
-    }
+    return list
   }
 
 

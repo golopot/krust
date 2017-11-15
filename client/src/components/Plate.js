@@ -81,6 +81,21 @@ FilterDescription.propTypes = {
 
 const FilterDescriptionWithRouter = withRouter(FilterDescription)
 
+export const PlateSidebar = () => {
+  const plates = store.resources['/api/plate'].plates
+  return (
+    <section class='plates-sidebar'>
+      <div class='list'>
+        {plates.map(x =>
+          <div class='item' key={x.name}>
+            <Plink to={`/plate/${x.name}`}>{x.name}</Plink>
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
 class Plate extends Component{
   constructor(){
     super()
@@ -92,22 +107,26 @@ class Plate extends Component{
   }
 
   render(){
+    const plateList = store.resources['/api/plate'].plates
     const {match} = this.props
     const {plate} = match.params
     const query = this.props.location.search
     return (
-      <section class='plate'>
-        <SetDocumentTitle title={plate} />
-        <div class='top-bar'>
-          <Tabs plateName={plate} />
-          <span class='right'>
-            <Plink to={`/plate/${plate}/tags`}>標籤</Plink>
-            <Plink to={`/plate/${plate}/rules`}>規則</Plink>
-            <Plink class='new-post' to={`/submit/${plate}`}>發文</Plink>
-          </span>
-        </div>
-        <FilterDescriptionWithRouter plate={plate}/>
-        <StoryListContainer plate={plate} query={query} />
+      <section class='plate-page'>
+        <PlateSidebar />
+        <section class='plate'>
+          <SetDocumentTitle title={plate} />
+          <div class='top-bar'>
+            <Tabs plateName={plate} />
+            <span class='right'>
+              <Plink to={`/plate/${plate}/tags`}>標籤</Plink>
+              <Plink to={`/plate/${plate}/rules`}>規則</Plink>
+              <Plink class='new-post' to={`/submit/${plate}`}>發文</Plink>
+            </span>
+          </div>
+          <FilterDescriptionWithRouter plate={plate}/>
+          <StoryListContainer plate={plate} query={query} />
+        </section>
       </section>
     )
   }
