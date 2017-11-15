@@ -21,7 +21,9 @@ const onClickDelete = (ev) => {
     }),
   })
     .then( r => r.json())
-    .then( r => console.log(r))
+    .then( r => {
+      if(r.error) throw r.error
+    })
     .then( () => window.location = window.location )
     .catch( e => console.error(e))
 }

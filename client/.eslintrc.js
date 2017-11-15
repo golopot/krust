@@ -36,6 +36,7 @@ module.exports = {
           {'varsIgnorePattern': '^Preact$|_'},
         ],
         'react/react-in-jsx-scope': 0,
+        'react/no-unknown-property': [2, {ignore: ['class']}]
 
     },
 

@@ -6,6 +6,7 @@ import Plink from './Plink'
 import promisedNavigate from '../promisedNavigate'
 import {Tag} from './Tag'
 import SetDocumentTitle from './SetDocumentTitle'
+import store from '../store'
 
 class VoteFilter extends Component{
   onKeyDown(ev){
@@ -107,7 +108,6 @@ class Plate extends Component{
   }
 
   render(){
-    const plateList = store.resources['/api/plate'].plates
     const {match} = this.props
     const {plate} = match.params
     const query = this.props.location.search

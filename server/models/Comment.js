@@ -10,6 +10,7 @@ const schema = new mongoose.Schema(M.translate({
   content_marked: M.string().required(),
   votes: M.number(),
   parent: M.number(),
+  deleted: M.boolean().required(),
   date_submit: M.date().required(),
   date_edit: M.date(),
 }), { timestamps: true })

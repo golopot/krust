@@ -57,6 +57,21 @@ class Comment extends Component{
         .catch( e => console.error(e))
     }
 
+    if(has('delete')){
+      fetch('/api/delete-comment', {
+        method: 'post',
+        credentials: 'include',
+        headers: {'content-type': 'application/json', 'X-CSRF-Prevention': 1},
+        body: JSON.stringify({id: this.props.comment.id}),
+      })
+        .then( r => r.json() )
+        .then( r => {
+          if(r.error) throw r.error
+          window.location = window.location
+        })
+        .catch(console.error)
+    }
+
     if(has('collapse')){
 
       const button = ev.target
@@ -83,6 +98,8 @@ class Comment extends Component{
     }
     const voteclass = voteMap[voteDirection]
 
+    const contentMarked =  c.deleted ? '<p>[deleted]</p>' : c.content_marked
+
     return(
       <div class='comment-tree'>
         <div class='comment' onClick={this.onClick} data-cid={c.id}>
@@ -102,7 +119,7 @@ class Comment extends Component{
           </div>
           <div
             class='content'
-            dangerouslySetInnerHTML={ ({__html: c.content_marked}) }>
+            dangerouslySetInnerHTML={ ({__html: contentMarked}) }>
           </div>
           {this.state.replying &&
             <CommentForm storyId={storyId} commentId={c.id} />

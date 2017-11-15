@@ -16,6 +16,7 @@ const createComment = (req, res, next) => {
     story: b.storyId,
     parent: b.commentId || null,
     username: req.username,
+    deleted: false,
     date_submit: new Date(),
     votes: 0,
   })
@@ -32,7 +33,21 @@ const createComment = (req, res, next) => {
     .catch( e => next(e) )
 }
 
+const deleteComment = (req, res, next) => {
+  const {id} = req.body
+  if( typeof id !== 'number' ) throw 'id must be number'
+  Comment.collection.findOne({id}).then(doc => {
+    if(doc.username !== req.username || req.username !== 'sysop')
+      throw 'Unauthorized'
+  })
+    .then( () => Comment.collection.updateOne({id}, {$set: {deleted: true}}))
+    .then( r => res.json(r))
+    .catch(next)
+
+}
+
 
 module.exports = {
-  createComment
+  createComment,
+  deleteComment,
 }

@@ -6,7 +6,7 @@ const {castVote, getUserVotes} = require('./vote')
 const {createStory, getStory, getStories, editStory, deleteStory,
   getFrontPageStories} = require('./story')
 const {createPlate, getPlates, getPlate} = require('./plate')
-const {createComment} = require('./comment')
+const {createComment, deleteComment} = require('./comment')
 const {getUserProfile, getUser} = require('./user')
 const {getTags} = require('./tag')
 
@@ -61,6 +61,7 @@ router.post('/create-comment', auth, createComment)
 router.post('/create-story', auth, createStory)
 router.post('/create-plate', auth, createPlate)
 router.post('/delete-story', auth, deleteStory)
+router.post('/delete-comment', auth, deleteComment)
 router.post('/edit-story', auth, editStory)
 router.post('/vote', auth, castVote)
 

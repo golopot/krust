@@ -45,18 +45,24 @@ const editStory = (req, res, next) => {
   // TODO: check user is author or moderator or admin
   // TODO: check content valid
   const b = req.body
-  Story.collection.findOneAndUpdate({id: ~~b.storyId}, {$set:
+  const storyId = ~~b.storyId
+
+  Story.collection.findOne({id: storyId})
+    .then(doc => {
+      if(!doc) throw 'Story is not found.'
+      const authorized = doc.username === req.username
+      || req.username === 'sysop'
+      if(!authorized) throw 'Unauthorized.'
+    })
+    .then( () => Story.collection.updateOne({id: storyId}, {$set:
     { title: b.title,
       content: b.content,
       content_marked: xss(converter.makeHtml(b.content)),
       tags: b.tags,
     }
-  })
-    .then( ({value: doc}) => {
-      if( doc === null ) throw 'Story is not found.'
-      return StoryTag.refreshTagsForStory(doc.id)
-    })
-    .then( () => res.json({id: ~~b.storyId}))
+    }))
+    .then( () => StoryTag.refreshTagsForStory(storyId) )
+    .then( () => res.json({id: storyId}))
     .catch(next)
 }
 
@@ -137,10 +143,17 @@ const getStory = (req, res, next) => {
 
 const deleteStory = (req, res, next) => {
   const b = req.body
-  Story.collection.findOneAndUpdate({id: ~~b.id}, {$set: {deleted: true}} )
-    .then( ({value}) => {
-      if( !value ) throw 'Story is not found.'
-      return StoryTag.collection.remove({story: value.id})
+  Story.collection.findOne({id: ~~b.id})
+    .then(doc => {
+      if(!doc) throw 'Story is not found.'
+      const authorized = doc.username === req.username
+      || req.username === 'sysop'
+      if(!authorized) throw 'Unauthorized.'
+    })
+    .then( () => Story.collection.updateOne({id: ~~b.id}, {$set: {deleted: true}} ))
+    .then( result => {
+      if( result.matchedCount !== 1 ) throw 'Story is not found.'
+      return StoryTag.refreshTagsForStory(~~b.id)
     })
     .then( r => res.json(r))
     .catch(next)

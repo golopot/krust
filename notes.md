@@ -16,12 +16,10 @@
 * crosspost
 * reputation
 * make score more conspicuous
-* make plates a menu
 * moderation history
 * precache link on mouse hover
 * write all things in chinese
 * tag editing
-* fix post upvote
 * preview before submit
 * access control for editing, deleting
 * use exponential backoff in fancyInsert
