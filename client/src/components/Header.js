@@ -5,7 +5,7 @@ import store from '../store'
 import Plink from './Plink'
 import Cookies from 'js-cookie'
 import {getUsername} from '../utils'
-
+import pageCache from '../pageCache'
 
 class Menu extends Component{
   constructor(){
@@ -67,12 +67,12 @@ const Header = ({location}) => {
   let plateName = ''
 
   if(/^\/p\//.test(path)){
-    const data = store.resources[pathToResources(path)[0]]
+    const data = pageCache.get(pathToResources(path)[0])
     if(!data) console.error('Resource loading failure.')
     plateName = data.story.plate
   }
   else if( /^\/plate\//.test(path)){
-    const data = store.resources[pathToResources(path)[0]]
+    const data = pageCache.get(pathToResources(path)[0])
     if(!data) console.error('Resource loading failure.')
     plateName =  data.plateName
   }

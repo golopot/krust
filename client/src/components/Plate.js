@@ -6,7 +6,7 @@ import Plink from './Plink'
 import promisedNavigate from '../promisedNavigate'
 import {Tag} from './Tag'
 import SetDocumentTitle from './SetDocumentTitle'
-import store from '../store'
+import pageCache from '../pageCache'
 
 class VoteFilter extends Component{
   onKeyDown(ev){
@@ -83,7 +83,7 @@ FilterDescription.propTypes = {
 const FilterDescriptionWithRouter = withRouter(FilterDescription)
 
 export const PlateSidebar = () => {
-  const plates = store.resources['/api/plate'].plates
+  const plates = pageCache.get('/api/plate').plates
   return (
     <section class='plates-sidebar'>
       <div class='list'>

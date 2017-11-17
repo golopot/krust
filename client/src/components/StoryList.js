@@ -1,5 +1,5 @@
 import Preact from 'preact'
-import store from '../store'
+import pageCache from '../pageCache'
 import dateStringify from '../dateStringify'
 import Plink from './Plink'
 const urlFromId = (id) => (
@@ -29,11 +29,11 @@ StoryItem.propTypes = {
 const StoryList = ({stories, nextPage}) => (
   <div class='story-list'>
     { stories.map( story => <StoryItem story={story} key={story.id} />) }
-    { stories === null && <span>There is no story here.</span> }
+    { stories && stories.length === 0 && <div>There is no story here.</div> }
     <div class='page-nav'>
       { nextPage
         ? <a href={`/?after=${nextPage}`} class='next'>next</a>
-        : <span>end of list</span>
+        : <span></span>
       }
     </div>
   </div>
@@ -47,7 +47,7 @@ StoryList.propTypes = {
 const StoryListContainer = ({plate, query}) => {
   query = query || ''
   const path = `/api/plate/${plate}${query}`
-  const {stories, nextPage} = store.resources[path]
+  const {stories, nextPage} = pageCache.get(path)
   return <StoryList stories={stories} nextPage={nextPage} />
 }
 

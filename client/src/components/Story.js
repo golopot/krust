@@ -1,6 +1,6 @@
 import Preact, {Component} from 'preact'
 import PropTypes from 'prop-types'
-import store from '../store'
+import pageCache from '../pageCache'
 
 import Comment from './Comment'
 import CommentForm from './CommentForm'
@@ -8,6 +8,7 @@ import {Tag} from './Tag'
 import {EventEmitter} from 'fbemitter'
 import SetDocumentTitle from './SetDocumentTitle'
 import {EditStoryForm} from './StoryForm'
+import {goBack} from '../promisedNavigate'
 
 
 const onClickDelete = (ev) => {
@@ -60,6 +61,7 @@ class Score extends Component{
   }
 
   componentDidMount(){
+    window.scrollTo(0, 0)
     this.props.eventEmitter.addListener('toggleVote', this.toggleVote.bind(this))
   }
 
@@ -95,6 +97,7 @@ class StoryProper extends Component{
     const editing = this.state.editing
     return (
       <section class='story'>
+        <div class='goback' onClick={goBack}>&lt;&nbsp;回前頁</div>
         <div class='title'>
           <div>{s.title}</div>
         </div>
@@ -156,7 +159,7 @@ Story.propTypes = {
 const withStory = (Wrapped) => class extends Preact.Component{
   render(){
     this.endpoint = '/api/story/'+ window.location.pathname.slice(3)
-    const {story} = store.resources[this.endpoint]
+    const {story} = pageCache.get(this.endpoint)
     return <Wrapped story={story} />
   }
 }

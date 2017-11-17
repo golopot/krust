@@ -1,5 +1,6 @@
 import pathToResources from './pathToResources'
 import store from './store'
+import pageCache from './pageCache'
 
 export default (to) => {
   const history = store.history
@@ -11,7 +12,7 @@ export default (to) => {
           throw r.error
         }
         else{
-          store.resources[uri] = r
+          pageCache.set(uri, r)
         }
       })
       .catch(console.error)
@@ -22,4 +23,8 @@ export default (to) => {
       history.push(to)
     })
     .catch(console.error)
+}
+
+export const goBack = () => {
+  store.history.goBack()
 }

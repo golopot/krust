@@ -28,6 +28,10 @@
 * show number of posts under a tag
 * A button to cancel tag, score filters
 * An button to go back from a post
+* dark theme
+* move comment collapse to right
+* use absolute date for posts
+* swipe left to goback
 
 ## Index
 * feed
@@ -35,6 +39,8 @@
 * plates
 
 ## bug fix
+* click on bottom of short post would trigger navigate back
+* navigate back + promisedNavigate does not work with F5 refresh
 
 ## later
 * api response format
