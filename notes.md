@@ -32,6 +32,9 @@
 * move comment collapse to right
 * use absolute date for posts
 * swipe left to goback
+* should plate name support chinese?
+* link post
+* 404
 
 ## Index
 * feed
@@ -41,6 +44,7 @@
 ## bug fix
 * click on bottom of short post would trigger navigate back
 * navigate back + promisedNavigate does not work with F5 refresh
+* appsecret in auth use production config
 
 ## later
 * api response format

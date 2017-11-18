@@ -10,12 +10,12 @@ import pageCache from '../pageCache'
 
 class VoteFilter extends Component{
   onKeyDown(ev){
-    const {match, history} = this.props
+    const {match} = this.props
     ev.stopPropagation()
     if(ev.key !== 'Enter') return
     const score = ev.target.value
     const to = `/plate/${match.params.plate}?score=${score}`
-    promisedNavigate(to, history)
+    promisedNavigate(to)
   }
 
   render(){

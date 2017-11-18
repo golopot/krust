@@ -1,0 +1,16 @@
+version: "3"
+services:
+  mongo:
+    image: mongo:3.4
+    expose:
+      - "27017"
+    ports:
+      - "27017:27017"
+    volumes:
+      - /srv/mongo:/data/db
+    networks:
+      - dumb
+
+networks:
+  dumb:
+    driver: "bridge"

@@ -1,7 +1,7 @@
 import Preact, {Component} from 'preact'
 import PropTypes from 'prop-types'
 import pageCache from '../pageCache'
-
+import store from '../store'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
 import {Tag} from './Tag'

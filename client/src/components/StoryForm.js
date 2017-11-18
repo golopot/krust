@@ -47,10 +47,9 @@ class StoryForm extends Component{
           this.setState({error: true})
         }
         else{
-          pJump('/hack').then( () =>
-            pJump(`/p/${r.id}`)
+          return pJump('/hack', {replace: true}).then( () =>
+            pJump(`/p/${r.id}`, {replace: true})
           )
-
         }
       })
       .catch( e => console.error(e) )
@@ -61,7 +60,7 @@ class StoryForm extends Component{
     ev.preventDefault()
     this.setState( {status: status.WAIT} )
     const taglineParse = (tagline) => {
-      return tagline.split(' ')
+      return tagline.split(' ').filter(s => s.length>0)
     }
     const form = formToObj(new FormData(ev.target))
     const body = {

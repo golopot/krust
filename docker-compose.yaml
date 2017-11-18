@@ -1,12 +1,9 @@
-version: '2'
-
-
+version: "3"
 services:
-  mogno:
-    image: mongo
-    expose:
-      - "27017"
+  krust:
+    build: .
+    restart: always
     ports:
-      - "27017:27017"
-    volumes:
-      - /srv/mongo:/data/db
+      - "80:9090"
+    env_file:
+      - .env

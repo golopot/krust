@@ -1,7 +1,6 @@
 import Preact, {Component} from 'preact'
 import PropTypes from 'prop-types'
 import pathToResources from '../pathToResources'
-import store from '../store'
 import Plink from './Plink'
 import Cookies from 'js-cookie'
 import {getUsername} from '../utils'
@@ -39,6 +38,8 @@ class Menu extends Component{
       ev.target.tagName === 'A' && this.setState({open: false})
     }
 
+    const plates = pageCache.get('/api/plate').plates
+
     const openess = this.state.open ? ' open' : ''
     return (
       <div class='plates-dropdown'
@@ -55,6 +56,13 @@ class Menu extends Component{
               : <div><Plink to='/login'>登入</Plink></div>
           }
           <div><Plink to='/plates'>全部看板</Plink></div>
+          <div class='menu-plate-list'>
+            {plates.map(plate =>
+              <div class='item' key={plate.name}>
+                <Plink to={`/plate/${plate.name}`}>{plate.name}</Plink>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     )

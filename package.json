@@ -4,10 +4,13 @@
   "description": "A forum",
   "scripts": {
     "dev": "cd client; webpack -w & gulp watch; kill %%",
+    "pack": "cd client; webpack && gulp",
     "up": "cd server; nodemon --ext js,njk server.js",
+    "pm2": "pm2 start server/server.js",
+    "db": "cd scripts; docker-compose -f docker-compose.db.yaml -p krust_db up",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslintc": "cd client; eslint **",
-    "eslints": "cd server; eslint **" 
+    "eslints": "cd server; eslint **"
   },
   "author": "",
   "license": "MIT",
@@ -21,7 +24,6 @@
     "body-parser": "^1.18.2",
     "compression": "^1.7.1",
     "cookie-parser": "^1.4.3",
-    "debug": "^2.6.9",
     "express": "^4.16.2",
     "fbemitter": "^2.1.1",
     "gulp": "^3.9.1",
@@ -31,6 +33,7 @@
     "mongoose": "^4.12.3",
     "node-fetch": "^1.7.3",
     "nunjucks": "^3.0.1",
+    "pm2": "^2.7.2",
     "preact": "^8.2.5",
     "preact-compat": "^3.17.0",
     "prop-types": "^15.6.0",

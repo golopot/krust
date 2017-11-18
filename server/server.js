@@ -1,6 +1,7 @@
 const config = require('../config')
+config.mongourl = process.env.mongourl || config.mongourl
+config.appsecret = process.env.appsecret || config.appsecret
 const mongoose = require('mongoose')
-mongoose.connect(config.mongourl, {useMongoClient: true })
 mongoose.Promise = global.Promise
 const api = require('./api/api')
 const express = require('express')
@@ -97,6 +98,11 @@ app.use( (req,res,next) => {
 
   res.status(404).render('notfound.njk')
 })
+
+
+mongoose.connect(config.mongourl, {useMongoClient: true })
+  .then( () => console.log('Mongodb connected. ' + config.mongourl) )
+  .catch(console.error)
 
 app.listen(9090, function () {
   console.log('Server listening on http://localhost:9090')

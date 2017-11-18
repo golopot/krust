@@ -16,9 +16,9 @@ class Plink extends Component{
   // TODO What happens when link href is current href?
 
   onClick(ev){
-    const {to, history} = this.props
+    const {to} = this.props
     ev.preventDefault()
-    promisedNavigate(to, history)
+    promisedNavigate(to)
   }
 
 

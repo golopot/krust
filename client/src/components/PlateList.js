@@ -49,7 +49,7 @@ export default class PlateList extends Component{
         {this.state.creating && <PlateForm />}
         <div class='plate-list'>
           {this.state.plates
-            ? this.state.plates.map( plate => <PlateItem plate={plate} key={plate} />)
+            ? this.state.plates.map( plate => <PlateItem plate={plate} key={plate.name} />)
             : <span>loading...</span>
           }
 

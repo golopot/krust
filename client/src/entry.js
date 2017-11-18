@@ -28,3 +28,4 @@ const userVotesToMap = (votesList) => {
 
 new KeyboardNavigator()
 window.store = store
+window.pageCache = pageCache

@@ -2,7 +2,7 @@ import pathToResources from './pathToResources'
 import store from './store'
 import pageCache from './pageCache'
 
-export default (to) => {
+export default (to, option) => {
   const history = store.history
   const resources = pathToResources(to).map(
     uri => fetch(uri)
@@ -20,7 +20,9 @@ export default (to) => {
 
   return Promise.all(resources)
     .then( () => {
-      history.push(to)
+      option && option.replace
+        ? history.replace(to)
+        : history.push(to)
     })
     .catch(console.error)
 }

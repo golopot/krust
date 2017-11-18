@@ -92,7 +92,6 @@ class SignupForm extends Component{
         <input name='verify-password' type='password'
           autoComplete='off' placeholder="verify password "
         />
-        <input name='email' type='email' placeholder="email " />
         <button>註冊</button>
         {created && <span>Account is created succssfully.</span>}
         {erroring && <span>Error</span>}
