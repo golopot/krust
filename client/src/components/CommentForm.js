@@ -45,13 +45,18 @@ class CommentForm extends Preact.Component{
   }
 
   render(){
-    if(!Cookies.get('authtoken'))
-      return null
+    let disabled = {}
+    if(this.state.status === status.WAIT || !Cookies.get('authtoken') )
+      disabled = {disabled: true}
+    const placeHolder = !Cookies.get('authtoken')
+      ? 'Log in to comment'
+      : 'Write Comment'
+
     return (
       <form class='comment-form' onSubmit={this.onSubmit}>
-        <div><textarea name='content' /></div>
+        <div><textarea name='content' placeHolder={placeHolder} {...disabled}/></div>
         <div class='bottom'>
-          <button disabled={this.state.status === status.WAIT} >save</button>
+          <button {...disabled} >save</button>
           { this.state.status === status.WAIT && <Loading /> }
         </div>
       </form>
