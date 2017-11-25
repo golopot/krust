@@ -22,6 +22,7 @@ const createStory = (req, res, next) => {
     plate: b.plate,
     votes: 0,
     username: req.username,
+    link: b.link,
     tags: b.tags,
     deleted: false,
     date_submit: new Date(),
@@ -57,6 +58,7 @@ const editStory = (req, res, next) => {
     .then( () => Story.collection.updateOne({id: storyId}, {$set:
     { title: b.title,
       content: b.content,
+      link: b.link,
       content_marked: xss(converter.makeHtml(b.content)),
       tags: b.tags,
     }
@@ -70,7 +72,7 @@ const editStory = (req, res, next) => {
 
 const getStories = (req, res, next) => {
   res
-  throw new Error('This is not implemented.')
+  throw new Error('This controller is not implemented.')
 }
 
 const getFrontPageStories = (req, res, next) => {
@@ -81,6 +83,7 @@ const getFrontPageStories = (req, res, next) => {
     votes: 1,
     tags: 1,
     plate: 1,
+    link: 1,
     username: 1,
   })
     .sort({date_submit: -1})
@@ -125,16 +128,17 @@ const getStory = (req, res, next) => {
           res.json({story: {
             id: x.id,
             title: x.title,
-            view_counts: 57,
             votes: x.votes,
             date_submit: dateToStr(x.date_submit),
             username: x.username,
             content: x.content,
             content_marked: x.content_marked,
             tags: x.tags,
+            link: x.link,
             comments: treeBuild(comments),
             deleted: x.deleted,
             plate: x.plate,
+            view_counts: 57,
           }})
         })
     })

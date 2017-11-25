@@ -8,6 +8,28 @@ const urlFromId = (id) => (
 import {Tagline} from './Tag'
 import PropTypes from 'prop-types'
 
+
+const StoryLink = ({link}) =>{
+  if(link){
+    try{
+      const shortUrl = new URL(link).hostname.replace(/^www\./, '')
+      return <a class='link' href={link}>{shortUrl}</a>
+    }
+    catch(e){
+      e.message += ' input=' + JSON.stringify(link)
+      console.error(e)
+      return null
+    }
+  }
+  else{
+    return <span class='link'></span>
+  }
+}
+
+StoryLink.propTypes = {
+  link: PropTypes.string,
+}
+
 const StoryItem = ({story}) => (
   <div class='story-item'>
     <div class='left score'>
@@ -16,6 +38,7 @@ const StoryItem = ({story}) => (
     <div class='right'>
       <div class='up'>
         <Plink class='title' to={urlFromId(story.id)}>{story.title}</Plink>
+        <StoryLink link={story.link}/>
         <Tagline tags={story.tags} plate={story.plate} />
       </div>
       <div class='bottom'>

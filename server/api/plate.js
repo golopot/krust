@@ -74,6 +74,7 @@ const getPlate = (req, res, next) => {
     tags: 1,
     plate: 1,
     username: 1,
+    link: 1,
   })
     .limit(q.size|| 20)
     .sort(sort)

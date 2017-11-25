@@ -1,25 +1,23 @@
 ## functionality
+* crawl and post popular posts on ptt, medium, and blogs
+* oauth
+* link post
+* precache link on mouse hover
+* expand menu change to click from hover
 * TLS
-* markdown styling
-* pagination
+* 404
 * spam moderation
-* home page
-* feed
 * notification
 * subscribe plate
 * edit history
 * plate settting: text only...
 * search filter: flagged deleted user before
-* keyboard navigation
 * chat
 * customizable stylesheets for each plate
-* crosspost
 * reputation
-* make score more conspicuous
+* pagination
 * moderation history
-* precache link on mouse hover
-* write all things in chinese
-* tag editing
+* tag input assist
 * preview before submit
 * access control for editing, deleting
 * use exponential backoff in fancyInsert
@@ -27,16 +25,19 @@
 * favorite tags
 * show number of posts under a tag
 * A button to cancel tag, score filters
-* An button to go back from a post
 * dark theme
 * move comment collapse to right
 * use absolute date for posts
-* swipe left to goback
+* swipe left to goback, or show boards
+* feed
 * should plate name support chinese?
-* link post
-* 404
 * align texts to an imaginary grid
-* crawl and post popular posts on ptt, medium, and blogs
+* crosspost
+
+## functionality-completed
+* keyboard navigation
+* tags
+* boards
 
 ## Index
 * feed
@@ -65,3 +66,4 @@
 ## questions
 * ask how to write pretty implementation in api for optional query fields.
 * express error handle middle-ware
+* ask how to know the origin stack for an error throw by a db request promise 

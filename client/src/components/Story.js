@@ -100,6 +100,7 @@ class StoryProper extends Component{
         <div class='goback' onClick={goBack}>&lt;&nbsp;回前頁</div>
         <div class='title'>
           <div>{s.title}</div>
+          <a class='link' href={s.link}>{s.link}</a>
         </div>
 
         <div class='byline'>

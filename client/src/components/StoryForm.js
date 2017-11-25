@@ -79,14 +79,15 @@ class StoryForm extends Component{
   }
 
   render(){
-    const {title, content, tags} = this.props
+    const {title, content, tags, link} = this.props
     const serializedTags = tags && tags.join(' ')
     return (
       <form id='story-form' onSubmit={this.onSubmit}>
-        <div><input name='title' placeholder='Title' defaultValue={title||null}/></div>
-        <div><textarea name='content' placeholder='Content' defaultValue={content||null}/></div>
-        <div><input name='tags' placeholder='Tags' defaultValue={serializedTags||null}/></div>
-        <button type='submit'>Submit</button>
+        <div><input name='title' placeholder='標題' defaultValue={title||null}/></div>
+        <div><input name='link' placeholder='連結' defaultValue={link||null}/></div>
+        <div><textarea name='content' placeholder='內文' defaultValue={content||null}/></div>
+        <div><input name='tags' placeholder='標籤' defaultValue={serializedTags||null}/></div>
+        <button type='submit'>發文</button>
         {this.state.error && <span>Error</span>}
       </form>
     )
@@ -97,6 +98,7 @@ StoryForm.propTypes = {
   title: PropTypes.string,
   content: PropTypes.string,
   storyId: PropTypes.string,
+  link: PropTypes.string,
   plate: PropTypes.string,
   tags: PropTypes.array,
   mode: PropTypes.string,
@@ -120,6 +122,7 @@ EditStoryForm.propTypes = {
   mode: PropTypes.string.isRequired,
   storyId: PropTypes.number.isRequired,
   content: PropTypes.string.isRequired,
+  link: PropTypes.string,
   title: PropTypes.string.isRequired,
   tags: PropTypes.array.isRequired,
 }

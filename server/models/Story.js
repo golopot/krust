@@ -10,13 +10,14 @@ const schema = new mongoose.Schema(M.translate({
   plate: M.string().required(),
   votes: M.number(),
   content: M.string().required(),
+  link: M.string().required(),
   content_marked: M.string().required(),
   comments: [M.number()],
   tags: [M.string()],
   date_submit: M.date().required(),
   date_edit: M.date(),
   deleted: M.boolean().required(),
-}), { timestamps: true })
+}))
 
 schema.statics.fancyInsert = fancyInsert
 
