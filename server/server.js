@@ -67,6 +67,7 @@ app.get('/p/:id', (req, res, next) => {
 app.get('/submit/:plate', sendEmptyBody)
 app.get('/profile', sendEmptyBody)
 app.get('/login', sendEmptyBody)
+app.get('/about', sendEmptyBody)
 app.get('/plates', sendEmptyBody)
 app.get('/u/:user', sendEmptyBody)
 app.get('/oauth-redirect-back-google', (req,res) => {

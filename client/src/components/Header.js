@@ -55,6 +55,7 @@ class Menu extends Component{
               ? <div><a onClick={this.onClickLogout}>登出</a></div>
               : <div><Plink to='/login'>登入</Plink></div>
           }
+          <div><Plink to='/about'>關於本站</Plink></div>
           <div><Plink to='/plates'>全部看板</Plink></div>
           <div class='menu-plate-list'>
             {plates.map(plate =>

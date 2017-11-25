@@ -17,6 +17,7 @@ import User from './User'
 import Index from './Index'
 import Header from './Header'
 import SideEffect from './SideEffect'
+import About from './About'
 
 const App = () => (
   <Router>
@@ -32,6 +33,7 @@ const App = () => (
       <Route path="/submit/:plate" component={CreateStory}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/plates" component={PlateList}/>
+      <Route path="/about" component={About}/>
       <Route component={SideEffect} />
     </div>
   </Router>
