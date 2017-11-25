@@ -8,33 +8,37 @@
   padding-bottom: 16px;
 
   > .left{
+    position: absolute;
     width: 20px;
-  }
-
-  > .up{
-    // display: flex;
-    // flex-wrap: wrap;
-    // align-items: center;
     font-size: 17px;
-    color: #000;
-
-    .title{
-      padding-right: 6px;
-    }
-
-    .tagline{
-      display: inline-block;
-      position: relative;
-      top: -2px;
-    }
+    text-align: center;
   }
 
-  > .middle{
-    font-size: 13px;
-    color: #717171;
+  > .right{
+    margin-left: 22px;
 
-    > a{
-      color: #4070d0;
+    > .up{
+      font-size: 17px;
+      color: #000;
+
+      .title{
+        padding-right: 6px;
+      }
+
+      .tagline{
+        display: inline-block;
+        position: relative;
+        top: -2px;
+      }
+    }
+
+    > .middle{
+      font-size: 13px;
+      color: #717171;
+
+      > a{
+        color: #4070d0;
+      }
     }
   }
 }
