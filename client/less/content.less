@@ -1,47 +1,61 @@
-
-.story > .content, .comment > .content{
-
-	h1, h2, h3, h4{
-		font-size: 1.2em;
-		margin: 1em 0 1em 0;
-	}
-
-	color: #262626;
-	font-size: 16px;
-	line-height: 1.45;
-
-	code{
-		padding: 0.2em 0.4em;
-		font-size: 85%;
-		background-color: rgba(27,31,35,0.05);
-	}
-
-	li{
-		margin: 0px 0px 4px 0px;
-	}
-
-	pre{
-		overflow-x: auto;
-		background-color: #f3f5f6;
-		padding: 5px;
-		> code{
-			padding: 0;
-			background-color: unset;
-		}
-	}
+.comment-tree {
+  position: relative;
 }
 
-.story > .content{
-	margin-top: 1em;
-	p{
-		margin: 0 0 1em 0;
-	}
+.comment {
+  padding: 0;
+  margin-left: 19px;
+
+  .byline {
+    font-size: 14px;
+    color: #888;
+
+    .actions {
+      > a {
+        color: #888;
+        padding: 0 3px;
+      }
+    }
+
+    > .collapse {
+      position: absolute;
+      left: 0;
+      height: 100%;
+      user-select: none;
+      margin: 0;
+      padding: 0 1px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    > .collapse:hover {
+      background-color: #eee;
+    }
+
+    > .vote.like {
+      color: orange;
+    }
+  }
 }
 
-.comment > .content{
-	margin-top: 3px;
+.comment-form {
+  > div {
+    display: flex;
+  }
 
-	p{
-		margin: 0 0 3px 0;
-	}
+  textarea {
+    width: 400px;
+    height: 114px;
+    flex-shrink: 1;
+  }
+
+  .bottom {
+    padding: 6px 0;
+  }
+}
+
+.comment-tree {
+  > .children {
+    padding-left: 16px;
+  }
 }

@@ -35,6 +35,8 @@
 * should plate name support chinese?
 * link post
 * 404
+* align texts to an imaginary grid
+* crawl and post popular posts on ptt, medium, and blogs
 
 ## Index
 * feed

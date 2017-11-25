@@ -1,6 +1,7 @@
 const dateToSlashed = d => `${d.getUTCFullYear()}/${d.getUTCMonth()+1}/${d.getUTCDate()}`
 
 const dateStringify = (date) => {
+  if(!date) throw 'parameter is required'
   const diff = new Date() - date
   const minute = 1000*60
   const hour = minute*60
@@ -20,7 +21,7 @@ const dateStringify = (date) => {
     return ~~ (diff/day) + ' days ago'
   }
   if(diff < year){
-    return dateToSlashed(date)
+    return dateToSlashed(new Date(date))
   }
 }
 

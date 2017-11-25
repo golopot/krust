@@ -7,13 +7,13 @@ export default class SideEffect extends Component{
     store.history = this.props.history
     window.app = window.app || {}
     window.app.history = this.props.history
-    document.body.addEventListener('click', ev => {
-      if(! /^\/p\//.test(window.location.pathname) )
-        return
-      if(ev.target.id === 'react-body'|| ev.target == document.body){
-        props.history.goBack()
-      }
-    })
+    // document.body.addEventListener('click', ev => {
+    //   if(! /^\/p\//.test(window.location.pathname) )
+    //     return
+    //   if(ev.target.id === 'react-body'|| ev.target == document.body){
+    //     props.history.goBack()
+    //   }
+    // })
   }
   render(){
     return null

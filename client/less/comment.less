@@ -1,65 +1,62 @@
 
 .comment-tree{
-	position: relative;
+  position: relative;
 }
 
 .comment{
-	padding: 0px 0px;
-	margin-left: 19px;
+  padding: 0;
+  margin-left: 19px;
 
-	.byline{
-		font-size: 14px;
-		color: #888;
+  .byline{
+    font-size: 14px;
+    color: #888;
 
-		.actions{
-			> a{
-				color: #888;
-				padding: 0px 3px;
-			}
-		}
+    .actions{
+      > a{
+        color: #888;
+        padding: 0 3px;
+      }
+    }
 
+    > .collapse{
+      position: absolute;
+      left: 0;
+      height: 100%;
+      user-select: none;
+      margin: 0;
+      padding: 0 1px;
+      font-size: 12px;
+      color: #999;
+    }
 
-		>.collapse{
-			position: absolute;
-			left: 0px;
-			height: 100%;
-			user-select: none;
-			margin: 0px;
-			padding: 0px 1px;
-			font-size: 12px;
-			color:#999;
-		}
-		>.collapse:hover{
-			background-color: #eee;
-		}
+    > .collapse:hover{
+      background-color: #eee;
+    }
 
-		>.vote.like{
-			color: orange;
-		}
-
+    > .vote.like{
+      color: orange;
+    }
   }
 }
 
 .comment-form{
-	> div{
-		display: flex;
-	}
+  > div{
+    display: flex;
+  }
 
-	textarea{
-		width: 400px;
-		height: 114px;
-		flex-shrink: 1;
-	}
+  textarea{
+    width: 400px;
+    height: 114px;
+    flex-shrink: 1;
+  }
 
-	.bottom{
-		padding: 6px 0px;
-	}
-
+  .bottom{
+    padding: 6px 0;
+  }
 }
 
-
 .comment-tree{
-	> .children{
-		padding-left: 16px;
-	}
+  > .children{
+    padding-left: 16px;
+  }
 }

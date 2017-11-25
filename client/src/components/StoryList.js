@@ -10,12 +10,14 @@ import PropTypes from 'prop-types'
 
 const StoryItem = ({story}) => (
   <div class='story-item'>
+    <div class='left'>
+      <span class='votes'>{story.votes}</span>      
+    </div>
     <div class='up'>
       <Plink class='title' to={urlFromId(story.id)}>{story.title}</Plink>
       <Tagline tags={story.tags} plate={story.plate} />
     </div>
     <div class='middle'>
-      <span class='votes'>{story.votes} points </span>
       <span class='date-submit'>{dateStringify(story.date_submit)} </span>
       <span class='authors'>{story.username} </span>
     </div>

@@ -1,84 +1,83 @@
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html{
-	overflow-y:scroll;
+  overflow-y: scroll;
 }
 
 body{
-	font-family: Arial,sans-serif;
-	line-height: 1.24;
-	font-size: 14px;
-	// padding: 0 2px;
-	margin: 0px 8px;
+  font-family: Arial, sans-serif;
+  line-height: 1.24;
+  font-size: 14px;
+  // padding: 0 2px;
+  margin: 0 8px;
 }
 
 a{
-	text-decoration: none;
-	color: #0366d6;
-
+  text-decoration: none;
+  color: #0366d6;
 }
 
 a:hover{
-	cursor: pointer;
-	text-decoration: underline;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 a:visited{
-	// color: inherit;
+  // color: inherit;
 }
 
 .span-button{
-	color: #0366d6;
+  color: #0366d6;
 }
 
 .span-button:hover{
-	text-decoration: underline;
-	cursor: pointer;
+  text-decoration: underline;
+  cursor: pointer;
 }
+
 #react-body{
-	> *{
-		margin: auto;
-		max-width: 1080px;
-	}
+  > *{
+    margin: auto;
+    max-width: 1080px;
+  }
 }
 
 #story-form{
+  > div{
+    display: flex;
+  }
 
-	>div{
-		display: flex;
-	}
+  input,
+  textarea{
+    width: 540px;
+    margin: 6px 0;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    flex-shrink: 1;
+  }
 
-	input, textarea{
-		width: 540px;
-		margin: 6px 0px;
-		font-size: 16px;
-		font-family: Arial,sans-serif ;
-		flex-shrink: 1;
-	}
+  input{
+    height: 28px;
+  }
 
-	input{
-		height: 28px;
-	}
-
-	textarea{
-		height: 300px;
-	}
+  textarea{
+    height: 300px;
+  }
 }
 
 .page-nav{
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .login-section{
-	form > input{
-		display: block;
-		margin: 10px 0px;
-	}
+  form > input{
+    display: block;
+    margin: 10px 0;
+  }
 }
-
 
 @import 'header.less';
 @import 'plateList.less';
