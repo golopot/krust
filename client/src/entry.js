@@ -13,7 +13,8 @@ window.INIT_FETCHES
     }
     store.userVotes = resources['/api/user-votes']
       ? userVotesToMap(resources['/api/user-votes'].userVotes||[])
-      : new Map
+      : new Map()
+    document.querySelector('#hack').remove()
     Preact.render(<App />, document.body)
   })
   .catch(console.error)
