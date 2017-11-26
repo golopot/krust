@@ -11,11 +11,18 @@ class Menu extends Component{
     super()
     this.state.open = false
     this.toggleOpen = this.toggleOpen.bind(this)
+    this.onClickMenu = this.onClickMenu.bind(this)
   }
 
   onClickLogout(){
     Cookies.remove('authtoken', {path: '/'})
     window.location.href = '/'
+  }
+
+  onClickMenu(ev){
+    if(ev.target.tagName === 'A'){
+      this.toggleOpen()
+    }
   }
 
   toggleOpen(){
@@ -57,7 +64,7 @@ class Menu extends Component{
           >
             選單
           </div>
-          <div class={'details' + isOpen}>
+          <div class={'details' + isOpen} onClick={this.onClickMenu}>
             <div><a onClick={this.onClickLogout}>登出</a></div>
             <div><Plink to='/profile'>帳號</Plink></div>
             <div><Plink to='/about'>關於本站</Plink></div>
