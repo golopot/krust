@@ -122,7 +122,7 @@ EditStoryForm.propTypes = {
   mode: PropTypes.string.isRequired,
   storyId: PropTypes.number.isRequired,
   content: PropTypes.string.isRequired,
-  link: PropTypes.string,
+  link: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   tags: PropTypes.array.isRequired,
 }

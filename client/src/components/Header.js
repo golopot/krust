@@ -10,21 +10,16 @@ class Menu extends Component{
   constructor(){
     super()
     this.state.open = false
-    this.onMouseEnter = this.onMouseEnter.bind(this)
-    this.onMouseLeave = this.onMouseLeave.bind(this)
-  }
-
-  onMouseEnter(){
-    this.setState({open: true})
-  }
-
-  onMouseLeave(){
-    this.setState({open: false})
+    this.toggleOpen = this.toggleOpen.bind(this)
   }
 
   onClickLogout(){
     Cookies.remove('authtoken', {path: '/'})
     window.location.href = '/'
+  }
+
+  toggleOpen(){
+    this.setState({open: !this.state.open})
   }
 
   componentDidMount(){
@@ -33,42 +28,63 @@ class Menu extends Component{
 
   render(){
 
-    const onTouchSummary = () => this.setState({open: !this.state.open})
-    const onClickDetails = (ev) => {
-      ev.target.tagName === 'A' && this.setState({open: false})
-    }
+    const isOpen = this.state.open ? ' open' : ''
 
-    const plates = pageCache.get('/api/plate').plates
-
-    const openess = this.state.open ? ' open' : ''
-    return (
-      <div class='plates-dropdown'
-        onMouseEnter={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}
-      >
-        <div class='dropdown-summary' onTouchStart={onTouchSummary}>
-          選單
-        </div>
-        <div class={'details' + openess} onClick={onClickDetails}>
-          {
-            getUsername()
-              ? <div><a onClick={this.onClickLogout}>登出</a></div>
-              : <div><Plink to='/login'>登入</Plink></div>
-          }
-          <div><Plink to='/about'>關於本站</Plink></div>
-          <div><Plink to='/plates'>全部看板</Plink></div>
-          <div class='menu-plate-list'>
-            {plates.map(plate =>
-              <div class='item' key={plate.name}>
-                <Plink to={`/plate/${plate.name}`}>{plate.name}</Plink>
-              </div>
-            )}
+    if(!getUsername()){
+      return (
+        <nav class='menu login'>
+          <div class='hamburger'
+            onClick={this.toggleOpen}
+            onTouchStart={this.toggleOpen}
+          >
+            登入
           </div>
-        </div>
-      </div>
-    )
+          <div class={'details' + isOpen}>
+            <div>by Twitter</div>
+            <div><a href='/oauth/google'>by Google</a></div>
+            <div><Plink to='/login'>by username/password</Plink></div>
+            <div><Plink to='/about'>關於本站</Plink></div>
+          </div>
+        </nav>
+      )
+    }
+    else{
+      return (
+        <nav class='menu'>
+          <div class='hamburger'
+            onClick={this.toggleOpen}
+            onTouchStart={this.toggleOpen}
+          >
+            選單
+          </div>
+          <div class={'details' + isOpen}>
+            <div><a onClick={this.onClickLogout}>登出</a></div>
+            <div><Plink to='/profile'>帳號</Plink></div>
+            <div><Plink to='/about'>關於本站</Plink></div>
+          </div>
+        </nav>
+      )
+    }
   }
 }
+
+const PlatesMenu = () => {
+  const plates = pageCache.get('/api/plate').plates
+  return(
+    <div>
+      <div><Plink to='/plates'>全部看板</Plink></div>
+      <div class='menu-plate-list'>
+        {plates.map(plate =>
+          <div class='item' key={plate.name}>
+            <Plink to={`/plate/${plate.name}`}>{plate.name}</Plink>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+PlatesMenu
 
 const Header = ({location}) => {
 

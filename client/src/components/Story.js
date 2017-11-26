@@ -100,9 +100,8 @@ class StoryProper extends Component{
         <div class='goback' onClick={goBack}>&lt;&nbsp;回前頁</div>
         <div class='title'>
           <div>{s.title}</div>
-          <a class='link' href={s.link}>{s.link}</a>
         </div>
-
+        <div class='linkline'><a class='link' href={s.link}>{s.link}</a></div>
         <div class='byline'>
           <Score story={s.id} score={s.votes} eventEmitter={this.eventEmitter} />
           <span class='author'>{s.username} </span>
@@ -120,7 +119,9 @@ class StoryProper extends Component{
         </div>
 
         { editing && <EditStoryForm
-          storyId={s.id} title={s.title} content={s.content} tags={s.tags}/>}
+          storyId={s.id} title={s.title} content={s.content} tags={s.tags}
+          link={s.link}
+        />}
         { s.deleted
           ? <div class='content'>[deleted]</div>
           : <div class='content' dangerouslySetInnerHTML={({__html: s.content_marked})} />

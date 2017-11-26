@@ -5,7 +5,9 @@
 * precache link on mouse hover
 * expand menu change to click from hover
 * TLS
+* add service worker
 * 404
+* anonymous user and captcha
 * spam moderation
 * notification
 * subscribe plate
@@ -34,6 +36,7 @@
 * align texts to an imaginary grid
 * crosspost
 
+
 ## functionality-completed
 * keyboard navigation
 * tags
@@ -46,7 +49,7 @@
 
 ## bug fix
 * click on bottom of short post would trigger navigate back
-* navigate back + promisedNavigate does not work with F5 refresh
+* story list cache is stale if you edit a story and go back to list
 * appsecret in auth use production config
 
 ## later
@@ -66,4 +69,4 @@
 ## questions
 * ask how to write pretty implementation in api for optional query fields.
 * express error handle middle-ware
-* ask how to know the origin stack for an error throw by a db request promise 
+* ask how to know the origin stack for an error throw by a db request promise

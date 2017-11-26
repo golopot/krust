@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt')
 const crypto = require('crypto')
 const {appsecret} = require('../../config')
 const {cerr} = require('../utils')
-const qs = require('qs')
 
 
 const getHmac = (username, date) => {
@@ -11,12 +10,12 @@ const getHmac = (username, date) => {
   return crypto.createHmac('sha256', appsecret).update(pre).digest('hex')
 }
 
-const sendAuthtoken = (user, res) => {
+const getAuthtoken = (user) => {
   const username = user.username
   const date = Date.now()
   const hash = getHmac(username, date)
   const authtoken = `${username}.${date}.${hash}`
-  res.json({data:{authtoken, username}})
+  return authtoken
 }
 
 const auth = (req, res, next) => {
@@ -77,7 +76,6 @@ const signUp = (req, res, next) => {
     .catch( e => next(e) )
 }
 
-
 const passwordSignIn = (req, res, next) => {
   const username = req.body.username
   const plainPassword = req.body.password
@@ -89,7 +87,7 @@ const passwordSignIn = (req, res, next) => {
     })
     .then(match => {
       if(match){
-        sendAuthtoken(user, res)
+        res.json({authtoken: getAuthtoken(user)})
       }
       else{
         res.frown('Password mismatch', 403)
@@ -98,61 +96,9 @@ const passwordSignIn = (req, res, next) => {
     .catch( e => next(e) )
 }
 
-
-const oauthSignIn = (req,res,next) => {
-  var {access_token} = qs.parse(req.body.hash.substring(1))
-  if( !access_token ){res.frown()}
-
-  const checkClientIdMatch = () =>
-    fetch(
-      'https://www.googleapis.com/oauth2/v3/tokeninfo?' + qs.stringify({access_token}),
-      {method: 'post'}
-    )
-      .then( r => r.json())
-      .then( r => {
-        if(r.aud !== '806708806553-ausj6asg5gof7tnfg2c20jjv32cm8jf6.apps.googleusercontent.com'){
-          throw('client_id mismatch')
-        }
-      })
-
-
-  const getUserInfo = () =>
-    fetch('https://www.googleapis.com/userinfo/v2/me' ,{
-      method: 'get',
-      headers: {Authorization: `Bearer ${access_token}`}
-    })
-      .then( r => r.json())
-      .then( r => {
-        if( r.verified_email !== true ) throw('google email is not verified')
-        return r
-      })
-
-  const createUser = (info) => {
-    return User.fancyInsert(new User({
-      gid: info.id,
-      name: 'unnamed',
-      email: info.email,
-    }))
-      .then( id => User.collection.findOne({id}) )
-  }
-
-  const findOrCreateUser = (info) =>
-    User.collection.findOne({gid: info.id})
-      .then( x => x || createUser(info) )
-
-  checkClientIdMatch()
-    .then(getUserInfo)
-    .then(findOrCreateUser)
-    .then(sendAuthtoken)
-    .catch( e => next(e) )
-
-}
-
-
-
 module.exports = {
   auth,
   passwordSignIn,
-  oauthSignIn,
+  getAuthtoken,
   signUp,
 }

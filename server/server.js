@@ -1,6 +1,5 @@
+require('dotenv').config({path: '../.env'})
 const config = require('../config')
-config.mongourl = process.env.mongourl || config.mongourl
-config.appsecret = process.env.appsecret || config.appsecret
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 const api = require('./api/api')
@@ -11,6 +10,7 @@ nunjucks.configure('views', {express: app})
 const Story = require('./models/Story')
 const cookieParser = require('cookie-parser')
 const compression = require('compression')
+const oauth = require('./oauth')
 const {ClientError} = require('./utils')
 
 app.use(compression())
@@ -70,14 +70,8 @@ app.get('/login', sendEmptyBody)
 app.get('/about', sendEmptyBody)
 app.get('/plates', sendEmptyBody)
 app.get('/u/:user', sendEmptyBody)
-app.get('/oauth-redirect-back-google', (req,res) => {
-  res.send(`
-		<html><script>
-			window.opener.oauthPopupCallback(window.location.hash)
-			window.close()
-		</script></html>
-	`)
-})
+app.get('/oauth/google', oauth.google)
+app.get('/oauth2callback', oauth.callback)
 
 
 app.use( (err,req,res,next) => {
@@ -99,7 +93,6 @@ app.use( (req,res,next) => {
 
   res.status(404).render('notfound.njk')
 })
-
 
 mongoose.connect(config.mongourl, {useMongoClient: true })
   .then( () => console.log('Mongodb connected. ' + config.mongourl) )
