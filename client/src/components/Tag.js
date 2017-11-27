@@ -11,12 +11,21 @@ export class Tag extends Component{
   }
 }
 
+const insertSpaces = (elements) => {
+  const result = [' ']
+  for(let e of elements){
+    result.push(e)
+    result.push(' ')
+  }
+  return result
+}
+
 export function Tagline({tags, plate}){
 
   return(
-    <div class='tagline'>
-      {tags.map( x => <Tag tag={x} plate={plate} key={x} />)}
-    </div>
+    <span class='tagline'>
+      {insertSpaces(tags.map( x => <Tag tag={x} plate={plate} key={x} />))}
+    </span>
   )
 }
 Tag.propTypes = {
