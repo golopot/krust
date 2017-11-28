@@ -138,7 +138,7 @@ StoryProper.propTypes = {
 }
 
 const Story = ({story}) => (
-  <div class='story-page'>
+  <main class='story-page'>
     <SetDocumentTitle title={story.title}/>
     <StoryProper story={story} />
     <CommentForm storyId={story.id} commentId={null}/>
@@ -151,7 +151,7 @@ const Story = ({story}) => (
         <div>No comments yet.</div>
       }
     </section>
-  </div>
+  </main>
 )
 
 Story.propTypes = {

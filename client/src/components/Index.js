@@ -10,13 +10,13 @@ export default class Index extends Component{
 
     const {stories} = pageCache.get('/api/front-page-stories')
     return (
-      <div class='homepage'>
+      <main class='homepage'>
         <SetDocumentTitle title='Krust' />
         <PlateSidebar />
         <div class='plate'>
           <div><StoryList stories={stories} /></div>
         </div>
-      </div>
+      </main>
     )
   }
 }

@@ -112,7 +112,7 @@ class Plate extends Component{
     const {plate} = match.params
     const query = this.props.location.search
     return (
-      <section class='plate-page'>
+      <main class='plate-page'>
         <PlateSidebar />
         <section class='plate'>
           <SetDocumentTitle title={plate} />
@@ -127,7 +127,7 @@ class Plate extends Component{
           <FilterDescriptionWithRouter plate={plate}/>
           <StoryListContainer plate={plate} query={query} />
         </section>
-      </section>
+      </main>
     )
   }
 }
