@@ -22,8 +22,8 @@ class LoginForm extends Component{
     })
       .then( r => r.json())
       .then( r => {
-        if(r.data && r.data.authtoken){
-          Cookies.set('authtoken', r.data.authtoken)
+        if(r.authtoken){
+          Cookies.set('authtoken', r.authtoken)
           window.location = '/'
         }
         else{
