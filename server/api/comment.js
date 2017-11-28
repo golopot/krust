@@ -21,17 +21,30 @@ const createComment = (req, res, next) => {
     votes: 0,
   })
 
-  // check story exist
-  // check comment parent exist
-  var commentId
-  Comment.fancyInsert(comment)
-    .then( id => {
-      commentId = id
-      return Story.collection.updateOne({id: b.story}, {$addToSet: {comments: id}})
+  Story.collection.findOne({id: b.storyId}, {_id: 1})
+    .then( doc => {
+      if(doc === null) throw 'story not found'
     })
-    .then( () => res.json({commentId}) )
-    .catch( e => next(e) )
+    .then( () => {
+      if(b.commentId){
+        return assertCommentExist(b.commentId)
+      }
+    })
+    .then( () => Comment.fancyInsert(comment) )
+    .then( commentId => {
+      return Story.collection.updateOne({id: b.story}, {$addToSet: {comments: commentId}})
+        .then( () => Story.updateCommentsCount(b.storyId) )
+        .then( () => res.json({commentId}))
+    })
+    .catch(next)
 }
+
+const assertCommentExist = (id) => (
+  Comment.collection.findOne({id}, {_id: 1})
+    .then( doc => {
+      if(doc === null) throw 'comment not found'
+    })
+)
 
 const deleteComment = (req, res, next) => {
   const {id} = req.body

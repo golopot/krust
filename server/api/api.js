@@ -3,9 +3,8 @@ const router = express.Router()
 const bodyParser = require('body-parser')
 
 const {castVote, getUserVotes} = require('./vote')
-const {createStory, getStory, getStories, editStory, deleteStory,
-  getFrontPageStories} = require('./story')
-const {createPlate, getPlates, getPlate} = require('./plate')
+const {createStory, getStory, getStories, editStory, deleteStory} = require('./story')
+const {createPlate, getPlates, getPlate, getFrontPageStories} = require('./plate')
 const {createComment, deleteComment} = require('./comment')
 const {getUserProfile, getUser} = require('./user')
 const {getTags} = require('./tag')

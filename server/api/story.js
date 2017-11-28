@@ -25,6 +25,7 @@ const createStory = (req, res, next) => {
     link: b.link,
     tags: b.tags,
     deleted: false,
+    comments_count: 0,
     date_submit: new Date(),
   })
 
@@ -73,25 +74,6 @@ const editStory = (req, res, next) => {
 const getStories = (req, res, next) => {
   res
   throw new Error('This controller is not implemented.')
-}
-
-const getFrontPageStories = (req, res, next) => {
-  Story.collection.find({deleted: false}, {
-    date_submit: 1,
-    id: 1,
-    title: 1,
-    votes: 1,
-    tags: 1,
-    plate: 1,
-    link: 1,
-    username: 1,
-  })
-    .sort({date_submit: -1})
-    .toArray()
-    .then( docs => {
-      res.json({stories: docs})
-    })
-    .catch(next)
 }
 
 /*
@@ -169,5 +151,4 @@ module.exports = {
   getStories,
   editStory,
   deleteStory,
-  getFrontPageStories,
 }

@@ -1,4 +1,5 @@
-const dateToSlashed = d => `${d.getUTCFullYear()}/${d.getUTCMonth()+1}/${d.getUTCDate()}`
+const YYMMDD = d => `${d.getUTCFullYear()}/${d.getUTCMonth()+1}/${d.getUTCDate()}`
+const MMDD = d => `${d.getUTCMonth()+1}/${d.getUTCDate()}`
 
 const dateStringify = (date) => {
   if(!date) throw 'parameter is required'
@@ -6,22 +7,24 @@ const dateStringify = (date) => {
   const minute = 1000*60
   const hour = minute*60
   const day = hour*24
-  // const month = day * 30
   const year = day * 365
   if(diff < minute){
     return 'just now'
   }
   if(diff < 2 * hour){
-    return  ~~ (diff/minute) + ' minutes ago'
+    return  ~~ (diff/minute) + ' minutes'
   }
   if(diff < 2 * day){
-    return ~~ (diff/hour) + ' hours ago'
+    return ~~ (diff/hour) + ' hours'
   }
   if(diff < 11 * day){
-    return ~~ (diff/day) + ' days ago'
+    return ~~ (diff/day) + ' days'
   }
   if(diff < year){
-    return dateToSlashed(new Date(date))
+    return MMDD(new Date(date))
+  }
+  else{
+    return YYMMDD(new Date(date))
   }
 }
 

@@ -75,6 +75,7 @@ const getPlate = (req, res, next) => {
     plate: 1,
     username: 1,
     link: 1,
+    comments_count: 1,
   })
     .limit(q.size|| 20)
     .sort(sort)
@@ -94,9 +95,33 @@ const getPlate = (req, res, next) => {
 
 }
 
+const getFrontPageStories = (req, res, next) => {
+  Story.collection.find({deleted: false}, {
+    date_submit: 1,
+    id: 1,
+    title: 1,
+    votes: 1,
+    tags: 1,
+    plate: 1,
+    link: 1,
+    username: 1,
+    comments_count: 1,
+  })
+    .sort({date_submit: -1})
+    .toArray()
+    .then( docs => {
+      for(let x of docs){
+        x.date_submit = x.date_submit.getTime()
+      }
+      res.json({stories: docs})
+    })
+    .catch(next)
+}
+
 
 module.exports = {
   createPlate,
   getPlates,
   getPlate,
+  getFrontPageStories,
 }

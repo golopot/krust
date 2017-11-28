@@ -12,8 +12,8 @@ import PropTypes from 'prop-types'
 const StoryLink = ({link}) =>{
   if(link){
     try{
-      const shortUrl = new URL(link).hostname.replace(/^www\./, '')
-      return <a class='link' href={link}>{shortUrl}</a>
+      const hostname = new URL(link).hostname.replace(/^www\./, '') + '...'
+      return <a class='link' href={link}>{hostname}</a>
     }
     catch(e){
       e.message += ' input=' + JSON.stringify(link)
@@ -44,6 +44,7 @@ const StoryItem = ({story}) => (
       <div class='bottom'>
         <span class='date-submit'>{dateStringify(story.date_submit)} </span>
         <span class='authors'>{story.username} </span>
+        <span class='comments'>{story.comments_count|| 0}cs</span>
       </div>
     </div>
   </div>
