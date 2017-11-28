@@ -42,7 +42,6 @@ class Menu extends Component{
         <nav class='menu login'>
           <div class='hamburger'
             onClick={this.toggleOpen}
-            onTouchStart={this.toggleOpen}
           >
             登入
           </div>
@@ -60,7 +59,6 @@ class Menu extends Component{
         <nav class='menu'>
           <div class='hamburger'
             onClick={this.toggleOpen}
-            onTouchStart={this.toggleOpen}
           >
             選單
           </div>
