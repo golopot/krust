@@ -35,7 +35,7 @@
 * should plate name support chinese?
 * align texts to an imaginary grid
 * crosspost
-
+* uglify
 
 ## functionality-completed
 * keyboard navigation

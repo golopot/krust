@@ -10,6 +10,7 @@ const Story = require('./models/Story')
 const cookieParser = require('cookie-parser')
 const compression = require('compression')
 const oauth = require('./oauth')
+const path = require('path')
 const {ClientError} = require('./utils')
 
 app.use(compression())
@@ -35,6 +36,8 @@ app.use( (req,res,next) => {
 
 app.use('/js', express.static(__dirname + '/../dist/js'))
 app.use('/css', express.static(__dirname + '/../dist/css'))
+app.use('/assets', express.static(__dirname + '/../assets'))
+app.use('/', express.static(__dirname + '/../assets/index'))
 
 app.use('/api', api )
 
@@ -71,6 +74,7 @@ app.get('/plates', sendEmptyBody)
 app.get('/u/:user', sendEmptyBody)
 app.get('/oauth/google', oauth.google)
 app.get('/oauth2callback', oauth.callback)
+app.get('/sw.js', (req, res) => res.sendFile(path.resolve(__dirname + '/../client/sw.js')))
 
 
 app.use( (err,req,res,next) => {
