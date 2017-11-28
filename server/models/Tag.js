@@ -12,13 +12,17 @@ const schema = new mongoose.Schema(M.translate({
 schema.statics.countTag = function(ctag){
   return StoryTag.collection.count({ctag})
     .then( count => {
-
       const [plate, name] = ctag.split('|')
-      return Tag.collection.updateOne(
-        {cname: ctag},
-        {$set: {count, plate, name}},
-        {upsert: true}
-      )
+      if(count === 0){
+        return Tag.collection.remove({cname: ctag})
+      }
+      else{
+        return Tag.collection.updateOne(
+          {cname: ctag},
+          {$set: {count, plate, name}},
+          {upsert: true}
+        )
+      }
     })
 }
 
