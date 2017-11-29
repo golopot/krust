@@ -97,36 +97,43 @@ export const PlateSidebar = () => {
   )
 }
 
-class Plate extends Component{
-  constructor(){
-    super()
-    this.onClickCreatePost = this.onClickCreatePost.bind(this)
-  }
-
-  onClickCreatePost(){
-
-  }
+class PlateInner extends Component{
 
   render(){
-    const {match} = this.props
-    const {plate} = match.params
-    const query = this.props.location.search
+    const {plateName, query} = this.props
+    return (
+      <section class='plate'>
+        <SetDocumentTitle title={plateName} />
+        <div class='top-bar'>
+          <Tabs plateName={plateName} />
+          <span class='right'>
+            <Plink to={`/plate/${plateName}/tags`}>標籤</Plink>
+            <Plink to={`/plate/${plateName}/rules`}>規則</Plink>
+            <Plink class='new-post' to={`/submit/${plateName}`}>發文</Plink>
+          </span>
+        </div>
+        <FilterDescriptionWithRouter plate={plateName}/>
+        <StoryListContainer plate={plateName} query={query} />
+      </section>
+    )
+  }
+}
+
+PlateInner.propTypes = {
+  plateName: PropTypes.string.isRequired,
+  query: PropTypes.string.isRequired,
+}
+
+class Plate extends Component{
+
+  render(){
+
+    const {plate} = this.props.match.params
+    const {query} = this.props.location
     return (
       <main class='plate-page'>
         <PlateSidebar />
-        <section class='plate'>
-          <SetDocumentTitle title={plate} />
-          <div class='top-bar'>
-            <Tabs plateName={plate} />
-            <span class='right'>
-              <Plink to={`/plate/${plate}/tags`}>標籤</Plink>
-              <Plink to={`/plate/${plate}/rules`}>規則</Plink>
-              <Plink class='new-post' to={`/submit/${plate}`}>發文</Plink>
-            </span>
-          </div>
-          <FilterDescriptionWithRouter plate={plate}/>
-          <StoryListContainer plate={plate} query={query} />
-        </section>
+        <PlateInner plateName={plate} query={query} />
       </main>
     )
   }

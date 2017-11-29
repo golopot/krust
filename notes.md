@@ -36,6 +36,7 @@
 * align texts to an imaginary grid
 * crosspost
 * uglify
+* link onclick change color to signal loading
 
 ## functionality-completed
 * keyboard navigation
