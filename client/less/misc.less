@@ -1,0 +1,22 @@
+.dropdown{
+	display: inline-block;
+	position: relative;
+	.summary{
+		cursor: pointer;
+	}
+	.details{
+		display: none;
+		position: absolute;
+		z-index: 1;
+		top: 24px;
+		left: 50%;
+		transform: translate(-50%, 0);
+		border-radius: 3px;
+		border: 1px solid #ddd;
+		background-color: white;
+		white-space: nowrap;
+	}
+	.details.open{
+		display: block;
+	}
+}

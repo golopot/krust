@@ -5,6 +5,7 @@ import {StoryListContainer} from './StoryList'
 import Plink from './Plink'
 import promisedNavigate from '../promisedNavigate'
 import {Tag} from './Tag'
+import DropDown from './DropDown'
 import SetDocumentTitle from './SetDocumentTitle'
 import pageCache from '../pageCache'
 
@@ -41,11 +42,21 @@ const VoteFilterWithRouter = withRouter(VoteFilter)
 class Tabs extends Component{
   render(){
     const {plateName} = this.props
+    const timeInitialSelected = () => {
+      const query = window.location.search
+      return (
+        /t=week/.test(query) && 1 ||
+        /t=month/.test(query) && 2 ||
+        0
+      )
+    }
     return (
       <span class='filter-tabs'>
-        <Plink to={`/plate/${plateName}`}>最新</Plink>
-        <Plink to={`/plate/${plateName}?t=week`}>本周</Plink>
-        <Plink to={`/plate/${plateName}?t=month`}>本月</Plink>
+        <DropDown class='time' initialSelected={timeInitialSelected()}>
+          <Plink to={`/plate/${plateName}`}>最新</Plink>
+          <Plink to={`/plate/${plateName}?t=week`}>本周</Plink>
+          <Plink to={`/plate/${plateName}?t=month`}>本月</Plink>
+        </DropDown>
         <a onClick={()=>this.setState({filterInput: true})}>過濾</a>
         { this.state.filterInput && <VoteFilterWithRouter />}
       </span>
@@ -129,10 +140,9 @@ class Plate extends Component{
   render(){
 
     const {plate} = this.props.match.params
-    const {query} = this.props.location
+    const query = this.props.location.search
     return (
       <main class='plate-page'>
-        <PlateSidebar />
         <PlateInner plateName={plate} query={query} />
       </main>
     )

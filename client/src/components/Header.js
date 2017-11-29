@@ -2,6 +2,7 @@ import Preact, {Component} from 'preact'
 import PropTypes from 'prop-types'
 import pathToResources from '../pathToResources'
 import Plink from './Plink'
+import DropDown from './DropDown'
 import Cookies from 'js-cookie'
 import {getUsername} from '../utils'
 import pageCache from '../pageCache'
@@ -73,23 +74,18 @@ class Menu extends Component{
   }
 }
 
-const PlatesMenu = () => {
+const PlatesDropDown = () => {
   const plates = pageCache.get('/api/plate').plates
-  return(
-    <div>
-      <div><Plink to='/plates'>全部看板</Plink></div>
-      <div class='menu-plate-list'>
-        {plates.map(plate =>
-          <div class='item' key={plate.name}>
-            <Plink to={`/plate/${plate.name}`}>{plate.name}</Plink>
-          </div>
-        )}
-      </div>
-    </div>
+  const details = plates.map(plate => (
+    <Plink to={`/plate/${plate.name}`} key={plate.name}>{plate.name}</Plink>
+  ))
+  return (
+    <DropDown summary={'看板'}>
+      {details}
+    </DropDown>
   )
 }
 
-PlatesMenu
 
 const Header = ({location}) => {
 
@@ -118,6 +114,7 @@ const Header = ({location}) => {
       </div>
 
       <div id='header-right'>
+        <PlatesDropDown />
         <Menu />
       </div>
     </header>

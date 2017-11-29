@@ -15,20 +15,25 @@ class Plink extends Component{
   // TODO indicate "connecting" after clicking
   // TODO What happens when link href is current href?
 
+  constructor(){
+    super()
+    this.onClick = this.onClick.bind(this)
+  }
+
   onClick(ev){
-    const {to} = this.props
+    const {to, onClick} = this.props
     ev.preventDefault()
+    if(typeof onClick === 'function') onClick(ev)
     promisedNavigate(to)
   }
 
-
   render(){
     // eslint-disable-next-line no-unused-vars
-    const {to, history, match, location, ...props} = this.props
+    const {to, onClick, history, match, location, ...props} = this.props
     return <a
       {...props}
       href={to}
-      onClick={this.onClick.bind(this)}
+      onClick={this.onClick}
     >
       {this.props.children}
     </a>
@@ -40,6 +45,7 @@ Plink.propTypes = {
   history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  onClick: PropTypes.func,
   children: PropTypes.object,
 }
 

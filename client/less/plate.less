@@ -1,9 +1,3 @@
-@media screen and (max-width: 560px) {
-  .plate-page > .plates-sidebar{
-    display: none;
-  }
-}
-
 .story-item{
   margin-bottom: 16px;
   font-size: 17px;
@@ -51,12 +45,14 @@
 
 .plate-page{
   display: flex;
+  justify-content: center;
 }
 
 .plates-sidebar{
-  width: 170px;
+  width: 190px;
   font-size: 16px;
   flex-shrink: 1;
+  margin-left: 20px;
 
   .item {
     padding-bottom: 10px;
@@ -64,27 +60,41 @@
 }
 
 .plate{
-  max-width: 910px;
+  max-width: 670px;
   flex-grow: 1;
 
   > .top-bar{
     padding: 15px 0;
+    margin-left: 22px;
     line-height: 22px;
 
+    > .filter-tabs{
+
+      > *{
+        margin-right: 6px;
+      }
+    }
+
     > .right{
-      float: right;
 
       > a{
         padding-left: 6px;
       }
     }
 
-    > .filter-tabs > a{
-      padding-right: 6px;
-    }
-
     > .new-post{
       float: right;
+    }
+  }
+}
+
+.dropdown.time{
+  .summary{
+      color: #0366D5
+  }
+  .details{
+    > *{
+      padding: 4px 6px;
     }
   }
 }

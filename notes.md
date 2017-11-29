@@ -37,6 +37,7 @@
 * crosspost
 * uglify
 * link onclick change color to signal loading
+* homepage stories should show plate name
 
 ## functionality-completed
 * keyboard navigation

@@ -2,7 +2,6 @@ import Preact, {Component} from 'preact'
 import pageCache from '../pageCache'
 import {StoryList} from './StoryList'
 import SetDocumentTitle from './SetDocumentTitle'
-import {PlateSidebar} from './Plate'
 
 export default class Index extends Component{
 
@@ -10,12 +9,11 @@ export default class Index extends Component{
 
     const {stories} = pageCache.get('/api/front-page-stories')
     return (
-      <main class='homepage'>
+      <main class='homepage plate-page'>
         <SetDocumentTitle title='Krust' />
-        <PlateSidebar />
-        <div class='plate'>
-          <div><StoryList stories={stories} /></div>
-        </div>
+        <section class='plate'>
+          <StoryList stories={stories} />
+        </section>
       </main>
     )
   }
