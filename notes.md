@@ -38,6 +38,7 @@
 * uglify
 * link onclick change color to signal loading
 * homepage stories should show plate name
+* Add to home screen
 
 ## functionality-completed
 * keyboard navigation

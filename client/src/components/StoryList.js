@@ -30,7 +30,7 @@ StoryLink.propTypes = {
   link: PropTypes.string,
 }
 
-const StoryItem = ({story}) => (
+const StoryItem = ({story, showPlate}) => (
   <div class='story-item'>
     <div class='left score'>
       {story.votes}
@@ -44,7 +44,8 @@ const StoryItem = ({story}) => (
       <div class='bottom'>
         <span class='date-submit'>{dateStringify(story.date_submit)} </span>
         <span class='authors'>{story.username} </span>
-        <span class='comments'>{story.comments_count|| 0}cs</span>
+        <span class='comments'>{story.comments_count|| 0}cs </span>
+        {showPlate && <Plink class='plate'to={`/plate/${story.plate}`}>{story.plate}</Plink> } {' '}
       </div>
     </div>
   </div>
@@ -52,11 +53,12 @@ const StoryItem = ({story}) => (
 
 StoryItem.propTypes = {
   story: PropTypes.object.isRequired,
+  showPlate: PropTypes.boolean,
 }
 
-const StoryList = ({stories, nextPage}) => (
+const StoryList = ({stories, nextPage, showPlate = false}) => (
   <div class='story-list'>
-    { stories.map( story => <StoryItem story={story} key={story.id} />) }
+    { stories.map( story => <StoryItem story={story} key={story.id} showPlate={showPlate} />) }
     { stories && stories.length === 0 && <div>There is no story here.</div> }
     <div class='page-nav'>
       { nextPage
@@ -70,6 +72,7 @@ const StoryList = ({stories, nextPage}) => (
 StoryList.propTypes = {
   stories: PropTypes.object.isRequired,
   nextPage: PropTypes.number,
+  showPlate: PropTypes.boolean,
 }
 
 const StoryListContainer = ({plate, query}) => {

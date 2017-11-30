@@ -12,7 +12,7 @@ export default class Index extends Component{
       <main class='homepage plate-page'>
         <SetDocumentTitle title='Krust' />
         <section class='plate'>
-          <StoryList stories={stories} />
+          <StoryList stories={stories} showPlate={true}/>
         </section>
       </main>
     )

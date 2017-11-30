@@ -1,18 +1,16 @@
 <html lang='zh'>
 <head>
-	<link rel="manifest" href="/manifest.json">
-	<link rel="stylesheet" type="text/css" href="/css/main.css">
-	<style>{% include "open-sans.css" %}</style>
+	<title>Krust</title>
 	<script>{% include "initLoader.js" %}</script>
 	<!-- <script>{% include "swRegister.js" %}</script> -->
 	<script defer src='/js/bundle.js' ></script>
+	<link rel="manifest" href="/manifest.json">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Krust</title>
 </head>
 <body>
-	<span id='hack' style="color: #fff">
-		.
-		<!-- Network fonts are not downloaded if body is empty. -->
-	</span>
+	<!--  Fonts are lazy loaded. This line hints the browser to download fonts -->
+	<span id='hack' style="font-family: 'Open Sans'; color: #fff;">.</span>
 </body>
 </html>
