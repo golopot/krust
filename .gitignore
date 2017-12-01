@@ -5,3 +5,5 @@ yarn-error.log
 dist/
 .env
 assets/img/
+nginx/site.crt
+nginx/site.key

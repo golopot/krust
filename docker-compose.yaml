@@ -4,6 +4,6 @@ services:
     build: .
     restart: always
     ports:
-      - "80:9090"
+      - "9090:9090"
     env_file:
       - .env
