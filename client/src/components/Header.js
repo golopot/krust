@@ -15,7 +15,8 @@ class Menu extends Component{
     this.onClickMenu = this.onClickMenu.bind(this)
   }
 
-  onClickLogout(){
+  onClickLogout(ev){
+    ev.preventDefault()
     Cookies.remove('authtoken', {path: '/'})
     window.location.href = '/'
   }
@@ -47,7 +48,6 @@ class Menu extends Component{
             登入
           </div>
           <div class={'details' + isOpen}>
-            <div>by Twitter</div>
             <div><a href='/oauth/google'>by Google</a></div>
             <div><Plink to='/login'>by username/password</Plink></div>
             <div><Plink to='/about'>關於本站</Plink></div>

@@ -38,6 +38,7 @@
 * uglify
 * link onclick change color to signal loading
 * Add to home screen
+* oauth by twitter
 
 ## functionality-completed
 * keyboard navigation

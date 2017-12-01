@@ -8,7 +8,7 @@ const User = require('./models/User')
 const google = (req, res) => {
   const query = {
     client_id: config.oauth_id_google,
-    redirect_uri: `http://${config.hostname}/oauth2callback`,
+    redirect_uri: `${config.protocol}://${config.hostname}/oauth2callback`,
     response_type: 'code',
     scope: 'https://www.googleapis.com/auth/plus.me',
     include_granted_scopes: 'true',
@@ -32,7 +32,7 @@ const callback = (req, res, next) => {
           code: authorization_code,
           client_id: config.oauth_id_google,
           client_secret: config.oauth_secret_google,
-          redirect_uri: `http://${config.hostname}/oauth2callback`,
+          redirect_uri: `${config.protocol}://${config.hostname}/oauth2callback`,
           grant_type: 'authorization_code'
         })
       }
