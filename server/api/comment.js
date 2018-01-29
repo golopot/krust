@@ -23,10 +23,10 @@ const createComment = (req, res, next) => {
 
   Story.collection.findOne({id: b.storyId}, {_id: 1})
     .then( doc => {
-      if(doc === null) throw 'story not found'
+      if (doc === null) throw 'story not found'
     })
     .then( () => {
-      if(b.commentId){
+      if (b.commentId) {
         return assertCommentExist(b.commentId)
       }
     })
@@ -42,15 +42,15 @@ const createComment = (req, res, next) => {
 const assertCommentExist = (id) => (
   Comment.collection.findOne({id}, {_id: 1})
     .then( doc => {
-      if(doc === null) throw 'comment not found'
+      if (doc === null) throw 'comment not found'
     })
 )
 
 const deleteComment = (req, res, next) => {
   const {id} = req.body
-  if( typeof id !== 'number' ) throw 'id must be number'
+  if ( typeof id !== 'number' ) throw 'id must be number'
   Comment.collection.findOne({id}).then(doc => {
-    if(doc.username !== req.username || req.username !== 'sysop')
+    if (doc.username !== req.username || req.username !== 'sysop')
       throw 'Unauthorized'
   })
     .then( () => Comment.collection.updateOne({id}, {$set: {deleted: true}}))

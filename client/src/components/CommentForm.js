@@ -10,15 +10,15 @@ const status = {
   WAIT: 1,
 }
 
-class CommentForm extends Preact.Component{
+class CommentForm extends Preact.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.setState( {status: status.IDLE} )
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  onSubmit(ev){
+  onSubmit(ev) {
     const {storyId, commentId} = this.props
 
     ev.preventDefault()
@@ -44,9 +44,9 @@ class CommentForm extends Preact.Component{
 
   }
 
-  render(){
+  render() {
     let disabled = {}
-    if(this.state.status === status.WAIT || !Cookies.get('authtoken') )
+    if (this.state.status === status.WAIT || !Cookies.get('authtoken') )
       disabled = {disabled: true}
     const placeHolder = !Cookies.get('authtoken')
       ? 'Log in to comment'

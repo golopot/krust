@@ -6,15 +6,15 @@ const status = {
   WAIT: 1,
 }
 
-class PlateForm extends Component{
+class PlateForm extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.setState( {status: status.IDLE} )
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  onSubmit(ev){
+  onSubmit(ev) {
     ev.preventDefault()
     this.setState( {status: status.WAIT} )
     const form = formToObj(new FormData(ev.target))
@@ -28,11 +28,11 @@ class PlateForm extends Component{
     })
       .then( x => x.json() )
       .then( r => {
-        if(r.error){
+        if (r.error) {
           this.setState({error: true})
           throw r.error
         }
-        else{
+        else {
           window.location.href = '/plates'
         }
 
@@ -41,7 +41,7 @@ class PlateForm extends Component{
       .catch( console.error )
   }
 
-  render(){
+  render() {
     const {error} = this.state
     return (
       <div>

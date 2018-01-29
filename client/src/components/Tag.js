@@ -2,10 +2,10 @@ import Preact, {Component} from 'preact'
 import Plink from './Plink'
 import PropTypes from 'prop-types'
 
-export class Tag extends Component{
-  render(){
+export class Tag extends Component {
+  render() {
     const {tag, plate} = this.props
-    return(
+    return (
       <Plink class='tag' to={`/plate/${plate}?tag=${tag}`}>{tag}</Plink>
     )
   }
@@ -13,16 +13,16 @@ export class Tag extends Component{
 
 const insertSpaces = (elements) => {
   const result = [' ']
-  for(let e of elements){
+  for (let e of elements) {
     result.push(e)
     result.push(' ')
   }
   return result
 }
 
-export function Tagline({tags, plate}){
+export function Tagline({tags, plate}) {
 
-  return(
+  return (
     <span class='tagline'>
       {insertSpaces(tags.map( x => <Tag tag={x} plate={plate} key={x} />))}
     </span>

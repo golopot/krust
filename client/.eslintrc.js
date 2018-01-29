@@ -14,7 +14,7 @@ module.exports = {
     },
     "rules": {
         "indent": [
-            "error",
+           "error",
             2
         ],
         "linebreak-style": [
@@ -29,14 +29,14 @@ module.exports = {
             "error",
             "never"
         ],
-        'no-console' : 0,
-        'no-cond-assign' : 0,
-        'no-unused-vars': [
-          'error',
-          {'varsIgnorePattern': '^Preact$|_'},
+        "no-console": 0,
+        "no-cond-assign": 0,
+        "no-unused-vars": [
+          "error",
+          {"varsIgnorePattern": "^Preact$|_"},
         ],
-        'react/react-in-jsx-scope': 0,
-        'react/no-unknown-property': [2, {ignore: ['class']}]
+        "react/react-in-jsx-scope": 0,
+        "react/no-unknown-property": [2, {ignore: ["class"]}]
 
     },
 

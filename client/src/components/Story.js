@@ -4,7 +4,6 @@ import pageCache from '../pageCache'
 import store from '../store'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
-import {Tag} from './Tag'
 import {EventEmitter} from 'fbemitter'
 import SetDocumentTitle from './SetDocumentTitle'
 import {EditStoryForm} from './StoryForm'
@@ -23,23 +22,23 @@ const onClickDelete = (ev) => {
   })
     .then( r => r.json())
     .then( r => {
-      if(r.error) throw r.error
+      if (r.error) throw r.error
     })
     .then( () => window.location = window.location )
     .catch( e => console.error(e))
 }
 
 
-class Score extends Component{
+class Score extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     const {story, score} = props
     this.state.score = score
     this.state.vote = this.initialVote = store.userVotes.get(`story${story}`) || 0
   }
 
-  toggleVote(){
+  toggleVote() {
     const {story, score} = this.props
     this.setState({vote: this.state.vote === 0 ? 1 : 0})
     const tempVote = this.state.vote - this.initialVote
@@ -60,12 +59,12 @@ class Score extends Component{
       .catch( e => console.error(e))
   }
 
-  componentDidMount(){
+  componentDidMount() {
     window.scrollTo(0, 0)
     this.props.eventEmitter.addListener('toggleVote', this.toggleVote.bind(this))
   }
 
-  render(){
+  render() {
     const cName = this.state.score === 1 ? 'like' : 'unvoted'
     return <span class={ 'score ' + cName }>{this.state.score} </span>
   }
@@ -78,13 +77,13 @@ Score.propTypes = {
 }
 
 
-const onClickEdit = function(){
+const onClickEdit = function() {
   this.setState({editing: true})
 }
 
-class StoryProper extends Component{
+class StoryProper extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.onClickDelete = onClickDelete.bind(this)
     this.onClickEdit = onClickEdit.bind(this)
@@ -92,7 +91,7 @@ class StoryProper extends Component{
   }
 
 
-  render(){
+  render() {
     const {story: s} = this.props
     const editing = this.state.editing
     return (
@@ -147,8 +146,8 @@ Story.propTypes = {
   story: PropTypes.object.isRequired,
 }
 
-const withStory = (Wrapped) => class extends Preact.Component{
-  render(){
+const withStory = (Wrapped) => class extends Preact.Component {
+  render() {
     this.endpoint = '/api/story/'+ window.location.pathname.slice(3)
     const {story} = pageCache.get(this.endpoint)
     return <Wrapped story={story} />

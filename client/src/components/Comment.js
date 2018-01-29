@@ -4,9 +4,9 @@ import {getUsername} from '../utils'
 import pt from 'prop-types'
 import store from '../store'
 
-class Comment extends Component{
+class Comment extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     const {id, votes} = props.comment
     this.state = {
@@ -17,14 +17,14 @@ class Comment extends Component{
     this.onClick = this.onClick.bind(this)
   }
 
-  onClick(ev){
+  onClick(ev) {
     const has = (name) => ev.target.classList.contains(name)
 
-    if(has('reply')){
+    if (has('reply')) {
       this.setState({replying: !this.state.replying})
     }
 
-    if(has('upvote')){
+    if (has('upvote')) {
       const oldDirection = this.state.voteDirection
       const newDirection = oldDirection === 1 ? 0 : 1
       this.setState({
@@ -44,8 +44,8 @@ class Comment extends Component{
       })
         .then( r => r.json())
         .then( r => {
-          if(r.error){
-            throw(r.error)
+          if (r.error) {
+            throw (r.error)
           }
           this.setState({
             votes: this.state.votes + this.state.temporaryVote,
@@ -57,7 +57,7 @@ class Comment extends Component{
         .catch( e => console.error(e))
     }
 
-    if(has('delete')){
+    if (has('delete')) {
       fetch('/api/delete-comment', {
         method: 'post',
         credentials: 'include',
@@ -66,13 +66,13 @@ class Comment extends Component{
       })
         .then( r => r.json() )
         .then( r => {
-          if(r.error) throw r.error
+          if (r.error) throw r.error
           window.location = window.location
         })
         .catch(console.error)
     }
 
-    if(has('collapse')){
+    if (has('collapse')) {
 
       const button = ev.target
 
@@ -88,7 +88,7 @@ class Comment extends Component{
 
   }
 
-  render(){
+  render() {
     const {comment: c, storyId} = this.props
     const {temporaryVote, voteDirection, votes} = this.state
     const voteMap = {
@@ -100,7 +100,7 @@ class Comment extends Component{
 
     const contentMarked =  c.deleted ? '<p>[deleted]</p>' : c.content_marked
 
-    return(
+    return (
       <div class='comment-tree'>
         <div class='comment' onClick={this.onClick} data-cid={c.id}>
           <div class='byline'>

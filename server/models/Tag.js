@@ -9,14 +9,14 @@ const schema = new mongoose.Schema(M.translate({
 
 }), { timestamps: true })
 
-schema.statics.countTag = function(ctag){
+schema.statics.countTag = function(ctag) {
   return StoryTag.collection.count({ctag})
     .then( count => {
       const [plate, name] = ctag.split('|')
-      if(count === 0){
+      if (count === 0) {
         return Tag.collection.remove({cname: ctag})
       }
-      else{
+      else {
         return Tag.collection.updateOne(
           {cname: ctag},
           {$set: {count, plate, name}},
@@ -26,7 +26,7 @@ schema.statics.countTag = function(ctag){
     })
 }
 
-schema.statics.updateAllTagCounts = function(){
+schema.statics.updateAllTagCounts = function() {
   return StoryTag.collection.aggregate([{$group: {_id: '$ctag'}}])
     .toArray()
     .then(docs => Promise.all( docs.map(doc => schema.statics.countTag(doc._id)) ) )

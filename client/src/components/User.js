@@ -1,25 +1,25 @@
 import Preact, {Component} from 'preact'
 import PropTypes from 'prop-types'
 
-export default class User extends Component{
+export default class User extends Component {
 
-  componentDidMount(){
+  componentDidMount() {
     const {user} = this.props.match.params
     fetch(`/api/user/${user}`)
       .then( r => r.json())
       .then( r => {
-        if(r.error){
+        if (r.error) {
           this.setState({error: true})
         }
-        else{
+        else {
           this.setState({user: r})
         }
       })
   }
 
-  render(){
-    if(this.state.error) return <div>Error</div>
-    if(!this.state.user) return null
+  render() {
+    if (this.state.error) return <div>Error</div>
+    if (!this.state.user) return null
     const {username, date_created, points} = this.state.user
     return (
       <section class='user'>

@@ -1,14 +1,14 @@
-function ClientError(reason, status){
+function ClientError(reason, status) {
   this.status = status || 400
   this.reason = reason || ''
 }
 
 
-function cerr(reason, status){
+function cerr(reason, status) {
   return new ClientError(reason, status)
 }
 
-function patchError(err){
+function patchError(err) {
   const ne = new Error()
   err.stack += '\n' + (ne.stack.split('\n')[2] || '').replace(/^ {4}at/, '    from')
   return err

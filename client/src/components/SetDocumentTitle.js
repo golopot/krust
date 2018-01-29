@@ -1,12 +1,12 @@
 import Preact, {Component} from 'preact'
 import PropTypes from 'prop-types'
-export default class SetDocumentTitle extends Component{
+export default class SetDocumentTitle extends Component {
 
-  componentDidMount(){
+  componentDidMount() {
     document.title = this.props.title || ''
   }
 
-  render(){
+  render() {
     return null
   }
 }

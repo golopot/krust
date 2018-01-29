@@ -21,18 +21,18 @@ const getAuthtoken = (user) => {
 const auth = (req, res, next) => {
 
   /* csrf check*/
-  if( !req.headers['x-csrf-prevention']){
+  if ( !req.headers['x-csrf-prevention']) {
     throw cerr('API requests must include the header `X-CSRF-Prevention: 1`.')
   }
   /* Check authtoken */
   const token = req.cookies.authtoken || ''
   const parts = token.split('.')
-  if( parts.length !== 3){
+  if ( parts.length !== 3) {
     throw cerr('Authentication error',401)
   }
   const [username, date, hash1] = parts
   const hash2 = getHmac(username, date)
-  if( hash1 !== hash2 ){
+  if ( hash1 !== hash2 ) {
     throw cerr('Authentication error',401)
   }
   req.username = username
@@ -43,15 +43,15 @@ const signUp = (req, res, next) => {
   const {newUsername, newPassword} = req.body
   User.collection.findOne({newUsername})
     .then( doc => {
-      if( doc !== null){
+      if ( doc !== null) {
         throw 'Username is already used.'
       }
 
-      if( ! User.validateUsername(newUsername) ){
+      if ( ! User.validateUsername(newUsername) ) {
         throw 'Username is invalid.'
       }
 
-      if( ! User.validatePassword(newPassword) ){
+      if ( ! User.validatePassword(newPassword) ) {
         throw 'Password is invalid.'
       }
 
@@ -86,10 +86,10 @@ const passwordSignIn = (req, res, next) => {
       return bcrypt.compare(plainPassword, doc.password)
     })
     .then(match => {
-      if(match){
+      if (match) {
         res.json({authtoken: getAuthtoken(user)})
       }
-      else{
+      else {
         res.frown('Password mismatch', 403)
       }
     })

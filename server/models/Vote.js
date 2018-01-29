@@ -16,7 +16,7 @@ const schema = new mongoose.Schema(M.translate({
 schema.statics.fancyInsert = fancyInsert
 
 
-schema.statics.updateVoteCounts = function(target, target_type){
+schema.statics.updateVoteCounts = function(target, target_type) {
 
   let total
 

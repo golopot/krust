@@ -10,12 +10,12 @@ const schema = new mongoose.Schema(M.translate({
 const CompositeTag = (plate, tag) => `${plate}|${tag}`
 
 
-schema.statics.refreshTagsForStory = function(storyId){
+schema.statics.refreshTagsForStory = function(storyId) {
   let story
   let tagsToRefresh
   return Story.findOne({id: storyId}, {id: 1, plate:1, tags: 1, deleted: 1})
     .then( doc => {
-      if(doc === null) throw new Error('Story is not found')
+      if (doc === null) throw new Error('Story is not found')
       story = doc
       return StoryTag.collection.find({story: storyId}).toArray()
     })
@@ -26,7 +26,7 @@ schema.statics.refreshTagsForStory = function(storyId){
       return StoryTag.collection.remove({story: storyId})
     })
     .then( () => {
-      if(story.deleted) return
+      if (story.deleted) return
       const ps = story.tags.map( tag =>
         new StoryTag({
           ctag: CompositeTag(story.plate, tag),

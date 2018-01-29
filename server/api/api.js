@@ -22,13 +22,13 @@ const {
 router.use( bodyParser.json() )
 
 router.use( (req, res, next) => {
-  res.panic = function(error, status){
+  res.panic = function(error, status) {
     console.error(error)
     error = 'Unexpected server error'
     status = status || 500
     res.status(status).json({error, status})
   }
-  res.frown = function(error, status){
+  res.frown = function(error, status) {
     console.error(error)
     error = error || 'Bad request'
     status = status || 400
@@ -72,13 +72,13 @@ router.get('/get-subscriptions', auth, getSubscriptions)
 router.use( (err,req,res,next) => {
 
 
-  if(err.constructor === ClientError){
+  if (err.constructor === ClientError) {
     res.frown(err.reason, err.status)
   }
-  else if( typeof err === 'string'){
+  else if ( typeof err === 'string') {
     res.frown(err, 400)
   }
-  else{
+  else {
     //TODO error logging
     res.panic(err)
   }

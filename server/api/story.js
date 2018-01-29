@@ -31,7 +31,7 @@ const createStory = (req, res, next) => {
 
   User.collection.findOne({username: req.username}, {id: 1})
     .then( doc => {
-      if( doc === null) throw('user not found.')
+      if ( doc === null) throw ('user not found.')
       story.user_id = doc.id
     })
     .then( () => Story.fancyInsert(story) )
@@ -51,10 +51,10 @@ const editStory = (req, res, next) => {
 
   Story.collection.findOne({id: storyId})
     .then(doc => {
-      if(!doc) throw 'Story is not found.'
+      if (!doc) throw 'Story is not found.'
       const authorized = doc.username === req.username
       || req.username === 'sysop'
-      if(!authorized) throw 'Unauthorized.'
+      if (!authorized) throw 'Unauthorized.'
     })
     .then( () => Story.collection.updateOne({id: storyId}, {$set:
     { title: b.title,
@@ -84,16 +84,16 @@ const getStory = (req, res, next) => {
   const treeBuild = nodes => {
     let topNodes = []
     let hash = {}
-    for(let node of nodes){
+    for (let node of nodes) {
       node.children = []
       hash[node.id] = node
     }
 
-    for(let node of nodes){
-      if(node.parent === null){
+    for (let node of nodes) {
+      if (node.parent === null) {
         topNodes.push(node)
       }
-      else{
+      else {
         hash[node.parent].children.push(node)
       }
     }
@@ -103,7 +103,7 @@ const getStory = (req, res, next) => {
 
   Story.collection.findOne({id: ~~req.params.id})
     .then( story => {
-      if( story === null ) throw 'Story not found.'
+      if ( story === null ) throw 'Story not found.'
       return Comment.collection.find({story: story.id}).toArray()
         .then( comments => {
           const x = story
@@ -131,14 +131,14 @@ const deleteStory = (req, res, next) => {
   const b = req.body
   Story.collection.findOne({id: ~~b.id})
     .then(doc => {
-      if(!doc) throw 'Story is not found.'
+      if (!doc) throw 'Story is not found.'
       const authorized = doc.username === req.username
       || req.username === 'sysop'
-      if(!authorized) throw 'Unauthorized.'
+      if (!authorized) throw 'Unauthorized.'
     })
     .then( () => Story.collection.updateOne({id: ~~b.id}, {$set: {deleted: true}} ))
     .then( result => {
-      if( result.matchedCount !== 1 ) throw 'Story is not found.'
+      if ( result.matchedCount !== 1 ) throw 'Story is not found.'
       return StoryTag.refreshTagsForStory(~~b.id)
     })
     .then( r => res.json(r))

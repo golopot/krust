@@ -3,7 +3,7 @@ import pageCache from '../pageCache'
 import {StoryList} from './StoryList'
 import SetDocumentTitle from './SetDocumentTitle'
 
-export default class Index extends Component{
+export default class Index extends Component {
 
   render() {
 

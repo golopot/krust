@@ -7,39 +7,39 @@ import Cookies from 'js-cookie'
 import {getUsername} from '../utils'
 import pageCache from '../pageCache'
 
-class Menu extends Component{
-  constructor(){
+class Menu extends Component {
+  constructor() {
     super()
     this.state.open = false
     this.toggleOpen = this.toggleOpen.bind(this)
     this.onClickMenu = this.onClickMenu.bind(this)
   }
 
-  onClickLogout(ev){
+  onClickLogout(ev) {
     ev.preventDefault()
     Cookies.remove('authtoken', {path: '/'})
     window.location.href = '/'
   }
 
-  onClickMenu(ev){
-    if(ev.target.tagName === 'A'){
+  onClickMenu(ev) {
+    if (ev.target.tagName === 'A') {
       this.toggleOpen()
     }
   }
 
-  toggleOpen(){
+  toggleOpen() {
     this.setState({open: !this.state.open})
   }
 
-  componentDidMount(){
+  componentDidMount() {
 
   }
 
-  render(){
+  render() {
 
     const isOpen = this.state.open ? ' open' : ''
 
-    if(!getUsername()){
+    if (!getUsername()) {
       return (
         <nav class='menu login'>
           <div class='hamburger'
@@ -55,7 +55,7 @@ class Menu extends Component{
         </nav>
       )
     }
-    else{
+    else {
       return (
         <nav class='menu'>
           <div class='hamburger'
@@ -92,14 +92,14 @@ const Header = ({location}) => {
   const path = location.pathname + location.search
   let plateName = ''
 
-  if(/^\/p\//.test(path)){
+  if (/^\/p\//.test(path)) {
     const data = pageCache.get(pathToResources(path)[0])
-    if(!data) console.error('Resource loading failure.')
+    if (!data) console.error('Resource loading failure.')
     plateName = data.story.plate
   }
-  else if( /^\/plate\//.test(path)){
+  else if ( /^\/plate\//.test(path)) {
     const data = pageCache.get(pathToResources(path)[0])
-    if(!data) console.error('Resource loading failure.')
+    if (!data) console.error('Resource loading failure.')
     plateName =  data.plateName
   }
 

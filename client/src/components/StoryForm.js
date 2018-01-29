@@ -8,14 +8,14 @@ const status = {
   WAIT: 1,
 }
 
-class StoryForm extends Component{
-  constructor(props){
+class StoryForm extends Component {
+  constructor(props) {
     super(props)
     this.setState( {status: status.IDLE} )
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  fetchCreateStory(body){
+  fetchCreateStory(body) {
     return fetch('/api/create-story', {
       method: 'post',
       credentials: 'include',
@@ -24,17 +24,17 @@ class StoryForm extends Component{
     })
       .then( r => r.json() )
       .then( r => {
-        if(r.error){
+        if (r.error) {
           this.setState({error: true})
         }
-        else{
+        else {
           pJump(`/p/${r.id}`)
         }
       })
       .catch( e => console.error(e) )
   }
 
-  fetchEditStory(body){
+  fetchEditStory(body) {
     return fetch('/api/edit-story', {
       method: 'post',
       credentials: 'include',
@@ -43,10 +43,10 @@ class StoryForm extends Component{
     })
       .then( r => r.json() )
       .then( r => {
-        if(r.error){
+        if (r.error) {
           this.setState({error: true})
         }
-        else{
+        else {
           return pJump('/hack', {replace: true}).then( () =>
             pJump(`/p/${r.id}`, {replace: true})
           )
@@ -55,7 +55,7 @@ class StoryForm extends Component{
       .catch( e => console.error(e) )
   }
 
-  onSubmit(ev){
+  onSubmit(ev) {
     const {storyId} = this.props
     ev.preventDefault()
     this.setState( {status: status.WAIT} )
@@ -70,15 +70,15 @@ class StoryForm extends Component{
       ... ({storyId})
     }
 
-    if(this.props.mode === 'edit'){
+    if (this.props.mode === 'edit') {
       this.fetchEditStory(body)
-    }else if(this.props.mode === 'create'){
+    } else if (this.props.mode === 'create') {
       this.fetchCreateStory(body)
     }
 
   }
 
-  render(){
+  render() {
     const {title, content, tags, link} = this.props
     const serializedTags = tags && tags.join(' ')
     return (

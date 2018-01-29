@@ -2,18 +2,18 @@ import Preact, {Component} from 'preact'
 import PropTypes from 'prop-types'
 import Cookies from 'js-cookie'
 
-class Profile extends Component{
+class Profile extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
   }
 
-  onClickLogout(){
+  onClickLogout() {
     Cookies.remove('authtoken', {path: '/'})
     window.location.href = '/'
   }
 
-  render(){
+  render() {
     const p = this.props.profile || {}
     return (
       <div class='profile'>
@@ -42,9 +42,9 @@ Profile.propTypes = {
   profile: PropTypes.object.isRequired,
 }
 
-class Container extends Component{
+class Container extends Component {
 
-  componentDidMount(){
+  componentDidMount() {
     fetch('/api/profile', {
       method: 'get',
       credentials: 'include',
@@ -56,7 +56,7 @@ class Container extends Component{
       })
   }
 
-  render(){
+  render() {
     return <Profile profile={this.state.profile} />
   }
 }

@@ -1,8 +1,8 @@
 import Preact, {Component} from 'preact'
 import PropTypes from 'prop-types'
 
-export default class DropDown extends Component{
-  constructor(props){
+export default class DropDown extends Component {
+  constructor(props) {
     super(props)
     const {children, initialSelected, summary} = this.props
     const selected = initialSelected || 0
@@ -11,15 +11,15 @@ export default class DropDown extends Component{
     this.toggleOpen = this.toggleOpen.bind(this)
     this.onClickItem = this.onClickItem.bind(this)
   }
-  toggleOpen(){
+  toggleOpen() {
     this.setState({open: !this.state.open})
   }
-  onClickItem(ev){
-    if(this.props.summary) return
+  onClickItem(ev) {
+    if (this.props.summary) return
     this.toggleOpen()
     this.setState({summary: ev.target.innerText})
   }
-  render(){
+  render() {
     const open = this.state.open ? ' open' : ''
     return (
       <div class={'dropdown '+this.props.class||''}>

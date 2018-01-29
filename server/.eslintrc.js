@@ -3,7 +3,7 @@ module.exports = {
         "commonjs": true,
         "es6": true,
         "browser": true,
-        'node': true,
+        "node": true,
     },
     "extends": "eslint:recommended",
     "rules": {
@@ -23,8 +23,8 @@ module.exports = {
             "error",
             "never"
         ],
-    		'no-console': 0,
-        'no-unused-vars': ["error", { "argsIgnorePattern": "^next$|^_$" }],
-        'no-cond-assign': 0,
+        "no-console": 0,
+        "no-cond-assign": 0,
+        "no-unused-vars": ["error", { "argsIgnorePattern": "^next$|^_$" }],
     }
 };

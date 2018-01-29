@@ -2,7 +2,7 @@ export const dq = x => document.querySelector(x)
 
 export const formToObj = form => {
   var obj = {}
-  for(let key of form.keys()){
+  for (let key of form.keys()) {
     obj[key] = form.get(key)
   }
   return obj

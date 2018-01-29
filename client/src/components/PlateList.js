@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import PlateForm from './PlateForm'
 import Plink from './Plink'
 
-class PlateItem extends Component{
+class PlateItem extends Component {
 
-  render(){
+  render() {
     const {plate} = this.props
-    return(
+    return (
       <div class='plate-item'>
         <div class='name'><Plink to={'/plate/'+plate.name}>{plate.name}</Plink></div>
         <div class='count'>{plate.userCount}</div>
@@ -20,17 +20,17 @@ PlateItem.propTypes = {
   plate: PropTypes.string.isRequired,
 }
 
-export default class PlateList extends Component{
+export default class PlateList extends Component {
 
-  componentDidMount(){
+  componentDidMount() {
     fetch('/api/plate')
       .then( r => r.json() )
       .then( r => {
 
-        if(r.plates !== undefined){
+        if (r.plates !== undefined) {
           this.setState({plates: r.plates})
         }
-        else{
+        else {
           this.setState({errored: true})
         }
 
@@ -38,7 +38,7 @@ export default class PlateList extends Component{
       .catch(console.error)
   }
 
-  render(){
+  render() {
     return (
       <div class='plate-list-page'>
         <div class='create-plate'>

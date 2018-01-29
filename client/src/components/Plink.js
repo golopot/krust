@@ -9,25 +9,25 @@ import Preact, {Component} from 'preact'
 import PropTypes from 'prop-types'
 import promisedNavigate from '../promisedNavigate'
 
-class Plink extends Component{
+class Plink extends Component {
 
   // TODO deal with furious clicking
   // TODO indicate "connecting" after clicking
   // TODO What happens when link href is current href?
 
-  constructor(){
+  constructor() {
     super()
     this.onClick = this.onClick.bind(this)
   }
 
-  onClick(ev){
+  onClick(ev) {
     const {to, onClick} = this.props
     ev.preventDefault()
-    if(typeof onClick === 'function') onClick(ev)
+    if (typeof onClick === 'function') onClick(ev)
     promisedNavigate(to)
   }
 
-  render(){
+  render() {
     // eslint-disable-next-line no-unused-vars
     const {to, onClick, history, match, location, ...props} = this.props
     return <a

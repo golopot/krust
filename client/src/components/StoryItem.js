@@ -52,18 +52,18 @@ StoryItem.propTypes = {
 }
 
 const LinkDomain = ({link}) =>{
-  if(link){
-    try{
+  if (link) {
+    try {
       const hostname = new URL(link).hostname.replace(/^www\./, '')
       return <span class='link' href={link}>{hostname}</span>
     }
-    catch(e){
+    catch (e) {
       e.message += ' input=' + JSON.stringify(link)
       console.error(e)
       return null
     }
   }
-  else{
+  else {
     return <span class='link'></span>
   }
 }

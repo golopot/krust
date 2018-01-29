@@ -18,13 +18,13 @@ app.use(cookieParser())
 app.disable('x-powered-by')
 
 app.use( (req,res,next) => {
-  res.panic = function(error, status){
+  res.panic = function(error, status) {
     console.error(error)
     error = error || ''
     status = status || 500
     res.status(status).render('error.njk', {error: 'server error', status})
   }
-  res.frown = function(error, status){
+  res.frown = function(error, status) {
     console.error(error)
     error = error || ''
     status = status || 400
@@ -58,7 +58,7 @@ app.get('/p/:id', (req, res, next) => {
 
   Story.collection.findOne({id: ~~req.params.id})
     .then( x => {
-      if( x === null ) throw 404
+      if ( x === null ) throw 404
       res.render('react.njk')
     })
 
@@ -79,14 +79,14 @@ app.get('/sw.js', (req, res) => res.sendFile(path.resolve(__dirname + '/../clien
 
 app.use( (err,req,res,next) => {
 
-  if(err.constructor === ClientError){
+  if (err.constructor === ClientError) {
     res.frown(err.reason, err.status)
   }
 
-  else if( err === 404 ){
+  else if ( err === 404 ) {
     res.status(404).render('notfound.njk')
   }
-  else{
+  else {
     console.error( err )
     res.panic('Unexpected server error')
   }

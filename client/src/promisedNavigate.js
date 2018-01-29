@@ -8,10 +8,10 @@ export default (to, option) => {
     uri => fetch(uri)
       .then( r => r.json() )
       .then( r => {
-        if(r.error){
+        if (r.error) {
           throw r.error
         }
-        else{
+        else {
           pageCache.set(uri, r)
         }
       })

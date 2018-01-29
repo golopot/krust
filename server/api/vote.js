@@ -14,15 +14,15 @@ const castVote = (req, res, next) => {
 
   Promise.resolve().then( () => {
     var model
-    if( b.target_type === 'comment')
+    if ( b.target_type === 'comment')
       model = Comment
-    if( b.target_type === 'story')
+    if ( b.target_type === 'story')
       model = Story
 
     return model.collection.findOne({id: vote.target})
   })
     .then( doc => {
-      if( doc === null ){
+      if ( doc === null ) {
         return Promise.reject('Comment or story is not found.')
       }
     })
@@ -37,11 +37,11 @@ const castVote = (req, res, next) => {
       )
     })
     .then( doc => {
-      if(doc === null){
+      if (doc === null) {
         return vote.save()
       }
-      else{
-        if(doc.direction != vote.direction){
+      else {
+        if (doc.direction != vote.direction) {
           return Vote.collection.updateOne(
             {_id: doc._id},
             {$set: {direction: vote.direction}}

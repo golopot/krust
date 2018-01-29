@@ -9,17 +9,17 @@ import DropDown from './DropDown'
 import SetDocumentTitle from './SetDocumentTitle'
 import pageCache from '../pageCache'
 
-class VoteFilter extends Component{
-  onKeyDown(ev){
+class VoteFilter extends Component {
+  onKeyDown(ev) {
     const {match} = this.props
     ev.stopPropagation()
-    if(ev.key !== 'Enter') return
+    if (ev.key !== 'Enter') return
     const score = ev.target.value
     const to = `/plate/${match.params.plate}?score=${score}`
     promisedNavigate(to)
   }
 
-  render(){
+  render() {
     return (
       <span>
         <input
@@ -39,8 +39,8 @@ VoteFilter.propTypes = {
 
 const VoteFilterWithRouter = withRouter(VoteFilter)
 
-class Tabs extends Component{
-  render(){
+class Tabs extends Component {
+  render() {
     const {plateName} = this.props
     const timeInitialSelected = () => {
       const query = window.location.search
@@ -69,13 +69,13 @@ Tabs.propTypes = {
 }
 
 
-class FilterDescription extends Component{
+class FilterDescription extends Component {
 
-  render(){
+  render() {
     const {plate} = this.props
     const m = /tag=([\w_-]+)/.exec(this.props.location.search)
     const tag = m ? m[1] : null
-    return(
+    return (
       tag && (
         <div>
           <span>Tag: </span>
@@ -108,9 +108,9 @@ export const PlateSidebar = () => {
   )
 }
 
-class PlateInner extends Component{
+class PlateInner extends Component {
 
-  render(){
+  render() {
     const {plateName, query} = this.props
     return (
       <section class='plate'>
@@ -135,9 +135,9 @@ PlateInner.propTypes = {
   query: PropTypes.string.isRequired,
 }
 
-class Plate extends Component{
+class Plate extends Component {
 
-  render(){
+  render() {
 
     const {plate} = this.props.match.params
     const query = this.props.location.search

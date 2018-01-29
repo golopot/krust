@@ -39,30 +39,30 @@ const getPlate = (req, res, next) => {
     deleted: false,
   }
 
-  if(q.tag){
+  if (q.tag) {
     selector['tags'] = q.tag
   }
 
-  if(q.t === 'week' || q.t === 'month'){
+  if (q.t === 'week' || q.t === 'month') {
     sort = {votes: -1}
 
-    if(q.t ==='week'){
+    if (q.t ==='week') {
       Object.assign(selector, {date_submit: {$gt: new Date(new Date() - 86400*1000*7)} })
     }
 
-    if(q.t === 'month'){
+    if (q.t === 'month') {
       Object.assign(selector, {date_submit: {$gt: new Date(new Date() - 86400*1000*30)}})
     }
 
   }
-  else{
+  else {
     sort = {date_submit: -1}
 
-    if(Number(q.score) >= 0){
+    if (Number(q.score) >= 0) {
       Object.assign(selector, {votes: {$gte: Number(q.score) }})
     }
 
-    if(q.before){
+    if (q.before) {
       Object.assign(selector, {date_submit: {$lt: q.before}})
     }
   }
@@ -81,7 +81,7 @@ const getPlate = (req, res, next) => {
     .sort(sort)
     .toArray()
     .then( docs => {
-      for(let x of docs){
+      for (let x of docs) {
         x.date_submit = x.date_submit.getTime()
       }
       const nextPage = docs.length > 20 && docs[20].id
@@ -110,7 +110,7 @@ const getFrontPageStories = (req, res, next) => {
     .sort({date_submit: -1})
     .toArray()
     .then( docs => {
-      for(let x of docs){
+      for (let x of docs) {
         x.date_submit = x.date_submit.getTime()
       }
       res.json({stories: docs})

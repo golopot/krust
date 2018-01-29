@@ -5,13 +5,13 @@ const pathToResources = (href) => {
 
   const q = query || ''
   let m
-  if(path === '/'){
+  if (path === '/') {
     return ['/api/plate', '/api/front-page-stories']
   }
-  if(m = /^\/p\/([\w]*)/.exec(path)){
+  if (m = /^\/p\/([\w]*)/.exec(path)) {
     return [`/api/story/${m[1]}${q}`]
   }
-  if(m = /^\/plate\/([\w]*)/.exec(path)){
+  if (m = /^\/plate\/([\w]*)/.exec(path)) {
     return [`/api/plate/${m[1]}${q}`]
   }
   return []

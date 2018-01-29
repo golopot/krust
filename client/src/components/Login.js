@@ -3,15 +3,15 @@ import {formToObj} from '../utils'
 import Cookies from 'js-cookie'
 import SetDocumentTitle from './SetDocumentTitle'
 
-class LoginForm extends Component{
+class LoginForm extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.onSubmitLogin = this.onSubmitLogin.bind(this)
   }
 
 
-  onSubmitLogin(ev){
+  onSubmitLogin(ev) {
     ev.preventDefault()
     const form = new FormData(ev.target)
     this.setState({loading: true})
@@ -22,17 +22,17 @@ class LoginForm extends Component{
     })
       .then( r => r.json())
       .then( r => {
-        if(r.authtoken){
+        if (r.authtoken) {
           Cookies.set('authtoken', r.authtoken)
           window.location = '/'
         }
-        else{
+        else {
           this.setState({erroring: true})
         }
       })
   }
 
-  render(){
+  render() {
     const {loading, erroring} = this.state
     return (
       <form id='login-form' onSubmit={this.onSubmitLogin}>
@@ -52,15 +52,15 @@ class LoginForm extends Component{
 }
 
 
-class SignupForm extends Component{
+class SignupForm extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.onSubmit = this.onSubmit.bind(this)
   }
 
 
-  onSubmit(ev){
+  onSubmit(ev) {
     ev.preventDefault()
     const form = new FormData(ev.target)
     this.setState({loading: true})
@@ -71,16 +71,16 @@ class SignupForm extends Component{
     })
       .then( r => r.json())
       .then( r => {
-        if(r.data){
+        if (r.data) {
           this.setState({created: true})
         }
-        else{
+        else {
           this.setState({erroring: true})
         }
       })
   }
 
-  render(){
+  render() {
     const {created, erroring} = this.state
     return (
       <form id='signup-form' onSubmit={this.onSubmit}>
@@ -101,13 +101,13 @@ class SignupForm extends Component{
   }
 }
 
-class Login extends Component{
+class Login extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
   }
 
-  render(){
+  render() {
     return (
       <section class='login-section'>
         <SetDocumentTitle title='登入 Krust' />

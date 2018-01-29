@@ -1,8 +1,8 @@
 import Preact, {Component} from 'preact'
 import PropTypes from 'prop-types'
 import store from '../store'
-export default class SideEffect extends Component{
-  constructor(props){
+export default class SideEffect extends Component {
+  constructor(props) {
     super(props)
     store.history = this.props.history
     window.app = window.app || {}
@@ -15,7 +15,7 @@ export default class SideEffect extends Component{
     //   }
     // })
   }
-  render(){
+  render() {
     return null
   }
 }
