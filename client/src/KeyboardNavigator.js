@@ -62,13 +62,18 @@ class KeyboardNavigator{
     }
 
     if(key === 'ArrowLeft'){
-      this.back()
+      if (/\/plate/.test(location.pathname)){
+        store.history.replace('/plates')
+      }
+      else{
+        this.back()
+      }
     }
 
     if(key === 'ArrowRight'){
       if(this.cursor === null) return
       const items =  Array.from(document.querySelectorAll('.story-list > .story-item'))
-      const link = items[this.cursor].querySelector('.up > a')
+      const link = items[this.cursor].querySelector('a.comments')
       link.click()
     }
 

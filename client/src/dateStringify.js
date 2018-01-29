@@ -9,16 +9,16 @@ const dateStringify = (date) => {
   const day = hour*24
   const year = day * 365
   if(diff < minute){
-    return 'just now'
+    return 'now'
   }
   if(diff < 2 * hour){
-    return  ~~ (diff/minute) + ' minutes'
+    return  ~~ (diff/minute) + 'min'
   }
   if(diff < 2 * day){
-    return ~~ (diff/hour) + ' hours'
+    return ~~ (diff/hour) + 'h'
   }
   if(diff < 11 * day){
-    return ~~ (diff/day) + ' days'
+    return ~~ (diff/day) + 'd'
   }
   if(diff < year){
     return MMDD(new Date(date))

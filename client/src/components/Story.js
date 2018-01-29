@@ -9,7 +9,7 @@ import {EventEmitter} from 'fbemitter'
 import SetDocumentTitle from './SetDocumentTitle'
 import {EditStoryForm} from './StoryForm'
 import {goBack} from '../promisedNavigate'
-
+import StoryItem from './StoryItem'
 
 const onClickDelete = (ev) => {
   const storyId = ev.target.dataset.storyId
@@ -96,26 +96,15 @@ class StoryProper extends Component{
     const {story: s} = this.props
     const editing = this.state.editing
     return (
+
       <section class='story'>
-        <div class='goback' onClick={goBack}>&lt;&nbsp;回前頁</div>
-        <div class='title'>
-          <div>{s.title}</div>
-        </div>
-        <div class='linkline'><a class='link' href={s.link}>{s.link}</a></div>
-        <div class='byline'>
-          <Score story={s.id} score={s.votes} eventEmitter={this.eventEmitter} />
-          <span class='author'>{s.username} </span>
-          <span class='date'>{s.date_submit} </span>
-          <span class='actions'>
-            <span class='upvote' onClick={()=>this.eventEmitter.emit('toggleVote')}>推</span>
-            <span class='edit' onClick={this.onClickEdit}>編</span>
-            <span class='delete' onClick={this.onClickDelete} data-story-id={s.id}>刪</span>
-            <span>噓</span>
-            <span>標</span>
-          </span>
-        </div>
-        <div class='tagline'>
-          {s.tags.map( x => <Tag tag={x} plate={s.plate} key={x} /> )}
+        <div class='goback'><span onClick={goBack} class='pointer'>&lt;&nbsp;回前頁</span></div>
+        <StoryItem story={s} showPlate={true} />
+        <div class='actions'>
+          <span class='edit' onClick={this.onClickEdit}>編輯</span>
+          <span class='delete' onClick={this.onClickDelete} data-story-id={s.id}>刪除</span>
+          <span>分享</span>
+          <span>檢舉</span>
         </div>
 
         { editing && <EditStoryForm
