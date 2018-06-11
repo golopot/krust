@@ -1,7 +1,7 @@
 version: "3"
 services:
   mongo:
-    image: mongo:3.4
+    image: mongo:3.6
     expose:
       - "27017"
     ports:

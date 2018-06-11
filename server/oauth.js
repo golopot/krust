@@ -1,4 +1,4 @@
-const config = require('../config')
+const config = require('./config')
 const qs = require('qs')
 const fetch = require('node-fetch')
 const assert = require('assert')

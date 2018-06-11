@@ -1,8 +1,12 @@
-FROM node:carbon
+FROM node:10
 WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm install --only=production
+
+COPY package.json ./
+COPY yarn.lock ./
+RUN npm install -g pm2
+RUN yarn
 COPY . .
-RUN npm run pack
+RUN yarn build
 EXPOSE 9090
-CMD cd server && node server.js
+WORKDIR /usr/src/app/server
+ENTRYPOINT ["pm2-docker", "server.js"]

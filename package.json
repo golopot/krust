@@ -1,16 +1,17 @@
 {
-  "name": "potato",
+  "name": "krust",
   "version": "0.0.0",
   "description": "A forum",
   "scripts": {
     "dev": "cd client; webpack -w & gulp watch; kill %%",
-    "pack": "cd client; webpack && gulp",
+    "build": "cd client; webpack && gulp",
     "up": "cd server; nodemon --ext js,njk server.js",
     "pm2": "pm2 start server/server.js",
     "db": "cd scripts; docker-compose -f docker-compose.db.yaml -p krust_db up",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslintc": "cd client; eslint **",
-    "eslints": "cd server; eslint **"
+    "eslints": "cd server; eslint **",
+    "deploy": "yarn && yarn build && yarn pm2"
   },
   "author": "",
   "license": "MIT",
@@ -20,7 +21,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.6.1",
-    "bcrypt": "^1.0.3",
+    "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
     "compression": "^1.7.1",
     "cookie-parser": "^1.4.3",
@@ -31,7 +32,7 @@
     "gulp-less": "^3.3.2",
     "js-cookie": "^2.1.4",
     "mongodb": "^2.2.33",
-    "mongoose": "^4.12.3",
+    "mongoose": "^5.1.4",
     "node-fetch": "^1.7.3",
     "nunjucks": "^3.0.1",
     "pm2": "^2.7.2",
@@ -42,11 +43,12 @@
     "react-router-dom": "^4.2.2",
     "showdown": "^1.8.1",
     "webpack": "^3.8.1",
-    "xss": "^0.3.4"
+    "xss": "^1.0.3"
   },
   "devDependencies": {
     "eslint": "^4.9.0",
     "eslint-plugin-react": "^7.4.0",
+    "nodemon": "^1.17.5",
     "stylelint-config-standard": "^17.0.0"
   },
   "engines": {

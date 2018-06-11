@@ -1,9 +1,15 @@
-version: "3"
+version: '3.1'
 services:
-  krust:
-    build: .
-    restart: always
+  web:
+    image: nginx
+    volumes:
+     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+     - ./site.key:/run/secrets/site.key
+     - ./site.crt:/run/secrets/site.crt
     ports:
-      - "9090:9090"
-    env_file:
-      - .env
+     - "443:443"
+     - "80:80"
+    command: nginx -g 'daemon off;'
+  node:
+    build:
+      context: .

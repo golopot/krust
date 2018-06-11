@@ -1,6 +1,5 @@
-const config = require('../config')
+const config = require('./config')
 const mongoose = require('mongoose')
-mongoose.Promise = global.Promise
 const api = require('./api/api')
 const express = require('express')
 const app = express()
@@ -97,7 +96,7 @@ app.use( (req,res,next) => {
   res.status(404).render('notfound.njk')
 })
 
-mongoose.connect(config.mongourl, {useMongoClient: true })
+mongoose.connect(config.mongourl)
   .then( () => console.log('Mongodb connected. ' + config.mongourl) )
   .catch(console.error)
 
