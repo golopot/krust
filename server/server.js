@@ -100,6 +100,6 @@ mongoose.connect(config.mongourl)
   .then( () => console.log('Mongodb connected. ' + config.mongourl) )
   .catch(console.error)
 
-app.listen(9090, function () {
-  console.log('Server listening on http://localhost:9090')
+app.listen(config.port, function () {
+  console.log('Server listening on http://localhost:' + config.port)
 })
