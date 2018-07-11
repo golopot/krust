@@ -1,0 +1,6 @@
+location ^~ /.well-known/acme-challenge/ {
+      default_type "text/plain";
+      allow all;
+      root /var/www/example;
+      auth_basic off;
+}
